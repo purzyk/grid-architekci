@@ -1,0 +1,25 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+	<!-- wp:post-title {"level":1,"style":{"typography":{"textTransform":"uppercase","fontWeight":"800"}}} /-->
+
+	<!-- wp:group {"layout":{"type":"flex"},"style":{"spacing":{"margin":{"bottom":"26px"}}}} -->
+	<div class="wp-block-group" style="margin-bottom:26px">
+		<!-- wp:post-terms {"term":"projekt_kategoria"} /-->
+		<!-- wp:post-terms {"term":"projekt_status"} /-->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:grid/project-detail /-->
+
+	<!-- wp:group {"layout":{"type":"flex","justifyContent":"space-between"},"style":{"spacing":{"margin":{"top":"56px"}}}} -->
+	<div class="wp-block-group" style="margin-top:56px">
+		<!-- wp:post-navigation-link {"type":"previous","label":"Poprzedni projekt","showTitle":true} /-->
+		<!-- wp:post-navigation-link {"type":"next","label":"Następny projekt","showTitle":true} /-->
+	</div>
+	<!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

@@ -67,6 +67,7 @@
 			]
 		},
 		"spacing": {
+			"blockGap": true,
 			"units": [ "px", "%", "em", "rem", "vw", "vh" ],
 			"spacingSizes": [
 				{ "slug": "10", "name": "10px", "size": "10px" },
@@ -130,6 +131,9 @@
 		}
 	},
 	"styles": {
+		"spacing": {
+			"blockGap": "56px"
+		},
 		"color": {
 			"background": "var(--wp--preset--color--paper)",
 			"text": "var(--wp--preset--color--ink)"

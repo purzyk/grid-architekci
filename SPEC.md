@@ -259,7 +259,43 @@ From `projekt/handoff/README.md`, unchanged:
      mocks) shows year "203" instead of "2003" — a malformed `post_date` on
      the *old* site, migrated faithfully. Worth flagging to the client;
      not something to silently correct.
-4. Templates/patterns assembled from blocks, matching the five mock pages.
+4. ✅ Templates/patterns assembled from blocks, matching the five mock
+   pages.
+   - `templates/single-projekt.html` — new `grid/project-detail` block
+     (lead/opis/gallery/site-plan/metrics, reading the *current* post's ACF
+     fields via `usesContext: ["postId"]` — the standard pattern core's own
+     Post Content/Post Featured Image blocks use) + core Post Terms and
+     Post Navigation Link for prev/next. Verified real adjacent-post
+     navigation works correctly across the 48 migrated projects.
+   - Front page, O nas, Osiągnięcia, Kontakt are real editable `Page`
+     posts (not hardcoded in template files) — client can edit them the
+     normal way. Content seeded from `wp-content/seed-content/` (tracked in
+     git, unlike `_migration-staging/`, since this is real deliverable
+     content, not throwaway migration scratch) — re-run
+     `wp eval-file wp-content/seed-content/create-pages.php` to recreate
+     them on a fresh clone.
+   - Real copy pulled from the mocks' own JS data where available (hero
+     statement, O nas manifesto + body, Osiągnięcia intro, Kontakt intro +
+     process steps) — not lorem ipsum. "O nas"'s "Czym się zajmujemy"
+     section reuses the Process Steps block as-is, since the mock's `n`/
+     `t`/`d` scope-of-work data is structurally identical to a process
+     step.
+   - Honest placeholders (not fake functionality) where a real decision or
+     asset is still pending: contact form, map graphic — both already
+     flagged in this doc.
+   - Two real bugs found via live testing, fixed:
+     - Front page and other custom pages were falling back to the generic
+       `index.html` template (which auto-outputs Post Title), showing a
+       stray "STRONA GŁÓWNA" heading above Hero and duplicate headings on
+       pages that already had their own in-content heading. Added explicit
+       `front-page.html` and `page.html` templates without post-title.
+     - No spacing between top-level blocks on a page (e.g. Process Steps
+       and Team Grid touching/visually merging) — `theme.json` had **two**
+       `settings.spacing` keys (a leftover from an earlier edit); JSON's
+       last-key-wins silently dropped the first one's `blockGap: true`.
+       Merged into one block. Worth remembering: silent duplicate-key data
+       loss like this won't error anywhere, only shows up as "the setting
+       I added doesn't seem to do anything."
 5. Migration — DB dump → `grid-legacy` → transform script → `grid`.
 6. Content gaps filled (client deliverables above).
 7. QA (responsive across the four breakpoints, a11y, contrast), redirect

@@ -1,0 +1,59 @@
+/* Header/footer chrome — the parts of the design that aren't inside a
+   custom block, so they don't get a block.json/style.scss of their own. */
+
+.grid-site-header {
+	border-bottom: 2px solid var(--wp--preset--color--divider);
+	padding-bottom: 14px;
+	align-items: center;
+}
+
+.grid-site-header .wp-block-navigation {
+	--wp--style--block-gap: 18px;
+}
+
+.grid-site-header .wp-block-navigation-item > .wp-block-navigation-item__content {
+	font-size: var(--wp--preset--font-size--meta);
+	text-transform: uppercase;
+	letter-spacing: var(--wp--custom--letter-spacing--nav);
+	color: var(--wp--preset--color--ink-50);
+	padding: 0 0 3px;
+	border-bottom: 1px solid transparent;
+}
+
+.grid-site-header .wp-block-navigation-item > .wp-block-navigation-item__content:hover {
+	color: var(--wp--preset--color--ink);
+}
+
+.grid-site-header .wp-block-navigation-item[data-wp-on--click] .wp-block-navigation-item__content,
+.grid-site-header .current-menu-item > .wp-block-navigation-item__content,
+.grid-site-header .wp-block-navigation-item__content[aria-current='page'] {
+	border-color: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--ink);
+}
+
+.grid-site-footer {
+	border-top: 2px solid var(--wp--preset--color--divider);
+	padding-top: 20px;
+	margin-top: 56px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.grid-site-footer a {
+	color: var(--wp--preset--color--accent-700);
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: var(--wp--preset--font-size--meta);
+	letter-spacing: var(--wp--custom--letter-spacing--nav);
+}
+
+.grid-site-footer a:hover {
+	text-decoration: underline;
+}
+
+.grid-site-footer__meta {
+	font-size: var(--wp--preset--font-size--body-sm);
+	color: var(--wp--preset--color--ink-70);
+}

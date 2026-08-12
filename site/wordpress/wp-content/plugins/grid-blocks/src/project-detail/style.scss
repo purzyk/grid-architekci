@@ -1,0 +1,79 @@
+.grid-project-detail {
+	&__lead {
+		max-width: var(--wp--custom--max-width--measure);
+		font-size: var(--wp--preset--font-size--lead);
+		line-height: var(--wp--custom--line-height--lead);
+		margin: 0 0 20px;
+	}
+
+	&__body {
+		max-width: var(--wp--custom--max-width--measure);
+		font-size: var(--wp--preset--font-size--body);
+		line-height: var(--wp--custom--line-height--body);
+		color: var(--wp--preset--color--ink-70);
+
+		p {
+			margin: 0 0 16px;
+		}
+		p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&__gallery {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		margin-top: 40px;
+	}
+
+	&__photo {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	&__siteplan {
+		margin-top: 40px;
+		background: var(--wp--preset--color--surface);
+		padding: 24px;
+
+		&-img {
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&__metrics {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 26px;
+		border-top: 2px solid var(--wp--preset--color--divider);
+		padding: 26px 18px;
+		margin-top: 40px;
+
+		@media (min-width: 620px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		@media (min-width: 900px) {
+			grid-template-columns: repeat(5, 1fr);
+			padding-left: 40px;
+			padding-right: 40px;
+		}
+	}
+
+	&__metric-label {
+		height: 12px;
+		margin-bottom: 6px;
+		font-size: var(--wp--preset--font-size--label);
+		text-transform: uppercase;
+		letter-spacing: var(--wp--custom--letter-spacing--kicker);
+		color: var(--wp--preset--color--ink-50);
+	}
+
+	&__metric-value {
+		font-size: var(--wp--preset--font-size--body-sm);
+		line-height: 1.4;
+	}
+}

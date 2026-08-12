@@ -220,6 +220,25 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
 	),
+	'project-detail' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/project-detail',
+		'title' => 'Szczegóły projektu',
+		'category' => 'grid-blocks',
+		'icon' => 'media-default',
+		'description' => 'Lead, opis, galeria pełnej szerokości, rysunek zagospodarowania i metryka — dla bieżącego wpisu typu Projekt. Do użycia w szablonie pojedynczego projektu.',
+		'supports' => array(
+			'html' => false
+		),
+		'usesContext' => array(
+			'postId'
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
 	'project-grid' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
