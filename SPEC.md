@@ -117,6 +117,39 @@ Two separate DDEV projects — **never merge them**:
    slugs (old site indexed since 2017 — this matters for SEO at launch).
 5. Delete `grid-legacy` once extraction is complete.
 
+### ✅ First pass complete
+
+`grid-core` plugin registers `projekt`/`zespol`/`nagroda`/`publikacja` CPTs,
+`projekt_kategoria`/`projekt_status` taxonomies, and ACF field groups for
+all four — all as code, version-controlled
+(`site/wordpress/wp-content/plugins/grid-core/`).
+
+Migrated into `grid`: **48 projects** (title, slug, year, category, status,
+featured image) and **4 team members** (name, role, title, LinkedIn,
+photo). Category/status counts: mieszkalne 26 / przemysłowe 12 / publiczne
+10; zrealizowane 29 / koncepcja 12 / konkurs 7 / w realizacji 0.
+
+- 32 projects are flagged `_migracja_do_recenzji` (postmeta) — every
+  project touched by the `komercyjne` guess, plus ones with no old-side
+  status equivalent (defaulted to `koncepcja`). Original old-site tags
+  kept in `_migracja_stare_tagi` for reference. **Not yet reviewed against
+  the client — treat these categories as provisional.**
+- 4 projects have no image at all (`Dom jednorodzinny, Warszawa`,
+  `Park nad Narwią`, `Dom w Brzozach`, `2Handle Polen, Kościan`) — zero
+  photos on the old site, gallery included. Needs images from the client
+  regardless of migration.
+- **Gallery images intentionally skipped this pass** (only the featured
+  image was imported per project) — the ~950 old gallery photos are
+  low-res and due for replacement anyway. Full gallery import is still
+  possible later: the export/import scripts and staged files are sitting
+  in `grid-legacy/export-projects.php` and
+  `site/wordpress/_migration-staging/` (gitignored, not deleted yet).
+- Description/lead text and the metrics block (client, structure,
+  services, contractor) were not migrated — confirmed empty on every old
+  project, not a gap in extraction.
+- `nagroda`/`publikacja` have no old-site source at all — content entry
+  only, no migration possible.
+
 ## Outstanding — blocked on the client
 
 From `projekt/handoff/README.md`, unchanged:

@@ -24,6 +24,9 @@ site/wordpress/wp-content/upgrade/
 site/wordpress/wp-content/cache/
 site/wordpress/wp-config.php
 
+# One-off migration staging (source images + export.json copied from grid-legacy)
+site/wordpress/_migration-staging/
+
 # Node
 node_modules/
 npm-debug.log*
