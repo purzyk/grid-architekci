@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "grid/manifesto",
+	"title": "Manifest",
+	"category": "grid-blocks",
+	"icon": "quote",
+	"description": "Stwierdzenie + akapit obok, np. otwarcie strony „O nas”. Mniejszy i nie kapitalikowy, w odróżnieniu od nagłówka Hero.",
+	"supports": { "html": false },
+	"attributes": {
+		"statement": { "type": "string", "source": "html", "selector": ".grid-manifesto__statement", "default": "" },
+		"body": { "type": "string", "source": "html", "selector": ".grid-manifesto__body", "default": "" }
+	},
+	"textdomain": "grid",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

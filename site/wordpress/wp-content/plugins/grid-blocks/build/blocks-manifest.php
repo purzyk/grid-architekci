@@ -117,6 +117,35 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
 	),
+	'manifesto' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/manifesto',
+		'title' => 'Manifest',
+		'category' => 'grid-blocks',
+		'icon' => 'quote',
+		'description' => 'Stwierdzenie + akapit obok, np. otwarcie strony „O nas”. Mniejszy i nie kapitalikowy, w odróżnieniu od nagłówka Hero.',
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'statement' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-manifesto__statement',
+				'default' => ''
+			),
+			'body' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-manifesto__body',
+				'default' => ''
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css'
+	),
 	'process-step' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
@@ -213,6 +242,32 @@ return array(
 		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php',
 		'viewScriptModule' => 'file:./view.js'
+	),
+	'publications-grid' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/publications-grid',
+		'title' => 'Siatka publikacji',
+		'category' => 'grid-blocks',
+		'icon' => 'media-document',
+		'description' => 'Okładki publikacji, 2–6 na wiersz — dane pobierane z wpisów typu Publikacja.',
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'label' => array(
+				'type' => 'string',
+				'default' => 'Publikacje'
+			),
+			'note' => array(
+				'type' => 'string',
+				'default' => ''
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
 	),
 	'stat-bar' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',

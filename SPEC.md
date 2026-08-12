@@ -208,15 +208,24 @@ From `projekt/handoff/README.md`, unchanged:
    from `nagroda` entries flagged `wyrozniona`, reusing Highlight Plate's
    visual style; the mock's own template already treats these as a data
    loop, not hand-placed content, so this matches the mock's intent rather
-   than adding one). Still to build: publications grid (dynamic), manifesto
-   text.
+   than adding one), Publications Grid (dynamic, `publikacja` CPT, 2–6
+   columns, covers `object-contain` since proportions vary wildly), and
+   Manifesto (static — the "O nas" opening statement; deliberately
+   overrides the theme's global heading style back to normal-case/
+   normal-weight, since it's the one heading in the whole design that
+   isn't a shouted uppercase display headline).
+
+   **✅ Block library complete — 11 blocks in `grid-blocks`.** Remaining
+   work is templates/patterns (milestone 4) that assemble these blocks into
+   the five actual pages.
 
    No real `nagroda` content exists yet (confirmed earlier: genuinely new,
    not migrated) — both award blocks were verified against 5 disposable
    sample entries (linked to real migrated projects by title match), then
    deleted once verified. Added an `opis` (short description) field to the
    `nagroda` ACF group — needed for the Featured Awards plate text, wasn't
-   in the original field list.
+   in the original field list. Same pattern for Publications Grid: 6
+   disposable sample `publikacja` entries, verified, deleted.
 
    Learned along the way, worth remembering:
    - `InnerBlocks` renders its own `block-editor-block-list__layout`
