@@ -106,9 +106,9 @@ Two separate DDEV projects — **never merge them**:
      contribution/role, LinkedIn, plus a featured photo. No bio paragraph
      — same gap pattern as projects. Migrates cleanly into the team grid
      block.
-   - `testimonial` post type also exists (3 entries) — not part of the
-     current design's data model; check content before deciding whether to
-     carry it forward or drop it.
+   - `testimonial` post type also exists (3 entries) — dropped. Client
+     never mentioned testimonials for the redesign, not part of the
+     approved design.
    - ACF is only used for global theme options (`analytics_id`, `logo`,
      `theme settings`, `theme header`) — not for project/team content, so
      no ACF field-group definitions need to be migrated. The `analytics_id`
