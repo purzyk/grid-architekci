@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"start": "cross-env WP_BLOCKS_MANIFEST=true wp-scripts start",
-		"build": "cross-env WP_BLOCKS_MANIFEST=true wp-scripts build"
+		"start": "cross-env WP_BLOCKS_MANIFEST=true WP_EXPERIMENTAL_MODULES=true wp-scripts start",
+		"build": "cross-env WP_BLOCKS_MANIFEST=true WP_EXPERIMENTAL_MODULES=true wp-scripts build"
 	},
 	"devDependencies": {
 		"@wordpress/scripts": "^30.0.0",

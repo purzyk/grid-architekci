@@ -199,9 +199,11 @@ From `projekt/handoff/README.md`, unchanged:
    discovery + `blocks-manifest.php`): Hero, Stat Bar/Stat Item, Highlight
    Plate, Process Steps/Process Step (all static), Team Grid (dynamic —
    server-rendered from the `zespol` CPT via `render.php`, not hand-entered,
-   since real team data already exists). Still to build: project grid +
-   filter (dynamic, Interactivity API), awards table (dynamic), publications
-   grid (dynamic), manifesto text.
+   since real team data already exists), Project Grid (dynamic + the
+   Interactivity API — category filter and "show more"/"show fewer",
+   verified live: filtering, expand, and collapse all work correctly
+   end-to-end against the 48 real migrated projects). Still to build: awards
+   table (dynamic), publications grid (dynamic), manifesto text.
 
    Learned along the way, worth remembering:
    - `InnerBlocks` renders its own `block-editor-block-list__layout`
@@ -220,6 +222,21 @@ From `projekt/handoff/README.md`, unchanged:
      `WP_BLOCKS_MANIFEST=true` (wired via `cross-env` in `package.json`) to
      actually emit `blocks-manifest.php` — it's opt-in, not automatic even
      with multiple `block.json` files present.
+   - Same story for `viewScriptModule` (how a block ships an Interactivity
+     API store): needs `WP_EXPERIMENTAL_MODULES=true` or wp-scripts silently
+     skips building it — no error, the file just never appears in `build/`.
+     Both flags now set in `package.json`'s `build`/`start` scripts.
+   - An author stylesheet's `display` rule always beats the UA stylesheet's
+     default `[hidden] { display: none }`, regardless of selector
+     specificity, since normal-importance author rules beat normal-importance
+     UA rules outright in the cascade. `data-wp-bind--hidden` silently does
+     nothing unless the block's own CSS adds an explicit `&[hidden] {
+     display: none }` override.
+   - Found one real data bug via testing, not guessing: "Europan 7,
+     Kristianstad" (the flagship award project, referenced throughout the
+     mocks) shows year "203" instead of "2003" — a malformed `post_date` on
+     the *old* site, migrated faithfully. Worth flagging to the client;
+     not something to silently correct.
 4. Templates/patterns assembled from blocks, matching the five mock pages.
 5. Migration — DB dump → `grid-legacy` → transform script → `grid`.
 6. Content gaps filled (client deliverables above).
