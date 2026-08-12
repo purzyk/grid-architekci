@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "grid/team-grid",
+	"title": "Siatka zespołu",
+	"category": "grid-blocks",
+	"icon": "groups",
+	"description": "Zdjęcia, role i bio zespołu — pobierane z wpisów typu Zespół, nie wpisywane ręcznie.",
+	"supports": { "html": false },
+	"attributes": {
+		"label": { "type": "string", "default": "Zespół" },
+		"note": { "type": "string", "default": "Pracownia we Wrocławiu" }
+	},
+	"textdomain": "grid",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

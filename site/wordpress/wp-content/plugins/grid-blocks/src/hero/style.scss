@@ -1,0 +1,32 @@
+.grid-hero {
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: end;
+	gap: 26px;
+	padding: 40px 0 26px;
+
+	@media (min-width: 900px) {
+		grid-template-columns: 1fr 420px;
+		gap: 64px;
+		padding: 56px 0 30px;
+	}
+
+	&__heading {
+		margin: 0;
+		font-weight: 800;
+		text-transform: uppercase;
+		line-height: 0.92;
+		letter-spacing: var(--wp--custom--letter-spacing--tightest);
+		font-size: var(--wp--preset--font-size--display);
+
+		@media (min-width: 900px) {
+			max-width: var(--wp--custom--max-width--measure);
+		}
+	}
+
+	&__intro {
+		margin: 0 0 18px;
+		font-size: var(--wp--preset--font-size--body);
+		color: var(--wp--preset--color--ink-70);
+	}
+}

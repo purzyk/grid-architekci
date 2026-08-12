@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "grid/hero",
+	"title": "Hero",
+	"category": "grid-blocks",
+	"icon": "cover-image",
+	"description": "Nagłówek strony głównej — duży tytuł po lewej, wstęp i pasek statystyk po prawej. Jedna kolumna poniżej 900px.",
+	"supports": { "html": false },
+	"attributes": {
+		"heading": { "type": "string", "source": "html", "selector": ".grid-hero__heading", "default": "Dobra przestrzeń, niezależnie od skali" },
+		"intro": { "type": "string", "source": "html", "selector": ".grid-hero__intro", "default": "" }
+	},
+	"textdomain": "grid",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

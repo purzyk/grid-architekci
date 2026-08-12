@@ -195,6 +195,31 @@ From `projekt/handoff/README.md`, unchanged:
    ported.
 2. CPTs + ACF fields registered in `grid`.
 3. Block library — static blocks first, then dynamic (CPT-backed) blocks.
+   ✅ 7 blocks built in `grid-blocks` (`@wordpress/scripts`, automatic block
+   discovery + `blocks-manifest.php`): Hero, Stat Bar/Stat Item, Highlight
+   Plate, Process Steps/Process Step (all static), Team Grid (dynamic —
+   server-rendered from the `zespol` CPT via `render.php`, not hand-entered,
+   since real team data already exists). Still to build: project grid +
+   filter (dynamic, Interactivity API), awards table (dynamic), publications
+   grid (dynamic), manifesto text.
+
+   Learned along the way, worth remembering:
+   - `InnerBlocks` renders its own `block-editor-block-list__layout`
+     wrapper between the parent and its children — a flex/grid rule on the
+     parent's own class has nothing to act on. Use `useInnerBlocksProps`
+     (apiVersion 3) with block.json `supports.layout` instead of hand-rolled
+     CSS on the block wrapper; only then do children become direct flex/grid
+     items.
+   - `theme.json`'s `dimensions.aspectRatios` does **not** generate a
+     reusable `--wp--preset--aspect-ratio--*` custom property — it only
+     feeds the core Image block's own aspect-ratio picker UI. Use a literal
+     `aspect-ratio` value in block CSS instead. (The `settings.custom` key
+     is different and does generate real `--wp--custom--*` vars — that part
+     works as expected.)
+   - `@wordpress/scripts`'s automatic block discovery needs
+     `WP_BLOCKS_MANIFEST=true` (wired via `cross-env` in `package.json`) to
+     actually emit `blocks-manifest.php` — it's opt-in, not automatic even
+     with multiple `block.json` files present.
 4. Templates/patterns assembled from blocks, matching the five mock pages.
 5. Migration — DB dump → `grid-legacy` → transform script → `grid`.
 6. Content gaps filled (client deliverables above).

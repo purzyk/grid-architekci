@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "grid/process-step",
+	"title": "Krok procesu",
+	"category": "grid-blocks",
+	"icon": "editor-ol",
+	"description": "Pojedynczy ponumerowany krok w bloku Kroki procesu.",
+	"parent": [ "grid/process-steps" ],
+	"supports": { "html": false, "reusable": false },
+	"attributes": {
+		"n": { "type": "string", "source": "html", "selector": ".grid-process-step__n", "default": "01" },
+		"title": { "type": "string", "source": "html", "selector": ".grid-process-step__title", "default": "Nazwa kroku" },
+		"description": { "type": "string", "source": "html", "selector": ".grid-process-step__description", "default": "" }
+	},
+	"textdomain": "grid",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

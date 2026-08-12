@@ -1,6 +1,35 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
+	'hero' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/hero',
+		'title' => 'Hero',
+		'category' => 'grid-blocks',
+		'icon' => 'cover-image',
+		'description' => 'Nagłówek strony głównej — duży tytuł po lewej, wstęp i pasek statystyk po prawej. Jedna kolumna poniżej 900px.',
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'heading' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-hero__heading',
+				'default' => 'Dobra przestrzeń, niezależnie od skali'
+			),
+			'intro' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-hero__intro',
+				'default' => ''
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css'
+	),
 	'highlight-plate' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
@@ -44,6 +73,80 @@ return array(
 			'variant' => array(
 				'type' => 'string',
 				'default' => 'accent'
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css'
+	),
+	'process-step' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/process-step',
+		'title' => 'Krok procesu',
+		'category' => 'grid-blocks',
+		'icon' => 'editor-ol',
+		'description' => 'Pojedynczy ponumerowany krok w bloku Kroki procesu.',
+		'parent' => array(
+			'grid/process-steps'
+		),
+		'supports' => array(
+			'html' => false,
+			'reusable' => false
+		),
+		'attributes' => array(
+			'n' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-process-step__n',
+				'default' => '01'
+			),
+			'title' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-process-step__title',
+				'default' => 'Nazwa kroku'
+			),
+			'description' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-process-step__description',
+				'default' => ''
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css'
+	),
+	'process-steps' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/process-steps',
+		'title' => 'Kroki procesu',
+		'category' => 'grid-blocks',
+		'icon' => 'list-view',
+		'description' => 'Ponumerowane kroki procesu, np. „Jak pracujemy”. 1 kolumna na telefonie, 5 na szerokim ekranie.',
+		'supports' => array(
+			'html' => false,
+			'layout' => array(
+				'default' => array(
+					'type' => 'flex',
+					'flexWrap' => 'wrap'
+				)
+			)
+		),
+		'attributes' => array(
+			'label' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-process-steps__label',
+				'default' => 'Jak pracujemy'
+			),
+			'note' => array(
+				'type' => 'string',
+				'source' => 'html',
+				'selector' => '.grid-process-steps__note',
+				'default' => ''
 			)
 		),
 		'textdomain' => 'grid',
@@ -103,5 +206,31 @@ return array(
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
 		'style' => 'file:./style-index.css'
+	),
+	'team-grid' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/team-grid',
+		'title' => 'Siatka zespołu',
+		'category' => 'grid-blocks',
+		'icon' => 'groups',
+		'description' => 'Zdjęcia, role i bio zespołu — pobierane z wpisów typu Zespół, nie wpisywane ręcznie.',
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'label' => array(
+				'type' => 'string',
+				'default' => 'Zespół'
+			),
+			'note' => array(
+				'type' => 'string',
+				'default' => 'Pracownia we Wrocławiu'
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
 	)
 );
