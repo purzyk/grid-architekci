@@ -132,6 +132,7 @@ function grid_core_register_acf_fields() {
 			array( 'key' => 'field_nagroda_konkurs', 'label' => 'Konkurs', 'name' => 'konkurs', 'type' => 'text' ),
 			array( 'key' => 'field_nagroda_wynik', 'label' => 'Wynik', 'name' => 'wynik', 'type' => 'text', 'instructions' => 'np. I nagroda' ),
 			array( 'key' => 'field_nagroda_wyrozniona', 'label' => 'Wyróżniona', 'name' => 'wyrozniona', 'type' => 'true_false', 'instructions' => 'Steruje kolorem i trafia na trzy płyty u góry strony Osiągnięcia' ),
+			array( 'key' => 'field_nagroda_opis', 'label' => 'Krótki opis', 'name' => 'opis', 'type' => 'textarea', 'rows' => 2, 'instructions' => 'Tylko dla wyróżnionych — tekst na płycie na stronie Osiągnięcia.' ),
 			array(
 				'key'   => 'field_nagroda_projekt',
 				'label' => 'Powiązany projekt',

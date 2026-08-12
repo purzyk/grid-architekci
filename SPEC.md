@@ -202,8 +202,21 @@ From `projekt/handoff/README.md`, unchanged:
    since real team data already exists), Project Grid (dynamic + the
    Interactivity API — category filter and "show more"/"show fewer",
    verified live: filtering, expand, and collapse all work correctly
-   end-to-end against the 48 real migrated projects). Still to build: awards
-   table (dynamic), publications grid (dynamic), manifesto text.
+   end-to-end against the 48 real migrated projects), Awards Table
+   (dynamic, `nagroda` CPT, links each row to its related project),
+   Featured Awards (dynamic — the 3 plates on the Osiągnięcia page pull
+   from `nagroda` entries flagged `wyrozniona`, reusing Highlight Plate's
+   visual style; the mock's own template already treats these as a data
+   loop, not hand-placed content, so this matches the mock's intent rather
+   than adding one). Still to build: publications grid (dynamic), manifesto
+   text.
+
+   No real `nagroda` content exists yet (confirmed earlier: genuinely new,
+   not migrated) — both award blocks were verified against 5 disposable
+   sample entries (linked to real migrated projects by title match), then
+   deleted once verified. Added an `opis` (short description) field to the
+   `nagroda` ACF group — needed for the Featured Awards plate text, wasn't
+   in the original field list.
 
    Learned along the way, worth remembering:
    - `InnerBlocks` renders its own `block-editor-block-list__layout`

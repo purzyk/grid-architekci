@@ -1,6 +1,44 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
+	'awards-table' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/awards-table',
+		'title' => 'Tabela nagród',
+		'category' => 'grid-blocks',
+		'icon' => 'list-view',
+		'description' => 'Pełna lista nagród — dane pobierane z wpisów typu Nagroda, wiersze linkują do powiązanego projektu.',
+		'supports' => array(
+			'html' => false
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
+	'featured-awards' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/featured-awards',
+		'title' => 'Wyróżnione nagrody',
+		'category' => 'grid-blocks',
+		'icon' => 'awards',
+		'description' => 'Trzy płyty wyróżnionych nagród u góry strony Osiągnięcia — pobierane z wpisów typu Nagroda oznaczonych „Wyróżniona”, nie wpisywane ręcznie.',
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'limit' => array(
+				'type' => 'number',
+				'default' => 3
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
 	'hero' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,

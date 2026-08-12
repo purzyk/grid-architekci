@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "grid/awards-table",
+  "title": "Tabela nagród",
+  "category": "grid-blocks",
+  "icon": "list-view",
+  "description": "Pełna lista nagród — dane pobierane z wpisów typu Nagroda, wiersze linkują do powiązanego projektu.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "grid",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}
