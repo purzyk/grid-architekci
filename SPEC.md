@@ -41,8 +41,10 @@ Current live site (being replaced): https://grid.net.pl/
     result PL/EN, featured (bool — drives the 3 highlight plates), link to
     project.
   - `publikacja` (publication) — title, type PL/EN, year, cover, link.
-- **Bilingual** — Polylang or WPML, separate `/pl/` `/en/` URLs (not a
-  client-state toggle) for SEO and linkability.
+- **Bilingual** — WPML (license already owned; the old site's DB dump
+  already carries `icl_*` tables, so PL/EN content is already structured
+  through it — build on that rather than switching to Polylang). Separate
+  `/pl/` `/en/` URLs (not a client-state toggle) for SEO and linkability.
 
 ## Dev environment
 
@@ -60,13 +62,59 @@ Two separate DDEV projects — **never merge them**:
 
 ## Migration approach
 
-1. Get a full DB dump of grid.net.pl (hosting/DB access confirmed
-   available).
-2. Import into `grid-legacy`, inspect via WP-CLI.
-3. Write a transform script: old posts/attachments → new `projekt` /
-   `nagroda` / `publikacja` CPTs + ACF fields.
-4. Generate an old→new URL diff for the 301 redirect map (old site indexed
-   since 2017 — this matters for SEO at launch).
+1. ✅ Full DB dump of grid.net.pl imported into `grid-legacy`
+   (`mysql20_mydevil_net.sql`, table prefix `wpsite_`, uploads at
+   `wordpress/media/` via the site's `UPLOADS` override — not the default
+   `wp-content/uploads`).
+2. ✅ Inspected via WP-CLI/SQL. Findings:
+   - Real `project` custom post type, 55 entries (48 published, 7 draft).
+     Not registered in this bare WP-CLI environment (the theme/plugin code
+     that registers it isn't installed here), but the raw data is intact
+     and queryable directly.
+   - Category **and** status are flattened into one taxonomy,
+     `project_category`: `do mieszkania` (29), `komercyjne` (27),
+     `zrealizowane` (32), `konkursy` (8). Maps to the new split as
+     `do mieszkania`→category, `komercyjne`→category,
+     `zrealizowane`/`konkursy`→status. No old-side equivalent for the new
+     `w realizacji` / `koncepcja` statuses — those are new.
+   - `post_content` and `post_excerpt` are empty on every project checked —
+     the old site has no written descriptions at all. This confirms
+     (doesn't newly discover) the README's outstanding-content list below:
+     lead text, description paragraphs, and the whole metrics block are
+     genuinely new content, not migratable.
+   - 926 attachments, clustered by `post_parent` into per-project galleries
+     (8–22 images each) — maps to the new gallery field.
+   - `_yoast_wpseo_metadesc` postmeta gives a usable seed for SEO
+     descriptions. `post_name` (slug) is what the redirect map is built
+     from.
+   - Active plugins of note: WPML (`sitepress-multilingual-cms` — license
+     owned, carry forward), Contact Form 7 (current live form handler, not
+     Gravity Forms — `gf_*` tables in the dump are stale leftovers from a
+     since-removed plugin), Yoast SEO, `cookie-law-info` (current cookie
+     banner), WPBakery/`js_composer` (built the old "Projekty" page as
+     shortcode markup — irrelevant to the rebuild, just explains why the
+     page itself has no structured content).
+3. Write a transform script: `project` posts + `project_category` terms +
+   attachment galleries → new `projekt` CPT + ACF fields, per the mapping
+   above.
+   - **No `award` or `publication` post type exists anywhere in the old
+     DB** — confirmed by checking every distinct `post_type` present.
+     `nagroda`/`publikacja` are genuinely new content, not migratable.
+   - **`team` post type exists, 4 published entries** (Agnieszka Zając,
+     Artur Toboła, Paulina Gogacz-Formella, Martyna Jóska) with real
+     structured data in a `team_options` postmeta field: name, job title,
+     contribution/role, LinkedIn, plus a featured photo. No bio paragraph
+     — same gap pattern as projects. Migrates cleanly into the team grid
+     block.
+   - `testimonial` post type also exists (3 entries) — not part of the
+     current design's data model; check content before deciding whether to
+     carry it forward or drop it.
+   - ACF is only used for global theme options (`analytics_id`, `logo`,
+     `theme settings`, `theme header`) — not for project/team content, so
+     no ACF field-group definitions need to be migrated. The `analytics_id`
+     value is worth grabbing for GA continuity on the new site.
+4. Generate an old→new URL diff for the 301 redirect map, using `post_name`
+   slugs (old site indexed since 2017 — this matters for SEO at launch).
 5. Delete `grid-legacy` once extraction is complete.
 
 ## Outstanding — blocked on the client
@@ -81,10 +129,15 @@ From `projekt/handoff/README.md`, unchanged:
 - Project metrics: structure, services, contractor, photo credits
 - Approved FAQ copy (mocks have draft text only — commercial commitments)
 - Native-speaker QA on the English translations
+- Asset prep (batch resize/export of hi-res photos into the sizes each
+  component needs) — ACDSee Pro license already available for this
 
 ## Open technical decisions
 
-- Where contact-form submissions go, and what confirmation the sender gets
+- Where contact-form submissions go, and what confirmation the sender gets.
+  The old site's DB shows Gravity Forms + EasyWP SMTP already in use — worth
+  checking `gf_form_meta`/`gf_notifications` in `grid-legacy` for the
+  current routing before deciding whether to carry that forward.
 - Cookie/privacy policy (mocks only have a GDPR clause under the form)
 - Touch fallback for the hover mask (`group-hover` doesn't exist on touch —
   README flags `active:opacity-90` or mask-on-`:active` as options, undecided)
