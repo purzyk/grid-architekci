@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-f35473aa-a622-4d05-ac8f-82ec32d0d028/styles.css">
+<script src="_ds/modernist-f35473aa-a622-4d05-ac8f-82ec32d0d028/_ds_bundle.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      screens: { sm: '620px', md: '900px', lg: '1440px' },
+      extend: {
+        colors: {
+          accent: { DEFAULT: 'rgb(var(--c-accent) / <alpha-value>)', 600: 'var(--c-accent-600)', 700: 'var(--c-accent-700)' },
+          ink: 'rgb(var(--c-ink) / <alpha-value>)',
+          paper: 'rgb(var(--c-paper) / <alpha-value>)',
+          desk: 'var(--c-desk)',
+          surface: 'var(--c-surface)',
+          divider: 'var(--c-divider)',
+          hairline: 'var(--c-hairline)'
+        },
+        fontFamily: { sans: ['Archivo', 'system-ui', 'sans-serif'] },
+        maxWidth: { page: '1360px', measure: '760px' },
+        transitionTimingFunction: { reveal: 'cubic-bezier(.2,.7,.2,1)' }
+      }
+    }
+  };
+</script>
+<script src="theme-toggle.js"></script>
+<style>
+  /* ---- Theme tokens. Dark mode flips these; nothing else changes. ---- */
+  :root {
+    --c-ink: 32 30 29;
+    --c-paper: 243 242 242;
+    --c-accent: 255 102 51;
+    --c-accent-600: #e85320;
+    --c-accent-700: #c9420f;
+    --c-desk: #dedbd9;
+    --c-surface: #eae9e9;
+    --c-divider: rgba(32,30,29,0.40);
+    --c-hairline: #d7d3d3;
+    --color-accent: #ff6633;
+    --color-accent-600: #e85320;
+    --color-accent-700: #c9420f;
+  }
+  .dark {
+    --c-ink: 238 236 233;
+    --c-paper: 26 25 24;
+    --c-accent: 255 118 74;
+    --c-accent-600: #ff8f5c;
+    --c-accent-700: #ffa77b;
+    --c-desk: #100f0f;
+    --c-surface: #2a2826;
+    --c-divider: rgba(238,236,233,0.32);
+    --c-hairline: #38352f;
+    --color-accent: #ff764a;
+    --color-accent-600: #ff8f5c;
+    --color-accent-700: #ffa77b;
+  }
+
+  body { background: var(--c-desk); color: rgb(var(--c-ink)); font-family: Archivo, system-ui, sans-serif; }
+  a { color: rgb(var(--c-accent)); text-decoration: none; }
+  a:hover { color: var(--c-accent-700); }
+
+  /* Design-system controls follow the theme */
+  .dark .input { background: var(--c-surface); color: rgb(var(--c-ink)); border-color: var(--c-divider); }
+  .dark .input::placeholder { color: rgb(var(--c-ink) / 0.45); }
+  .dark .btn-primary { color: #191817; }
+  /* Photographs carry less glare on a dark ground */
+  .dark [class*="saturate-"] { filter: brightness(0.88) saturate(0.6); }
+  /* The logo is dark ink on transparent — invert it, keeping the orange bar orange */
+  .dark img[alt="GRID Architekci"] { filter: invert(1) hue-rotate(180deg); }
+  .dark .icon-sun { display: none; }
+  html:not(.dark) .icon-moon { display: none; }
+  /* Hamburger: swap the icon when the menu is open (descendants can't use peer-*) */
+  #navtoggle:checked ~ div .icon-open { display: none; }
+  #navtoggle:checked ~ div .icon-close { display: block; }
+  /* Wide tiles collapse to a single column on phones */
+  @media (max-width: 619px) { .pgrid > * { grid-column: auto !important; } }
+</style>
+</helmet>
+
+<div class="mx-auto w-full max-w-page bg-paper px-[18px] pb-11 pt-5 sm:px-7 sm:pb-14 sm:pt-6 md:px-10 md:pb-[70px] md:pt-[30px]">
+
+  <header class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b-2 border-divider pb-3.5 md:flex-nowrap md:items-end">
+    <input id="navtoggle" type="checkbox" class="peer hidden">
+    <a href="index.dc.html" class="block md:order-1">
+      <img src="uploads/grid_loga6.png" alt="GRID Architekci" class="block h-7 w-auto md:h-8">
+    </a>
+    <div class="flex items-center gap-4 md:order-3">
+      <div class="flex gap-1.5 border-b border-transparent pb-0.5 text-[11px] tracking-[0.1em]">
+        <span onClick="{{ toPl }}" class="cursor-pointer" style="color: {{ plCol }}; font-weight: {{ plW }};">PL</span>
+        <span class="text-ink/30">/</span>
+        <span onClick="{{ toEn }}" class="cursor-pointer" style="color: {{ enCol }}; font-weight: {{ enW }};">EN</span>
+      </div>
+      <button type="button" data-theme-toggle="true" aria-label="Tryb ciemny" class="-my-1 cursor-pointer p-1 text-ink transition-opacity hover:opacity-60">
+        <svg class="icon-sun h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="icon-moon h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4z"/></svg>
+      </button>
+      <label for="navtoggle" class="-mr-1 cursor-pointer p-1 text-ink md:hidden" aria-label="Menu">
+        <svg class="icon-open block h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg class="icon-close hidden h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </label>
+    </div>
+    <nav class="hidden w-full flex-col items-start gap-3 pb-1 pt-2 peer-checked:flex md:order-2 md:ml-auto md:flex md:w-auto md:flex-row md:flex-wrap md:items-center md:gap-7 md:pb-0 md:pt-0">
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="4">
+        <a href="{{ item.href }}" class="border-b pb-0.5 text-[11px] uppercase tracking-[0.14em]" style="color: {{ item.col }}; border-color: {{ item.bd }};">{{ item.label }}</a>
+      </sc-for>
+    </nav>
+  </header>
+
+  <div class="grid grid-cols-1 items-end gap-7 pb-6 pt-9 sm:pt-10 md:gap-10 md:pb-[30px] md:pt-14 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-16">
+    <h1 class="m-0 hyphens-auto break-words text-[clamp(30px,6.4vw,84px)] font-extrabold uppercase leading-[0.94] tracking-[-0.04em] lg:max-w-measure">{{ heroTitle }}</h1>
+    <div>
+      <p class="m-0 mb-[18px] text-[15px] leading-[1.6] text-ink/75">{{ heroBlurb }}</p>
+      <div class="flex gap-6 border-t-2 border-divider pt-3.5 sm:gap-9 md:gap-10">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="3">
+          <div>
+            <div class="text-[26px] font-extrabold leading-none tracking-[-0.03em] text-accent sm:text-[30px]">{{ s.v }}</div>
+            <div class="mt-[5px] text-[10px] uppercase tracking-[0.14em] text-ink/50">{{ s.k }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-[26px] flex flex-col items-start gap-3 border-t-2 border-divider pt-3.5 sm:flex-row sm:items-baseline sm:justify-between">
+    <div class="flex flex-wrap gap-x-[22px] gap-y-2">
+      <sc-for list="{{ filtersG }}" as="f" hint-placeholder-count="4">
+        <span onClick="{{ f.onClick }}" class="cursor-pointer pb-[3px] text-[11px] font-extrabold uppercase tracking-[0.14em]" style="color: {{ f.col }}; border-bottom: {{ f.bd }};">{{ f.label }}</span>
+      </sc-for>
+    </div>
+    <span class="text-[11px] tracking-[0.12em] text-ink/45">{{ countG }}</span>
+  </div>
+
+  <div class="pgrid grid grid-flow-dense grid-cols-1 items-start gap-[30px] sm:grid-cols-2 sm:gap-x-5 sm:gap-y-8 md:grid-cols-3 md:gap-x-8 md:gap-y-10">
+    <sc-for list="{{ listG }}" as="item" hint-placeholder-count="9">
+      <a href="grid-projekt.dc.html" class="group block text-ink" style="grid-column: {{ item.span }};">
+        <div class="relative aspect-[500/325] w-full overflow-hidden bg-surface">
+          <div class="absolute inset-0 bg-cover bg-center saturate-[.6] transition-[transform,filter] duration-700 ease-reveal group-hover:scale-[1.03] group-hover:saturate-100" style="background-image: {{ item.bgImg }};"></div>
+          <div class="absolute inset-0 bg-accent opacity-0 mix-blend-multiply transition-opacity duration-[450ms] group-hover:opacity-[0.28] group-active:opacity-[0.28]"></div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between gap-4 border-t-2 border-divider pt-2.5">
+          <span class="text-[15px] font-extrabold uppercase leading-[1.1] tracking-[-0.015em] transition-colors group-hover:text-accent sm:text-[17px]">{{ item.title }}</span>
+          <span class="whitespace-nowrap text-[10px] uppercase tracking-[0.14em] text-ink/50">{{ item.year }}</span>
+        </div>
+        <div class="mt-1 flex flex-wrap items-baseline gap-x-2 text-[11px] uppercase tracking-[0.1em] text-ink/45">
+          <span class="shrink-0 whitespace-nowrap">{{ item.catLine }}</span>
+          <span class="shrink-0 whitespace-nowrap before:mr-2 before:content-['·']">{{ item.statusLine }}</span>
+          <sc-if value="{{ item.hasAward }}" hint-placeholder-val="{{ true }}">
+            <span class="shrink-0 whitespace-nowrap before:mr-2 before:content-['·']">{{ item.awardLine }}</span>
+          </sc-if>
+        </div>
+      </a>
+    </sc-for>
+
+    <div onClick="{{ toggleMore }}" class="flex w-full cursor-pointer items-end pt-1 sm:aspect-[500/325] sm:pt-0">
+      <span class="border-b-2 border-accent pb-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-accent sm:translate-y-3.5">{{ moreLabel }}</span>
+    </div>
+  </div>
+
+  <section class="mt-14 md:mt-16">
+    <h2 class="mb-6 text-[22px] font-extrabold uppercase tracking-[-0.03em] md:text-[26px]">{{ currentLabel }}</h2>
+    <div class="grid grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
+      <sc-for list="{{ current }}" as="c" hint-placeholder-count="3">
+        <a href="grid-projekt.dc.html" class="group block text-ink">
+          <div class="relative aspect-[3/2] w-full overflow-hidden bg-surface">
+            <div class="absolute inset-0 bg-cover bg-center saturate-[.6] transition-[transform,filter] duration-700 ease-reveal group-hover:scale-[1.03] group-hover:saturate-100" style="background-image: {{ c.bgImg }};"></div>
+            <div class="absolute inset-0 bg-accent opacity-0 mix-blend-multiply transition-opacity duration-[450ms] group-hover:opacity-[0.28] group-active:opacity-[0.28]"></div>
+          </div>
+          <div class="mt-3 flex items-baseline justify-between gap-4 border-t-2 border-divider pt-2.5">
+            <span class="text-[15px] font-extrabold uppercase leading-[1.1] tracking-[-0.015em] transition-colors group-hover:text-accent sm:text-[16px]">{{ c.title }}</span>
+            <span class="whitespace-nowrap text-[10px] uppercase tracking-[0.14em] text-ink/50">{{ c.statusLabel }}</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer class="mt-14 grid grid-cols-1 items-end gap-7 border-t-2 border-divider pt-6 md:mt-16 md:grid-cols-[1fr_auto] md:gap-16">
+    <div>
+      <div class="mb-2.5 flex flex-wrap gap-x-6 gap-y-3">
+        <sc-for list="{{ footerLinks }}" as="l" hint-placeholder-count="3">
+          <a href="#" class="border-b-2 border-accent pb-0.5 text-[18px] font-extrabold uppercase tracking-[-0.02em] md:text-[22px]">{{ l }}</a>
+        </sc-for>
+      </div>
+      <p class="m-0 text-[12px] text-ink/55">{{ socialNote }}</p>
+    </div>
+    <address class="text-left text-[13px] not-italic leading-[1.5] text-ink/70 md:text-right">
+      ul. Jarocińska 59, 51-011 Wrocław<br>+48 71 365 69 98<br>info@grid.net.pl
+    </address>
+  </footer>
+</div>
+
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;pl&quot;,&quot;en&quot;],&quot;default&quot;:&quot;pl&quot;,&quot;tsType&quot;:&quot;'pl' | 'en'&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#ff6633&quot;,&quot;rgb(var(--c-ink))&quot;,&quot;#ec3013&quot;,&quot;#c9420f&quot;],&quot;default&quot;:&quot;#ff6633&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Look&quot;},&quot;revealMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Look&quot;}}">
+const M = 'https://grid.net.pl/media/';
+
+const CAT = {
+  housing: { pl: 'Do mieszkania', en: 'Housing' },
+  public: { pl: 'Publiczne', en: 'Public' },
+  industrial: { pl: 'Przemysłowe', en: 'Industrial' }
+};
+const ST = {
+  built: { pl: 'Zrealizowane', en: 'Built' },
+  progress: { pl: 'W realizacji', en: 'In progress' },
+  comp: { pl: 'Konkurs', en: 'Competition' },
+  concept: { pl: 'Koncepcja', en: 'Concept' }
+};
+
+const P = [
+  { id: 'zapolice', n: '01', pl: 'Dom Kultury, Zapolice', en: 'Community Centre, Zapolice', year: '2022', cat: 'public', st: 'built', award: '', img: M + '2022/07/dom-kultury_1.jpg',
+    bpl: 'Trzy bryły spięte nieregularnym hallem; sala na 250 osób.', ben: 'Three volumes joined by an irregular hall; a 250-seat auditorium.' },
+  { id: 'krzemien', n: '02', pl: 'Dom Kultury Krzemień, Szczecin', en: 'Krzemień Cultural Centre, Szczecin', year: '2020', cat: 'public', st: 'built', award: 'I', img: M + '2020/09/d07_5227_500x325.jpg',
+    bpl: 'Pierwsza nagroda w konkursie, zrealizowana bez kompromisów.', ben: 'First prize in competition, built without compromise.' },
+  { id: 'szwalnia', n: '03', pl: 'Stara Szwalnia, Leszno', en: 'The Old Sewing Room, Leszno', year: '2023', cat: 'housing', st: 'built', award: 'ZZ', img: M + '2023/10/d07_8155-500x325-2.jpg',
+    bpl: 'Adaptacja fabryki na mieszkania. Laureat Zabytku Zadbanego 2023.', ben: 'A factory turned to housing. Zabytek Zadbany laureate, 2023.' },
+  { id: 'tornos', n: '04', pl: 'Hala montażowa TORNOS', en: 'TORNOS Assembly Hall', year: '2023', cat: 'industrial', st: 'built', award: '', img: M + '2023/10/d07_0975-fullres-kopia500x325-1.jpg',
+    bpl: 'Precyzyjna obudowa dla precyzyjnej produkcji.', ben: 'A precise envelope for precision manufacturing.' },
+  { id: 'deptak', n: '05', pl: 'Deptak, Leszno', en: 'Pedestrian Street, Leszno', year: '2023', cat: 'public', st: 'progress', award: '', img: M + '2023/08/1-akso-kopia_500.jpg',
+    bpl: 'Śródmiejska ulica oddana pieszym.', ben: 'A city-centre street handed back to people on foot.' },
+  { id: 'brzozy', n: '06', pl: 'Dom w Brzozach', en: 'House among Birches', year: '2024', cat: 'housing', st: 'built', award: '', img: M + '2024/01/d07_7926-500x325-1.jpg',
+    bpl: 'Dom, który ustępuje drzewom.', ben: 'A house that gives way to the trees.' },
+  { id: 'narew', n: '07', pl: 'Park nad Narwią', en: 'Park on the Narew', year: '2023', cat: 'public', st: 'comp', award: '', img: M + '2023/09/lawka_jesien-500.jpg',
+    bpl: 'Krajobraz nadrzeczny jako przestrzeń publiczna.', ben: 'A river landscape read as public space.' },
+  { id: 'jezioro', n: '08', pl: 'Dom nad jeziorem', en: 'House by the Lake', year: '2021', cat: 'housing', st: 'built', award: '', img: M + '2021/07/jezioro_1str500x325.jpg',
+    bpl: 'Jedna kalenica, jeden widok.', ben: 'One ridge line, one view.' },
+  { id: 'rolkowisko', n: '09', pl: 'Rolkowisko, Wrocław', en: 'Skate Park, Wrocław', year: '2021', cat: 'public', st: 'built', award: '', img: M + '2021/11/04_500-1.jpg',
+    bpl: 'Betonowy tor jako miejski mebel.', ben: 'A concrete track as street furniture.' },
+  { id: 'gawrowka', n: '10', pl: 'Osada Gawrówka, Stronie Śląskie', en: 'Gawrówka Settlement, Stronie Śląskie', year: '2020', cat: 'housing', st: 'concept', award: '', img: M + '2020/12/zima_ps-500x325-1.jpg',
+    bpl: 'Górska osada zamiast pojedynczych domów.', ben: 'A mountain settlement instead of scattered houses.' },
+  { id: 'wakacyjne', n: '11', pl: 'Domy wakacyjne w górach', en: 'Holiday Houses in the Mountains', year: '2023', cat: 'housing', st: 'concept', award: '', img: M + '2023/09/widok-3-500x325-1.jpg',
+    bpl: 'Powtarzalny typ, każdorazowo inny stok.', ben: 'One repeatable type, a different slope each time.' },
+  { id: 'hantech', n: '12', pl: 'Hantech, Kąty Wrocławskie', en: 'Hantech, Kąty Wrocławskie', year: '2019', cat: 'industrial', st: 'concept', award: '', img: M + '2019/12/hantech_wizka_2_500.jpg',
+    bpl: 'Biuro i hala pod jednym gestem.', ben: 'Office and hall under a single gesture.' },
+  { id: 'piekary', n: '13', pl: 'Dworzec autobusowy, Piekary Śląskie', en: 'Bus Station, Piekary Śląskie', year: '2014', cat: 'public', st: 'built', award: 'I', img: M + '2017/11/piekary-1.jpg',
+    bpl: 'I nagroda; Najlepsza Przestrzeń Publiczna Śląska 2017.', ben: 'First prize; Best Public Space of Silesia, 2017.' },
+  { id: 'biblioteka', n: '14', pl: 'Biblioteka, Szczecin', en: 'Library, Szczecin', year: '2018', cat: 'public', st: 'comp', award: '', img: M + '2018/08/biblioteka-szczecin-1_500.jpg',
+    bpl: 'Czytelnia jako plac miejski pod dachem.', ben: 'A reading room as a covered city square.' },
+  { id: 'kwartal', n: '15', pl: 'Kwartał 39, Szczecin', en: 'Block 39, Szczecin', year: '2021', cat: 'housing', st: 'comp', award: '', img: M + '2021/05/2b_ps-500x325-1.jpg',
+    bpl: 'Domknięcie kwartału śródmiejskiego.', ben: 'Completing a downtown perimeter block.' },
+  { id: 'europan', n: '16', pl: 'Europan 7, Kristianstad', en: 'Europan 7, Kristianstad', year: '2003', cat: 'housing', st: 'comp', award: 'I', img: M + '2017/11/europan_startowy-1.jpg',
+    bpl: 'Pierwszy polski zespół z I nagrodą w Europan.', ben: 'The first Polish team to take first prize at Europan.' },
+  { id: 'ensinger', n: '17', pl: 'Ensinger Polska, Leszno', en: 'Ensinger Polska, Leszno', year: '2017', cat: 'industrial', st: 'built', award: '', img: M + '2017/11/ensinger-7.jpg',
+    bpl: 'Zakład produkcyjny o czytelnej strukturze.', ben: 'A production plant with a legible structure.' },
+  { id: 'osobowice', n: '18', pl: 'Dom z pracownią, Osobowice', en: 'House with a Studio, Osobowice', year: '2013', cat: 'housing', st: 'built', award: 'PW', img: M + '2017/11/jarocinska-1.jpg',
+    bpl: 'I nagroda „Piękny Wrocław” — nasza własna siedziba.', ben: 'First prize, Piękny Wrocław — and our own studio.' }
+];
+
+const AWARD = { I: { pl: 'I nagroda', en: '1st prize' }, ZZ: { pl: 'Zabytek Zadbany', en: 'Heritage award' }, PW: { pl: 'Piękny Wrocław', en: 'Piękny Wrocław' } };
+
+const NAV = [
+  { key: 'projects', href: 'index.dc.html', pl: 'Projekty', en: 'Projects' },
+  { key: 'studio', href: 'grid-o-nas.dc.html', pl: 'O nas', en: 'Studio' },
+  { key: 'awards', href: 'grid-osiagniecia.dc.html', pl: 'Osiągnięcia', en: 'Achievements' },
+  { key: 'contact', href: 'grid-kontakt.dc.html', pl: 'Kontakt', en: 'Contact' }
+];
+
+const TEAM = [
+  { img: '2017/11/20171114_122935-4.jpg', name: 'Artur Toboła', pl: 'architekt IARP, prezes zarządu', en: 'architect IARP, managing director',
+    bpl: 'Architekt z wieloletnim doświadczeniem w projektowaniu i prowadzeniu procesów inwestycyjnych. Nadzoruje realizację projektów, łącząc wiedzę techniczną z praktycznym podejściem do potrzeb inwestorów. Sędzia konkursowy SARP.',
+    ben: 'An architect with many years of experience in design and in running investment processes. He supervises delivery, combining technical knowledge with a practical reading of what clients need. A SARP competition judge.' },
+  { img: '2017/11/20171114_123251-5.jpg', name: 'Agnieszka Zając', pl: 'architekt IARP, partner', en: 'architect IARP, partner',
+    bpl: 'Architektka z wieloletnim doświadczeniem zdobytym w międzynarodowych biurach projektowych oraz w polskich pracowniach specjalizujących się w architekturze przemysłowej. Prowadzi inwestycje na wszystkich etapach procesu projektowego — od opracowania koncepcji po dokumentację wykonawczą, tworząc funkcjonalne i przemyślane rozwiązania architektoniczne.',
+    ben: 'An architect with long experience in international practices and in Polish offices specialising in industrial architecture. She runs projects through every design stage — from concept to technical documentation — making functional, carefully considered architecture.' },
+  { img: '2017/11/20171114_122617-3.jpg', name: 'Paulina Gogacz-Formella', pl: 'architekt IARP, BIM manager', en: 'architect IARP, BIM manager',
+    bpl: 'Architektka prowadząca samodzielną działalność projektową, współpracująca z pracownią przy realizacji projektów na wszystkich etapach procesu projektowego — od koncepcji po dokumentację wykonawczą.',
+    ben: 'An architect in independent practice who works with the studio across every design stage — from concept through to technical documentation.' }
+];
+
+const FORMER = [
+  'Justyna Szymczyk', 'Dominika Iskra-Sufin', 'Bartosz Bielecki*', 'Karolina Kołpaczyńska',
+  'Hanna Moskal', 'Katarzyna Karaś', 'Marta Flik', 'Katarzyna Zachwej', 'Valeryia Mazurkevich',
+  'Martyna Jóska', 'Damian Garbula', 'Wiktoria Mąkosa', 'Anna-Maria Declair', 'Paweł Bartela',
+  'Maja Iwan-Gieracha', 'Ewa Żukowska', 'Bartek Żukowski', 'Natalia Wadas', 'Szymon Stasiak'
+];
+
+const AWARDS = [
+  { year: '2023', pl: 'Piękny Wrocław, XXXII edycja', en: 'Piękny Wrocław, 32nd edition', ppl: 'Dom jednorodzinny', pen: 'Single-family house', rpl: 'I nagroda', ren: '1st prize', top: true },
+  { year: '2023', pl: 'Zabytek Zadbany — adaptacja obiektów zabytkowych', en: 'Zabytek Zadbany — adaptation of heritage buildings', ppl: 'Stara Szwalnia, Leszno', pen: 'The Old Sewing Room, Leszno', rpl: 'Laureat', ren: 'Laureate', top: true },
+  { year: '2021', pl: 'Polski Cement w architekturze', en: 'Polish Cement in Architecture', ppl: 'Dom Kultury Krzemień', pen: 'Krzemień Cultural Centre', rpl: 'Nominacja', ren: 'Nomination' },
+  { year: '2021', pl: 'IDOL Zachodniopomorskie', en: 'IDOL West Pomerania', ppl: 'Dom Kultury Krzemień', pen: 'Krzemień Cultural Centre', rpl: 'Laureat', ren: 'Laureate', top: true },
+  { year: '2020', pl: 'Konkurs SARP', en: 'SARP competition', ppl: 'Rynek w Janowie', pen: 'Market Square, Janów', rpl: 'Wyróżnienie', ren: 'Honourable mention' },
+  { year: '2019', pl: 'Piękny Wrocław, XXIX edycja', en: 'Piękny Wrocław, 29th edition', ppl: 'Dom jednorodzinny', pen: 'Single-family house', rpl: 'Wyróżnienie', ren: 'Honourable mention' },
+  { year: '2017', pl: 'Najlepsza Przestrzeń Publiczna Woj. Śląskiego', en: 'Best Public Space of Silesia', ppl: 'Dworzec autobusowy, Piekary Śląskie', pen: 'Bus station, Piekary Śląskie', rpl: 'Nagroda', ren: 'Award', top: true },
+  { year: '2017', pl: 'Centrum Aktywności Lokalnej, Szczecin', en: 'Local Activity Centre, Szczecin', ppl: 'Dom Kultury Krzemień', pen: 'Krzemień Cultural Centre', rpl: 'I nagroda', ren: '1st prize', top: true },
+  { year: '2016', pl: 'Karkonoskie Spotkania Architektów KASA', en: 'KASA Karkonosze Architects Meeting', ppl: 'Nagroda Mistera', pen: 'Mister Award', rpl: 'III miejsce', ren: '3rd place' },
+  { year: '2016', pl: 'Konkurs Fundacji Familijny', en: 'Familijny Foundation competition', ppl: 'Zespół wielofunkcyjny, Poznań', pen: 'Mixed-use complex, Poznań', rpl: 'Wyróżnienie', ren: 'Honourable mention' },
+  { year: '2016', pl: 'Konkurs UG Drezdenko', en: 'Drezdenko council competition', ppl: 'Przebudowa Placu Wileńskiego, Drezdenko', pen: 'Wileński Square, Drezdenko', rpl: 'Wyróżnienie', ren: 'Honourable mention' },
+  { year: '2014', pl: 'Konkurs UM Piekary', en: 'Piekary city competition', ppl: 'Dworzec autobusowy, Piekary Śląskie', pen: 'Bus station, Piekary Śląskie', rpl: 'I nagroda', ren: '1st prize', top: true },
+  { year: '2014', pl: 'Piękny Wrocław, XXIV edycja', en: 'Piękny Wrocław, 24th edition', ppl: 'Domy jednorodzinne', pen: 'Single-family houses', rpl: 'II nagroda', ren: '2nd prize' },
+  { year: '2013', pl: 'Piękny Wrocław, XXIII edycja', en: 'Piękny Wrocław, 23rd edition', ppl: 'Dom z pracownią, Osobowice', pen: 'House with a studio, Osobowice', rpl: 'I nagroda', ren: '1st prize', top: true },
+  { year: '2013', pl: 'Piękny Wrocław, XXIII edycja', en: 'Piękny Wrocław, 23rd edition', ppl: 'Rozbudowa bliźniaka, Wrocław', pen: 'Semi-detached extension, Wrocław', rpl: 'II nagroda', ren: '2nd prize' },
+  { year: '2012', pl: 'Profesjonaliści Forbesa', en: 'Forbes Professionals', ppl: 'Artur Toboła — zawód zaufania publicznego', pen: 'Artur Toboła — profession of public trust', rpl: 'Laureat', ren: 'Laureate' },
+  { year: '2010', pl: 'Konkurs SARP', en: 'SARP competition', ppl: 'Sala gimnastyczna przy Z.S. Sportowych, Szczecin', pen: 'Sports hall, Szczecin', rpl: 'III nagroda', ren: '3rd prize' },
+  { year: '2008', pl: 'Konkurs SARP', en: 'SARP competition', ppl: 'Przedszkole w Złotym Potoku', pen: 'Kindergarten, Złoty Potok', rpl: 'II nagroda', ren: '2nd prize' },
+  { year: '2008', pl: 'Konkurs UM Zawiercie', en: 'Zawiercie city competition', ppl: 'Rozbudowa osiedla TAZ', pen: 'TAZ estate extension', rpl: 'III nagroda', ren: '3rd prize' },
+  { year: '2008', pl: 'Konkurs SARP', en: 'SARP competition', ppl: 'Rynek w Olsztynie k. Częstochowy', pen: 'Market Square, Olsztyn', rpl: 'Wyróżnienie', ren: 'Honourable mention' },
+  { year: '2003', pl: 'Europan 7', en: 'Europan 7', ppl: 'Osiedle mieszkaniowe, Kristianstad, Szwecja', pen: 'Housing, Kristianstad, Sweden', rpl: 'I nagroda', ren: '1st prize', top: true }
+];
+
+const INK = 'rgb(var(--c-ink))';
+const MUTED = 'rgb(var(--c-ink) / 0.5)';
+const PAPER = 'rgb(var(--c-paper))';
+
+class Component extends DCLogic {
+  state = { lang: null, showAll: false, hov: {}, filter: { a: 'all', b: 'all', c: 'all', g: 'all', cur: 'all' } };
+
+  setHov(opt, id) { this.setState(s => ({ hov: Object.assign({}, s.hov, { [opt]: id }) })); }
+  setFilter(opt, f) { this.setState(s => ({ filter: Object.assign({}, s.filter, { [opt]: f }) })); }
+
+  renderVals() {
+    const lang = this.state.lang || this.props.lang || 'pl';
+    const motion = this.props.revealMotion !== false;
+    const accent = this.props.accentColor || '#ff6633';
+
+    const mk = (opt) => {
+      const f = this.state.filter[opt];
+      const items = P.filter(p => f === 'all' || p.cat === f);
+      const hov = motion ? this.state.hov[opt] : null;
+      const shown = hov || (items[0] && items[0].id);
+      return items.map((p, i) => {
+        const on = p.id === hov;
+        const wide = i % 7 === 0;
+        return {
+          id: p.id, n: p.n, year: p.year, img: p.img, bgImg: 'url("' + p.img + '")',
+          title: p[lang],
+          blurb: lang === 'pl' ? p.bpl : p.ben,
+          catLabel: CAT[p.cat][lang],
+          statusLabel: ST[p.st][lang],
+          awardLabel: p.award ? AWARD[p.award][lang] : '',
+          metaText: p.year + '   ' + CAT[p.cat][lang],
+          metaFull: p.year + '   ·   ' + CAT[p.cat][lang] + '   ·   ' + ST[p.st][lang],
+          col: on ? accent : INK,
+          numCol: on ? accent : MUTED,
+          metaCol: on ? INK : MUTED,
+          pad: on ? '20px' : '0px',
+          pv: p.id === shown ? 1 : 0,
+          pvOn: on ? 1 : 0,
+          h: on ? '150px' : '96px',
+          veil: on ? 'rgb(var(--c-ink) / 0.44)' : 'rgba(243,242,242,0)',
+          colB: on ? PAPER : INK,
+          numColB: on ? 'rgba(243,242,242,0.75)' : MUTED,
+          metaColB: on ? 'rgba(243,242,242,0.85)' : MUTED,
+          rowBg: on ? 'rgba(255,102,51,0.08)' : 'transparent',
+          span: wide ? 'span 2' : 'span 1',
+          zoom: on ? 'scale(1.03)' : 'scale(1)',
+          sat: on ? 'saturate(1)' : 'saturate(0.6)',
+          tint: on ? 0.28 : 0,
+          gridMeta: CAT[p.cat][lang] + '  ·  ' + ST[p.st][lang] + (p.award ? '  ·  ' + AWARD[p.award][lang] : ''),
+          catLine: CAT[p.cat][lang],
+          statusLine: ST[p.st][lang],
+          hasAward: !!p.award,
+          awardLine: p.award ? AWARD[p.award][lang] : '',
+          statusCol: 'rgb(var(--c-ink) / .45)',
+          st: p.st,
+          on: () => this.setHov(opt, p.id),
+          off: () => this.setHov(opt, null)
+        };
+      });
+    };
+
+    const fbar = (opt) => ['all', 'housing', 'public', 'industrial'].map(k => {
+      const sel = this.state.filter[opt] === k;
+      return {
+        label: k === 'all' ? (lang === 'pl' ? 'Wszystkie' : 'All') : CAT[k][lang],
+        col: sel ? accent : MUTED,
+        bd: sel ? '2px solid ' + accent : '2px solid transparent',
+        onClick: () => this.setFilter(opt, k)
+      };
+    });
+
+    const listA = mk('a');
+    const listB = mk('b');
+    const listC = mk('c');
+    const gall = mk('g');
+    const listGall = gall;
+    const LIMIT = 12;
+    const expanded = !!this.state.showAll;
+    const listG = expanded ? listGall : listGall.slice(0, LIMIT);
+    const activeA = listA.filter(x => x.pv === 1)[0] || listA[0] || {};
+    const count = (l) => (lang === 'pl' ? l.length + ' projektów' : l.length + ' projects');
+
+    const navFor = (k) => NAV.map(x => ({ label: x[lang], href: x.href, col: x.key === k ? INK : MUTED, bd: x.key === k ? accent : 'transparent' }));
+    const pl = lang === 'pl';
+
+    return {
+      nav: navFor('projects'), navS: navFor('studio'), navA: navFor('awards'), navK: navFor('contact'),
+
+      about: {
+        statement: pl
+          ? 'Od ponad dwudziestu lat, niezależnie od skali zlecenia, staramy się tworzyć dobrą przestrzeń i architekturę.'
+          : 'For over twenty years, whatever the scale of the commission, we have worked to make good space and good architecture.',
+        body: pl
+          ? 'Wspieramy inwestorów w całym procesie — od szkiców koncepcyjnych do gotowej realizacji. Wspólnie z zespołem doświadczonych projektantów tworzymy projekty cieszące przyszłych użytkowników i doceniane przez środowisko architektoniczne oraz prasę branżową. Konsekwencja i dbałość o szczegóły zaowocowały wieloma realizacjami; jako pierwszy polski zespół otrzymaliśmy I nagrodę w międzynarodowym konkursie Europan.'
+          : 'We stay with clients through the whole process — from the first conceptual sketches to the finished building. With a team of experienced designers we make projects that please the people who use them and that are recognised by the profession and the trade press. Consistency and care for detail have produced many completed buildings; we were the first Polish team to take first prize at the international Europan competition.',
+        scopeLabel: pl ? 'Czym się zajmujemy' : 'What we do',
+        scope: [
+          { n: '01', t: pl ? 'Domy jednorodzinne' : 'Houses', d: pl ? 'Domy jednorodzinne, przebudowy i rozbudowy, domy wakacyjne — od pierwszej rozmowy o działce do odbioru.' : 'Single-family houses, conversions and extensions, holiday houses — from the first conversation about a plot to handover.' },
+          { n: '02', t: pl ? 'Inwestycje publiczne' : 'Public investment', d: pl ? 'Partner w realizacji inwestycji publicznych. Współpracujemy z samorządami, projektując obiekty użyteczności publicznej, nowoczesne przestrzenie miejskie oraz rewitalizacje zabytków. Opracowujemy także PFU, tworząc solidne podstawy dla efektywnej realizacji projektów.' : 'A partner in public investment. We work with local government on public buildings, contemporary urban space and heritage regeneration, and prepare functional-requirement programmes that give projects a solid basis.' },
+          { n: '03', t: pl ? 'Budynki komercyjne' : 'Commercial buildings', d: pl ? 'Tworzymy i wspieramy Państwa inwestycje od pierwszych analiz i koncepcji po gotowy budynek produkcyjny, logistyczny lub administracyjny.' : 'We create and support your investment from the first analyses and concepts through to a finished production, logistics or office building.' }
+        ],
+        teamLabel: pl ? 'Zespół' : 'The team',
+        teamNote: pl ? 'Pracownia we Wrocławiu' : 'A studio in Wrocław',
+        team: TEAM.map(m => ({ bg: 'url("' + M + m.img + '")', name: m.name, role: m[lang], bio: pl ? m.bpl : m.ben })),
+        formerLabel: pl ? 'Współpracowali z nami' : 'Former collaborators',
+        former: FORMER,
+        formerFoot: pl
+          ? '* współzałożyciel pracowni.  Jeśli brakuje tu Twojego nazwiska — napisz do nas, dopiszemy.'
+          : '* co-founder of the practice.  If your name is missing from this list, please send us an e-mail.',
+        nextA: pl ? 'Dalej' : 'Next',
+        nextATitle: pl ? 'Osiągnięcia' : 'Achievements',
+        nextB: pl ? 'Zapraszamy' : 'Get in touch',
+        nextBTitle: pl ? 'Kontakt' : 'Contact'
+      },
+
+      awards: {
+        title: pl ? 'Osiągnięcia' : 'Achievements',
+        intro: pl
+          ? 'Nasze projekty i zrealizowane obiekty są doceniane od ponad dwóch dekad. Siedem znaczących nagród — cztery dla zrealizowanych budynków, trzy I nagrody w konkursach — oraz kilkanaście innych nagród i wyróżnień, od 2003 roku. Wśród nich Europan 7: pierwsza taka wygrana polskiego zespołu.'
+          : 'Our designs and completed buildings have been recognised for over two decades. Seven significant awards — four for completed buildings, three first prizes in competitions — and a dozen further prizes and mentions since 2003. Among them Europan 7: the first such win for a Polish team.',
+        colYear: pl ? 'Rok' : 'Year',
+        colName: pl ? 'Konkurs / nagroda' : 'Competition / award',
+        colProject: pl ? 'Projekt' : 'Project',
+        colResult: pl ? 'Wynik' : 'Result',
+        highlights: [
+          { year: '2003', result: pl ? 'I nagroda' : '1st prize', name: 'Europan 7, Kristianstad', note: pl ? 'Pierwszy polski zespół z I nagrodą w Europan.' : 'The first Polish team to take first prize at Europan.', bg: accent, fg: PAPER },
+          { year: '2014', result: pl ? 'I nagroda' : '1st prize', name: pl ? 'Dworzec, Piekary Śląskie' : 'Bus Station, Piekary Śląskie', note: pl ? 'Zrealizowany; Najlepsza Przestrzeń Publiczna Śląska 2017.' : 'Built; Best Public Space of Silesia, 2017.', bg: 'rgb(var(--c-ink))', fg: PAPER },
+          { year: '2023', result: pl ? 'Laureat' : 'Laureate', name: pl ? 'Zabytek Zadbany' : 'Zabytek Zadbany', note: pl ? 'Stara Szwalnia w Lesznie — adaptacja fabryki na mieszkania.' : 'The Old Sewing Room, Leszno — a factory turned to housing.', bg: 'var(--c-surface)', fg: INK }
+        ],
+        rows: AWARDS.map(a => ({
+          year: a.year, name: a[lang], project: pl ? a.ppl : a.pen,
+          result: pl ? a.rpl : a.ren, col: a.top ? accent : 'rgb(var(--c-ink) / .55)'
+        }))
+      },
+
+      contact: {
+        title: pl ? 'Zacznijmy od rozmowy' : 'Let us start with a conversation',
+        intro: pl
+          ? 'Napisz, zadzwoń albo wpadnij. Najlepiej z tym, co już masz — działką, decyzją, warunkami zabudowy albo tylko pomysłem. Zapraszamy od poniedziałku do piątku, 9–17.'
+          : 'Write, call, or come by. Bring whatever you have — a plot, a permit, planning conditions, or just an idea. We are here Monday to Friday, 9 to 5.',
+        blocks: [
+          { k: pl ? 'Siedziba' : 'Studio', v: 'ul. Jarocińska 59', v2: '51-011 Wrocław' },
+          { k: pl ? 'Telefon' : 'Telephone', v: '+48 71 365 69 98', v2: pl ? 'pon.–pt. 9:00–17:00' : 'Mon–Fri 9:00–17:00' },
+          { k: 'E-mail', v: 'info@grid.net.pl', v2: pl ? 'Odpowiadamy w ciągu dwóch dni' : 'We reply within two working days' },
+          { k: pl ? 'Nazwa' : 'Legal name', v: 'Grid Architekci sp. z o.o.', v2: pl ? 'Kapitał zakładowy 5 000 PLN' : 'Share capital PLN 5,000' }
+        ],
+        regLabel: pl ? 'Dane rejestrowe' : 'Company registration',
+        registry: [
+          { k: 'NIP', v: '895 207 28 15' },
+          { k: 'REGON', v: '363820348' },
+          { k: 'KRS', v: '0000604446' },
+          { k: pl ? 'Kapitał' : 'Capital', v: '5 000 PLN' }
+        ],
+        court: pl
+          ? 'Sąd Rejonowy dla Wrocławia-Fabrycznej, VI Wydział Gospodarczy Krajowego Rejestru Sądowego.'
+          : 'District Court for Wrocław-Fabryczna, 6th Commercial Division of the National Court Register.',
+        social: ['Instagram', 'LinkedIn', 'Facebook'],
+        formLabel: pl ? 'Napisz do nas' : 'Send a message',
+        fields: [
+          { label: pl ? 'Imię i nazwisko' : 'Name', ph: pl ? 'Jan Kowalski' : 'Jane Smith' },
+          { label: 'E-mail', ph: 'jan@example.com' },
+          { label: pl ? 'Telefon (opcjonalnie)' : 'Telephone (optional)', ph: '+48' },
+          { label: pl ? 'Lokalizacja inwestycji' : 'Where is the site', ph: pl ? 'Miasto, gmina' : 'Town, municipality' }
+        ],
+        msgLabel: pl ? 'O czym myślisz' : 'What are you planning',
+        msgPh: pl ? 'Kilka zdań o inwestycji, skali i terminie.' : 'A few sentences on the project, its scale and timing.',
+        send: pl ? 'Wyślij zapytanie' : 'Send enquiry',
+        rodo: pl
+          ? 'Administratorem danych jest Grid Architekci, ul. Jarocińska 59, 51-011 Wrocław. Dane przetwarzamy wyłącznie po to, by odpowiedzieć na Twoje pytanie.'
+          : 'The data controller is Grid Architekci, ul. Jarocińska 59, 51-011 Wrocław. We process your data only in order to answer your enquiry.',
+        mapLabel: pl ? 'Jak do nas trafić' : 'Finding us',
+        mapNote: pl ? 'Osobowice, dziesięć minut od obwodnicy. Przed domem można zaparkować.' : 'Osobowice, ten minutes from the ring road. There is parking in front of the house.',
+        mapCta: pl ? 'Otwórz w Mapach Google' : 'Open in Google Maps',
+        mapSlot: pl ? 'Mapa dojazdu — do uzupełnienia' : 'Location map — to be supplied',
+        photoSlot: pl ? 'Zdjęcie do wymiany' : 'Photograph to be replaced',
+        caption: pl
+          ? 'Nasza siedziba — dom jednorodzinny z pracownią na Osobowicach, I nagroda w konkursie „Piękny Wrocław” 2013.'
+          : 'Our studio — a house with a workshop in Osobowice, first prize in the Piękny Wrocław competition, 2013.'
+      },
+
+      pubs: {
+        label: pl ? 'Publikacje' : 'Published',
+        note: pl
+          ? 'Wybrane gazety, książki i portale, które pisały o naszych budynkach.'
+          : 'Selected newspapers, books and portals that wrote about our buildings.',
+        items: [
+          { n: '01', title: 'Architektura Murator 06/2021', kind: pl ? 'Prasa branżowa' : 'Trade press', year: '2021', bg: 'url("uploads/architektura-06-2021.jpeg")' },
+          { n: '02', title: 'Architektura Dolnego Śląska', kind: pl ? 'Katalog wystawy' : 'Exhibition catalogue', year: '2017', bg: 'url("uploads/architektura-dolnego-slaska.jpg")' },
+          { n: '03', title: 'Murator 05/2016', kind: pl ? 'Prasa branżowa' : 'Trade press', year: '2016', bg: 'url("uploads/murator-05-2016.jpg")' },
+          { n: '04', title: 'Murator 03/2014', kind: pl ? 'Prasa branżowa' : 'Trade press', year: '2014', bg: 'url("uploads/murator-03-2014.jpg")' },
+          { n: '05', title: 'Ładny Dom 11/2013', kind: pl ? 'Prasa branżowa' : 'Trade press', year: '2013', bg: 'url("uploads/ladnydom-11-2013.jpg")' },
+          { n: '06', title: 'Architekturführer Stettin / Szczecin', kind: pl ? 'Książka' : 'Book', year: '2019', bg: 'url("uploads/przewodnik-po-szczecinie.jpg")' },
+          { n: '07', title: 'Europan 7 — European Results', kind: pl ? 'Katalog konkursowy' : 'Competition catalogue', year: '2003', bg: 'url("uploads/europan-7-european-results.jpg")' },
+          { n: '08', title: 'Architektura Murator 04/2004', kind: pl ? 'Prasa branżowa' : 'Trade press', year: '2004', bg: 'url("uploads/architektura-04-2004.jpg")' }
+        ],
+        label2: pl ? 'Wybrane gazety, książki i portale, które pisały o naszych budynkach.' : 'Selected newspapers, books and portals that wrote about our buildings.'
+      },
+
+      timeline: {
+        label: pl ? 'Ponad 20 lat' : 'Over twenty years',
+        items: [
+          { y: '2003', t: pl ? 'Europan 7, Kristianstad' : 'Europan 7, Kristianstad', d: pl ? 'I nagroda. Pierwszy polski zespół zwyciężył w tym cyklicznym konkursie.' : 'First prize — the first Polish team ever to win this recurring competition.' },
+          { y: '2004', t: pl ? 'GRID architekci s.c.' : 'GRID architekci s.c.', d: pl ? 'Bartosz Bielecki, Agnieszka Zając i Artur Toboła zakładają spółkę.' : 'Bartosz Bielecki, Agnieszka Zając and Artur Toboła found the practice.' },
+          { y: '2008', t: pl ? 'Konkursy SARP' : 'SARP competitions', d: pl ? 'Złoty Potok, Zawiercie, Olsztyn — trzy nagrody w jednym roku.' : 'Złoty Potok, Zawiercie, Olsztyn — three prizes in one year.' },
+          { y: '2013', t: pl ? 'Własna siedziba na Osobowicach' : 'Our own studio in Osobowice', d: pl ? 'Dom z pracownią. I nagroda „Piękny Wrocław”.' : 'A house with a studio. First prize, Piękny Wrocław.' },
+          { y: '2016', t: pl ? 'Grid Architekci sp. z o.o.' : 'Grid Architekci sp. z o.o.', d: pl ? 'Pracownia zmienia formę prawną.' : 'The practice changes its legal form.' },
+          { y: '2017', t: pl ? 'Najlepsza Przestrzeń Publiczna Woj. Śląskiego' : 'Best Public Space of Silesia', d: pl ? 'Nagroda dla dworca autobusowego w Piekarach Śląskich.' : 'Awarded to the bus station in Piekary Śląskie.' },
+          { y: '2018', t: pl ? 'Dom Kultury Krzemień' : 'Krzemień Cultural Centre', d: pl ? 'Realizacja konkursowej pracy.' : 'The winning competition entry goes to site.' },
+          { y: '2023', t: pl ? 'Zabytek Zadbany' : 'Zabytek Zadbany', d: pl ? 'Stara Szwalnia w Lesznie. Fabryka zamieniona na mieszkania.' : 'The Old Sewing Room, Leszno. A factory turned into housing.' }
+        ]
+      },
+
+      process: {
+        label: pl ? 'Jak pracujemy' : 'How we work',
+        note: pl ? 'Pięć etapów. Każdy kończy się Waszą decyzją i fakturą — nie ma niespodzianek w środku.' : 'Five stages. Each ends with your decision and an invoice — no surprises in between.',
+        steps: [
+          { n: '01', t: pl ? 'Rozmowa i działka' : 'Conversation and site', d: pl ? 'Spotkanie, oględziny działki, warunki zabudowy lub plan miejscowy. Wycena po tym spotkaniu, nie przed.' : 'A meeting, a look at the plot, the planning conditions. We quote after this meeting, not before.' },
+          { n: '02', t: pl ? 'Koncepcja' : 'Concept', d: pl ? 'Dwa warianty układu i bryły, rzuty i widoki 3D. Dwie rundy poprawek w cenie.' : 'Two options for plan and form, drawings and 3D views. Two rounds of revisions included.' },
+          { n: '03', t: pl ? 'Projekt budowlany' : 'Building permit design', d: pl ? 'Pełna dokumentacja z branżami. Formalności urzędowe prowadzimy w Waszym imieniu.' : 'Full documentation with all disciplines. We handle the paperwork on your behalf.' },
+          { n: '04', t: pl ? 'Projekt wykonawczy' : 'Technical design', d: pl ? 'Detale, zestawienia, dokumentacja przetargowa dla wykonawców.' : 'Details, schedules and tender documentation for contractors.' },
+          { n: '05', t: pl ? 'Nadzór autorski' : 'Site supervision', d: pl ? 'Wizyty na budowie w umówionym rytmie, do odbioru budynku.' : 'Site visits at an agreed rhythm, through to handover.' }
+        ]
+      },
+
+      faq: {
+        label: 'FAQ',
+        note: pl ? 'Odpowiedzi są wersją roboczą — do potwierdzenia przez pracownię.' : 'Draft answers — to be confirmed by the practice.',
+        groups: [
+          { t: pl ? 'Wynagrodzenie' : 'Fees', items: [
+            { q: pl ? 'Jak wyceniacie swoje usługi?' : 'How do you price your work?', a: pl ? 'Ryczałtem za cały obiekt, ustalonym po pierwszym spotkaniu i oględzinach działki. Nie liczymy od metra ani procentem od wartości inwestycji — obie te metody karzą za oszczędny projekt.' : 'A fixed fee for the whole building, set after the first meeting and a look at the site. We do not charge per square metre or as a percentage of construction cost — both penalise an economical design.' },
+            { q: pl ? 'Jak wygląda harmonogram płatności?' : 'What does the payment schedule look like?', a: pl ? 'Płatność jest podzielona na pięć etapów pracy. Każda transza jest wymagalna po Waszej akceptacji danego etapu.' : 'Payment follows the five stages of work. Each instalment falls due once you have signed off that stage.' },
+            { q: pl ? 'Co wchodzi w cenę, a co jest dodatkowo?' : 'What is included, and what costs extra?', a: pl ? 'W cenie: architektura, konstrukcja i instalacje sanitarne oraz elektryczne. Dodatkowo: projekt wnętrz, systemy specjalne (rekuperacja, pompa ciepła, smart home), mapy geodezyjne i badania gruntu — te ostatnie zamawiane są bezpośrednio u wykonawców.' : 'Included: architecture, structure, and the sanitary and electrical services. Extra: interior design, specialist systems (heat recovery, heat pumps, smart home), surveys and ground investigations — the last ordered directly from their suppliers.' }
+          ]},
+          { t: pl ? 'Proces i poprawki' : 'Process and revisions', items: [
+            { q: pl ? 'Ile wariantów koncepcji dostanę?' : 'How many concept options will I get?', a: pl ? 'Dwa różne układy funkcjonalne i dwie propozycje bryły. Z nich wybieramy jeden kierunek i go rozwijamy.' : 'Two different plan layouts and two proposals for the form. From these we choose one direction and develop it.' },
+            { q: pl ? 'Ile rund poprawek jest w cenie?' : 'How many rounds of revisions are included?', a: pl ? 'Dwie na etapie koncepcji i jedna na etapie projektu budowlanego. Kolejne rozliczamy godzinowo, po wcześniejszym uzgodnieniu zakresu.' : 'Two at concept stage and one at permit stage. Further rounds are charged hourly, with the scope agreed in advance.' },
+            { q: pl ? 'Gdzie kończy się projekt budowlany, a zaczyna projekt wnętrz?' : 'Where does the building design end and the interior begin?', a: pl ? 'Projekt budowlany zawiera układ ścian, okien i instalacji — w tym rozmieszczenie gniazdek i punktów świetlnych. Meble, materiały wykończeniowe i oprawy to już projekt wnętrz.' : 'The building design covers walls, openings and services — including socket and light positions. Furniture, finishes and fittings belong to the interior design.' }
+          ]},
+          { t: pl ? 'Czas i formalności' : 'Time and paperwork', items: [
+            { q: pl ? 'Ile trwa przygotowanie kompletnego projektu do urzędu?' : 'How long until the application is ready?', a: pl ? 'Zwykle pięć do siedmiu miesięcy od podpisania umowy — z czego około połowa to koncepcja i Wasze decyzje.' : 'Usually five to seven months from signing — about half of which is the concept stage and your decisions.' },
+            { q: pl ? 'Kto załatwia formalności urzędowe?' : 'Who handles the paperwork?', a: pl ? 'My. Warunki zabudowy, wypisy z planu, warunki przyłączy i wniosek o pozwolenie na budowę składamy w Waszym imieniu.' : 'We do. Planning conditions, plan extracts, utility connections and the building permit application are all submitted on your behalf.' },
+            { q: pl ? 'Co, jeśli urząd zażąda poprawek?' : 'What if the authority asks for changes?', a: pl ? 'Poprawki wynikające z uwag urzędu wprowadzamy bez dodatkowej opłaty.' : 'Changes arising from the authority’s comments are made at no extra charge.' }
+          ]},
+          { t: pl ? 'Budowa' : 'Construction', items: [
+            { q: pl ? 'Czy prowadzicie nadzór autorski?' : 'Do you supervise construction?', a: pl ? 'Tak, rozliczany od wizyty. Przy domu jednorodzinnym to zwykle wizyta co dwa–trzy tygodnie.' : 'Yes, charged per visit. On a house that usually means a visit every two to three weeks.' },
+            { q: pl ? 'Czy polecacie wykonawców?' : 'Do you recommend contractors?', a: pl ? 'Podajemy listę ekip, z którymi pracowaliśmy. Nie bierzemy od nich prowizji ani nie pośredniczymy w umowie.' : 'We share a list of teams we have worked with. We take no commission from them and are not party to your contract.' }
+          ]}
+        ]
+      },
+
+      toPl: () => this.setState({ lang: 'pl' }),
+      toEn: () => this.setState({ lang: 'en' }),
+      plCol: lang === 'pl' ? INK : MUTED, plW: lang === 'pl' ? 700 : 400,
+      enCol: lang === 'en' ? INK : MUTED, enW: lang === 'en' ? 700 : 400,
+
+      listA: listA, listB: listB, listC: listC, listG: listG, activeA: activeA,
+      filtersA: fbar('a'), filtersB: fbar('b'), filtersC: fbar('c'), filtersG: fbar('g'),
+      countA: count(listA), countB: count(listB), countC: count(listC),
+      countG: listG.length + ' / ' + listGall.length,
+      toggleMore: () => this.setState(s => ({ showAll: !s.showAll })),
+      current: mk('cur').filter(x => x.st === 'progress' || x.st === 'concept').slice(0, 3),
+      currentLabel: pl ? 'Aktualne projekty' : 'Current projects',
+      socialNote: pl ? 'Kulisy naszej pracy, postępy na budowach i świeże realizacje.' : 'Behind the scenes, progress on site and freshly finished buildings.',
+      footerLinks: ['Instagram', 'Facebook', 'LinkedIn'],
+      stats: [
+        { v: '+20', k: lang === 'pl' ? 'lat pracowni' : 'years of practice' },
+        { v: '+200', k: lang === 'pl' ? 'projektów' : 'projects' },
+        { v: '+20', k: lang === 'pl' ? 'nagród i wyróżnień' : 'awards and mentions' }
+      ],
+      moreLabel: this.state.showAll
+        ? (lang === 'pl' ? 'Pokaż mniej' : 'Show fewer')
+        : (lang === 'pl' ? 'Pokaż więcej projektów' : 'Show more projects'),
+
+      heroTitle: lang === 'pl' ? 'Dobra przestrzeń, niezależnie od skali' : 'Good space, whatever the scale',
+      heroBlurb: lang === 'pl'
+        ? 'Od ponad dwudziestu lat, niezależnie od skali zlecenia, staramy się tworzyć dobrą przestrzeń i architekturę, wspierając Inwestorów w całym procesie inwestycyjnym — od szkiców koncepcyjnych do gotowej realizacji.'
+        : 'For over twenty years, whatever the scale of the commission, we have worked to make good space and good architecture, supporting our clients through the whole process — from the first conceptual sketches to the finished building.',
+
+      colNo: lang === 'pl' ? 'Nr' : 'No.',
+      colName: lang === 'pl' ? 'Projekt' : 'Project',
+      colYear: lang === 'pl' ? 'Rok' : 'Year',
+      colType: lang === 'pl' ? 'Typ' : 'Type',
+      colStatus: lang === 'pl' ? 'Status / nagrody' : 'Status / awards',
+      hintC: lang === 'pl' ? 'Najedź na wiersz, aby zobaczyć projekt' : 'Hover a row to preview the project',
+
+      pp: {
+        kicker: lang === 'pl' ? 'Publiczne · Zrealizowane · 2022' : 'Public · Built · 2022',
+        title: lang === 'pl' ? 'Dom Kultury, Zapolice' : 'Community Centre, Zapolice',
+        lead: lang === 'pl'
+          ? 'Całkowita przebudowa gminnego ośrodka sportu i kultury. Forma jest wprost odwzorowaniem podziałów funkcjonalnych wewnątrz budynku.'
+          : 'A complete rebuilding of the municipal sport and culture centre. The form is a direct reading of the functional divisions inside.',
+        spec: [
+          { k: lang === 'pl' ? 'Klient' : 'Client', v: 'Gmina Zapolice' },
+          { k: lang === 'pl' ? 'Rok' : 'Year', v: '2022' },
+          { k: 'Status', v: lang === 'pl' ? 'Zrealizowane' : 'Built' },
+          { k: lang === 'pl' ? 'Zakres' : 'Scope', v: lang === 'pl' ? 'Koncepcja, PFU' : 'Concept, functional brief' },
+          { k: lang === 'pl' ? 'Zespół' : 'Team', v: 'Artur Toboła, Agnieszka Zając, Damian Garbula' },
+          { k: lang === 'pl' ? 'Konstrukcja' : 'Structure', v: 'do uzupełnienia' },
+          { k: lang === 'pl' ? 'Instalacje' : 'Services', v: 'do uzupełnienia' },
+          { k: lang === 'pl' ? 'Wykonawca' : 'Contractor', v: 'do uzupełnienia' },
+          { k: lang === 'pl' ? 'Zdjęcia' : 'Photography', v: 'do uzupełnienia' }
+        ],
+        awardLabel: lang === 'pl' ? 'Nagrody' : 'Awards',
+        awards: [],
+        awardsEmpty: lang === 'pl' ? 'Ten projekt nie był zgłaszany do konkursu.' : 'This project was not entered for an award.',
+        body1: lang === 'pl'
+          ? 'Efektem jest parterowy budynek złożony z trzech brył połączonych nieregularnym hallem. Wejście wycofano od ulicy, by powstał plac wejściowy — przedpole z zielenią i siedziskami, przestrzeń publiczna otwarta dla wszystkich, także wtedy, gdy budynek jest zamknięty.'
+          : 'The result is a single-storey building of three volumes joined by an irregular hall. The entrance is set back from the street to make a forecourt — planting and seating, a public space open to everyone, including the hours when the building itself is shut.',
+        body2: lang === 'pl'
+          ? 'Przy strefie wejściowej zlokalizowano bibliotekę, która razem z hallem tworzy strefę przyjęć. Kolejne skrzydło mieści dwie sale zajęć fakultatywnych oraz salę konferencyjną i muzyczną, doświetlone wewnętrznym patio. Największa bryła to sala wielofunkcyjna dla 250 osób ze sceną i rozkładaną widownią — przystosowana również do zajęć sportowych i dzielona na dwie niezależne przestrzenie.'
+          : 'A library sits beside the entrance and, with the hall, forms the arrival zone. The next wing holds two activity rooms plus a conference and music room, daylit through an internal patio. The largest volume is a 250-seat multifunction hall with a stage and retractable seating — equally suited to sport, and divisible into two independent spaces.',
+        planLabel: lang === 'pl' ? 'Zagospodarowanie terenu' : 'Site plan',
+        prevLabel: lang === 'pl' ? 'Poprzedni' : 'Previous',
+        prevTitle: lang === 'pl' ? 'Stara Szwalnia, Leszno' : 'The Old Sewing Room, Leszno',
+        nextLabel: lang === 'pl' ? 'Następny' : 'Next',
+        nextTitle: lang === 'pl' ? 'Deptak, Leszno' : 'Pedestrian Street, Leszno',
+        allLabel: lang === 'pl' ? 'Wszystkie projekty' : 'All projects',
+        ctaTitle: lang === 'pl' ? 'Masz działkę, budżet i termin? Zacznijmy od rozmowy.' : 'Site, budget, deadline? Let us start with a conversation.',
+        addrLabel: lang === 'pl' ? 'Siedziba' : 'Studio',
+        telLabel: lang === 'pl' ? 'Telefon' : 'Telephone',
+        indexLabel: pl ? 'Spis ilustracji' : 'Index of images',
+        scrollHint: pl ? 'Przewiń w prawo' : 'Scroll right',
+        gallery: [
+          { n: '01', bg: 'url("' + M + '2022/07/dom-kultury_1.jpg")', cap: pl ? 'Widok od strony ulicy Głównej' : 'View from Główna Street' },
+          { n: '02', bg: 'url("' + M + '2022/07/dom-kultury_hol.jpg")', cap: pl ? 'Hol wejściowy' : 'Entrance hall' },
+          { n: '03', bg: 'url("' + M + '2022/07/dom-kultury_biblio2.jpg")', cap: pl ? 'Biblioteka przy strefie wejściowej' : 'Library beside the arrival zone' },
+          { n: '04', bg: 'url("' + M + '2022/07/dom-kultury_sala.jpg")', cap: pl ? 'Sala wielofunkcyjna na 250 osób' : 'Multifunction hall for 250' },
+          { n: '05', bg: 'url("' + M + '2022/07/dom-kultury_3.jpg")', cap: pl ? 'Patio wewnętrzne' : 'Internal patio' },
+          { n: '06', bg: 'url("' + M + '2022/07/dom-kultury_5.jpg")', cap: pl ? 'Plac wejściowy od ulicy' : 'The forecourt from the street' }
+        ]
+      }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

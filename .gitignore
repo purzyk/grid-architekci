@@ -1,0 +1,32 @@
+# DDEV
+.ddev/.*
+.ddev/db_snapshots/
+.ddev/.homeadditions/
+.ddev/.sshimageBuild/
+.ddev/.webimageBuild/
+.ddev/import.sql
+.ddev/traefik/
+
+# WordPress core — only the custom theme/plugin(s) under wp-content are tracked
+site/wordpress/wp-admin/
+site/wordpress/wp-includes/
+site/wordpress/wp-*.php
+site/wordpress/xmlrpc.php
+site/wordpress/index.php
+site/wordpress/license.txt
+site/wordpress/readme.html
+site/wordpress/wp-content/uploads/
+site/wordpress/wp-content/plugins/
+site/wordpress/wp-content/themes/twenty*/
+site/wordpress/wp-content/upgrade/
+site/wordpress/wp-content/cache/
+site/wordpress/wp-config.php
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
