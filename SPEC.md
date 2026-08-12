@@ -17,10 +17,31 @@ Current live site (being replaced): https://grid.net.pl/
 
 ## Architecture decisions
 
-- **Full Site Editing (FSE) block theme.** `theme.json` carries the design
-  tokens (colors, type scale, spacing) ported directly from
-  `projekt/handoff/tailwind.config.js` — nothing invented, same source of
-  truth as the mocks.
+- **Full Site Editing (FSE) block theme.** `theme.json` still carries base
+  color/typography tokens, but block and template styling itself runs on
+  **Tailwind CSS**, compiled at build time from the theme's own
+  `tailwind.config.js` (ported from `projekt/handoff/tailwind.config.js`).
+  Blocks' `edit.js`/`save.js`/`render.php` use the mocks' literal Tailwind
+  classes directly, copied from `projekt/*.dc.html` rather than
+  hand-translated into native CSS — a hand-translation pass through
+  `theme.json`/SCSS was the original approach and produced several
+  visual-mismatch bugs, which motivated the switch.
+  - **Known limitation:** Tailwind's CLI only generates CSS for classes it
+    finds by scanning files listed in `tailwind.config.js`'s `content`
+    array (block source + `wp-content/seed-content/`). It cannot see
+    classes typed directly into post content via wp-admin after the fact —
+    if a future edit introduces a new arbitrary-value class (e.g.
+    `text-[37px]`) that isn't already used somewhere in a scanned file, no
+    CSS will exist for it and it will silently do nothing. Stick to classes
+    already used elsewhere in the block library, or add a rebuild step to
+    any workflow that lets editors write raw Tailwind classes.
+  - Blocks have **two independent build steps** — the plugin
+    (`grid-blocks/`, via `wp-scripts build`) and the theme (`assets/css/`,
+    via the `tailwindcss` CLI). Editing `src/*.js`/`render.php` requires
+    rebuilding the plugin; editing Tailwind classes anywhere requires
+    rebuilding the theme CSS. WordPress registers blocks from `build/`, not
+    `src/` — an edit to `src/` with no rebuild is invisible on the live
+    site even though the source file looks correct.
 - **Custom Gutenberg blocks**, not fixed PHP templates, for anything the
   client should be able to rearrange or reuse:
   - Static/editable: hero, stat bar, highlight plates, process steps, team

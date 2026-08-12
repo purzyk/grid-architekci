@@ -7,13 +7,7 @@
   "icon": "list-view",
   "description": "Ponumerowane kroki procesu, np. „Jak pracujemy”. 1 kolumna na telefonie, 5 na szerokim ekranie.",
   "supports": {
-    "html": false,
-    "layout": {
-      "default": {
-        "type": "flex",
-        "flexWrap": "wrap"
-      }
-    }
+    "html": false
   },
   "attributes": {
     "label": {
@@ -30,6 +24,5 @@
     }
   },
   "textdomain": "grid",
-  "editorScript": "file:./index.js",
-  "style": "file:./style-index.css"
+  "editorScript": "file:./index.js"
 }

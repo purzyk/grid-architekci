@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Archivo is already self-hosted via theme.json's typography.fontFamilies
+   fontFace declarations — WP outputs the actual @font-face rule from
+   there, nothing to duplicate here. */
+
+body {
+	background-color: theme('colors.desk');
+	color: theme('colors.ink.DEFAULT');
+	font-family: theme('fontFamily.sans');
+}
+
+/* Hamburger: swap the icon when the menu is open (descendants can't use
+   peer-*, since peer-checked only reaches direct siblings — same limitation
+   the mocks hit, see grid-o-nas.dc.html's own #navtoggle:checked rule). */
+#grid-navtoggle:checked ~ label .icon-open { display: none; }
+#grid-navtoggle:checked ~ label .icon-close { display: block; }

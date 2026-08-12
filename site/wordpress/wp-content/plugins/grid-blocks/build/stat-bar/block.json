@@ -7,15 +7,8 @@
   "icon": "chart-bar",
   "description": "Rząd statystyk oddzielony górną linią, np. „+20 lat pracowni”.",
   "supports": {
-    "html": false,
-    "layout": {
-      "default": {
-        "type": "flex",
-        "flexWrap": "nowrap"
-      }
-    }
+    "html": false
   },
   "textdomain": "grid",
-  "editorScript": "file:./index.js",
-  "style": "file:./style-index.css"
+  "editorScript": "file:./index.js"
 }

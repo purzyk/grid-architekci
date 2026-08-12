@@ -39,15 +39,15 @@ $context = array(
 	'categoryCounts'      => $category_counts,
 );
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'grid-project-grid' ) ); ?>
+<div <?php echo get_block_wrapper_attributes(); ?>
 	data-wp-interactive="grid/project-grid"
 	<?php echo wp_interactivity_data_wp_context( $context ); ?>
 >
-	<div class="grid-project-grid__filters">
-		<div class="grid-project-grid__filter-buttons">
+	<div class="mb-[26px] flex flex-col items-start gap-3 border-t-2 border-divider pt-3.5 sm:flex-row sm:items-baseline sm:justify-between">
+		<div class="flex flex-wrap gap-x-[22px] gap-y-2">
 			<button
 				type="button"
-				class="grid-project-grid__filter-btn"
+				class="border-b-2 border-transparent pb-[3px] text-meta font-extrabold uppercase tracking-nav text-ink/50 aria-pressed:border-accent aria-pressed:text-accent"
 				data-wp-on--click="actions.setCategory"
 				data-wp-bind--aria-pressed="state.isPressed"
 				<?php echo wp_interactivity_data_wp_context( array( 'filterValue' => 'all' ) ); ?>
@@ -55,17 +55,17 @@ $context = array(
 			<?php foreach ( $categories as $term ) : ?>
 				<button
 					type="button"
-					class="grid-project-grid__filter-btn"
+					class="border-b-2 border-transparent pb-[3px] text-meta font-extrabold uppercase tracking-nav text-ink/50 aria-pressed:border-accent aria-pressed:text-accent"
 					data-wp-on--click="actions.setCategory"
 					data-wp-bind--aria-pressed="state.isPressed"
 					<?php echo wp_interactivity_data_wp_context( array( 'filterValue' => $term->slug ) ); ?>
 				><?php echo esc_html( ucfirst( $term->name ) ); ?></button>
 			<?php endforeach; ?>
 		</div>
-		<span class="grid-project-grid__count" data-wp-text="state.countLabel"><?php echo esc_html( min( $initial_visible, $total ) . " / {$total}" ); ?></span>
+		<span class="text-meta text-ink/45" data-wp-text="state.countLabel"><?php echo esc_html( min( $initial_visible, $total ) . " / {$total}" ); ?></span>
 	</div>
 
-	<div class="grid-project-grid__grid">
+	<div class="grid grid-flow-dense grid-cols-1 items-start gap-[30px] sm:grid-cols-2 sm:gap-x-5 sm:gap-y-8 md:grid-cols-3 md:gap-x-8 md:gap-y-10">
 		<?php
 		$index = 0;
 		while ( $query->have_posts() ) :
@@ -81,22 +81,22 @@ $context = array(
 			?>
 			<a
 				href="<?php the_permalink(); ?>"
-				class="grid-project-grid__tile<?php echo $is_wide ? ' grid-project-grid__tile--wide' : ''; ?>"
-				data-wp-class--is-hidden="state.isTileHidden"
+				class="group block text-inherit<?php echo $is_wide ? ' sm:col-span-2' : ''; ?>"
+				data-wp-class--hidden="state.isTileHidden"
 				<?php echo wp_interactivity_data_wp_context( array( 'itemCategory' => $kategoria_slug, 'itemIndex' => $index ) ); ?>
 			>
-				<div class="grid-project-grid__thumb">
+				<div class="relative aspect-tile w-full overflow-hidden bg-surface">
 					<?php if ( has_post_thumbnail() ) : ?>
-						<?php the_post_thumbnail( 'large', array( 'class' => 'grid-project-grid__img' ) ); ?>
+						<?php the_post_thumbnail( 'large', array( 'class' => 'absolute inset-0 h-full w-full object-cover saturate-60 transition-[transform,filter] duration-700 ease-reveal group-hover:scale-[1.03] group-hover:saturate-100' ) ); ?>
 					<?php endif; ?>
-					<div class="grid-project-grid__mask"></div>
+					<div class="absolute inset-0 bg-accent opacity-0 mix-blend-multiply transition-opacity duration-450 group-hover:opacity-28"></div>
 				</div>
-				<div class="grid-project-grid__meta-row">
-					<span class="grid-project-grid__title"><?php the_title(); ?></span>
-					<?php if ( $rok ) : ?><span class="grid-project-grid__year"><?php echo esc_html( $rok ); ?></span><?php endif; ?>
+				<div class="mt-3 flex items-baseline justify-between gap-4 border-t-2 border-divider pt-2.5">
+					<span class="text-tile font-extrabold uppercase transition-colors group-hover:text-accent"><?php the_title(); ?></span>
+					<?php if ( $rok ) : ?><span class="whitespace-nowrap text-label uppercase tracking-nav text-ink/50"><?php echo esc_html( $rok ); ?></span><?php endif; ?>
 				</div>
 				<?php if ( $kategoria_label || $status_label ) : ?>
-					<div class="grid-project-grid__meta-sub">
+					<div class="mt-1 flex flex-wrap items-baseline gap-x-2 text-meta uppercase tracking-[0.1em] text-ink/45">
 						<?php if ( $kategoria_label ) : ?><span><?php echo esc_html( $kategoria_label ); ?></span><?php endif; ?>
 						<?php if ( $status_label ) : ?><span><?php echo esc_html( $status_label ); ?></span><?php endif; ?>
 					</div>
@@ -110,10 +110,10 @@ $context = array(
 		<?php if ( $total > $initial_visible ) : ?>
 			<button
 				type="button"
-				class="grid-project-grid__show-more"
+				class="flex w-full items-end pt-1.5 sm:aspect-tile sm:pt-0"
 				data-wp-on--click="actions.toggleShowMore"
-				data-wp-bind--hidden="state.isShowMoreHidden"
-			><span data-wp-text="state.showMoreLabel">Pokaż więcej projektów</span></button>
+				data-wp-class--hidden="state.isShowMoreHidden"
+			><span class="border-b-2 border-accent pb-1 text-meta font-extrabold uppercase tracking-[0.16em] text-accent sm:translate-y-3.5" data-wp-text="state.showMoreLabel">Pokaż więcej projektów</span></button>
 		<?php endif; ?>
 	</div>
 </div>

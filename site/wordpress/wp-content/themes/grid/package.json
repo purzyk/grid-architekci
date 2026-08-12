@@ -1,0 +1,12 @@
+{
+	"name": "grid-theme",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"build": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind-build.css --minify",
+		"start": "tailwindcss -i ./assets/css/tailwind-input.css -o ./assets/css/tailwind-build.css --watch"
+	},
+	"devDependencies": {
+		"tailwindcss": "^3.4.0"
+	}
+}

@@ -8,10 +8,16 @@ const VARIANTS = [
 	{ label: 'Surface', value: 'surface' },
 ];
 
+const VARIANT_CLASSES = {
+	accent: 'bg-accent text-paper',
+	ink: 'bg-ink text-paper',
+	surface: 'bg-surface text-ink',
+};
+
 export default function Edit( { attributes, setAttributes } ) {
 	const { year, kicker, title, description, url, variant } = attributes;
 	const blockProps = useBlockProps( {
-		className: `grid-highlight-plate is-variant-${ variant }`,
+		className: `group relative block overflow-hidden p-7 pb-[34px] ${ VARIANT_CLASSES[ variant ] }`,
 	} );
 
 	return (
@@ -31,32 +37,32 @@ export default function Edit( { attributes, setAttributes } ) {
 			<div { ...blockProps }>
 				<RichText
 					tagName="div"
-					className="grid-highlight-plate__year"
+					className="grid-highlight-plate__year text-[46px] font-extrabold leading-none tracking-tightest"
 					value={ year }
 					onChange={ ( year ) => setAttributes( { year } ) }
 					allowedFormats={ [] }
 				/>
 				<RichText
 					tagName="div"
-					className="grid-highlight-plate__kicker"
+					className="grid-highlight-plate__kicker my-3 text-label uppercase tracking-[0.18em] opacity-75"
 					value={ kicker }
 					onChange={ ( kicker ) => setAttributes( { kicker } ) }
 					allowedFormats={ [] }
 				/>
 				<RichText
 					tagName="div"
-					className="grid-highlight-plate__title"
+					className="grid-highlight-plate__title text-[22px] font-extrabold uppercase leading-[1.1] tracking-[-0.02em]"
 					value={ title }
 					onChange={ ( title ) => setAttributes( { title } ) }
 					allowedFormats={ [] }
 				/>
 				<RichText
 					tagName="p"
-					className="grid-highlight-plate__description"
+					className="grid-highlight-plate__description mt-2 text-body-sm opacity-80"
 					value={ description }
 					onChange={ ( description ) => setAttributes( { description } ) }
 				/>
-				<span className="grid-highlight-plate__arrow">→</span>
+				<span className="pointer-events-none absolute bottom-[26px] right-6 -translate-x-2 text-[22px] font-extrabold opacity-0 transition-[opacity,transform] duration-450 ease-reveal">→</span>
 			</div>
 		</>
 	);

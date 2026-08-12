@@ -41,20 +41,20 @@ $metric_labels = array(
 	'autor_zdjec' => 'Autor zdjęć',
 );
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'grid-project-detail' ) ); ?>>
+<div <?php echo get_block_wrapper_attributes(); ?>>
 	<?php if ( $lead ) : ?>
-		<p class="grid-project-detail__lead"><?php echo esc_html( $lead ); ?></p>
+		<p class="max-w-measure text-lead"><?php echo esc_html( $lead ); ?></p>
 	<?php endif; ?>
 
 	<?php if ( $opis ) : ?>
-		<div class="grid-project-detail__body"><?php echo wp_kses_post( $opis ); ?></div>
+		<div class="mt-5 max-w-measure text-body text-ink/70 [&_p]:mb-4 [&_p:last-child]:mb-0"><?php echo wp_kses_post( $opis ); ?></div>
 	<?php endif; ?>
 
 	<?php if ( ! empty( $galeria ) ) : ?>
-		<div class="grid-project-detail__gallery">
+		<div class="mt-10 flex flex-col gap-5">
 			<?php foreach ( $galeria as $img ) : ?>
 				<img
-					class="grid-project-detail__photo"
+					class="block w-full h-auto"
 					src="<?php echo esc_url( $img['sizes']['large'] ?? $img['url'] ); ?>"
 					alt="<?php echo esc_attr( $img['alt'] ?? '' ); ?>"
 					<?php if ( ! empty( $img['caption'] ) ) : ?>title="<?php echo esc_attr( $img['caption'] ); ?>"<?php endif; ?>
@@ -64,8 +64,8 @@ $metric_labels = array(
 	<?php endif; ?>
 
 	<?php if ( $rysunek_id ) : ?>
-		<div class="grid-project-detail__siteplan">
-			<?php echo wp_get_attachment_image( $rysunek_id, 'large', false, array( 'class' => 'grid-project-detail__siteplan-img' ) ); ?>
+		<div class="mt-10 bg-surface p-6">
+			<?php echo wp_get_attachment_image( $rysunek_id, 'large', false, array( 'class' => 'block w-full h-auto' ) ); ?>
 		</div>
 	<?php endif; ?>
 
@@ -73,12 +73,12 @@ $metric_labels = array(
 	$has_metrics = is_array( $metryka ) && count( array_filter( $metryka ) ) > 0;
 	if ( $has_metrics ) :
 		?>
-		<div class="grid-project-detail__metrics">
+		<div class="mt-10 grid grid-cols-2 gap-[26px] border-t-2 border-divider px-[18px] py-[26px] sm:grid-cols-3 md:grid-cols-5 md:px-10">
 			<?php foreach ( $metric_labels as $key => $label ) : ?>
 				<?php if ( empty( $metryka[ $key ] ) ) continue; ?>
-				<div class="grid-project-detail__metric">
-					<div class="grid-project-detail__metric-label"><?php echo esc_html( $label ); ?></div>
-					<div class="grid-project-detail__metric-value"><?php echo esc_html( $metryka[ $key ] ); ?></div>
+				<div>
+					<div class="mb-1.5 h-3 text-label uppercase tracking-kicker text-ink/50"><?php echo esc_html( $label ); ?></div>
+					<div class="text-body-sm leading-[1.4]"><?php echo esc_html( $metryka[ $key ] ); ?></div>
 				</div>
 			<?php endforeach; ?>
 		</div>

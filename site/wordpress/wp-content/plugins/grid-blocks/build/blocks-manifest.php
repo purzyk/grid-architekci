@@ -14,7 +14,6 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php'
 	),
 	'featured-awards' => array(
@@ -36,7 +35,6 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php'
 	),
 	'hero' => array(
@@ -65,8 +63,7 @@ return array(
 			)
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'highlight-plate' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -114,8 +111,7 @@ return array(
 			)
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'manifesto' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -143,8 +139,7 @@ return array(
 			)
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'process-step' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -182,8 +177,7 @@ return array(
 			)
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'process-steps' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -194,13 +188,7 @@ return array(
 		'icon' => 'list-view',
 		'description' => 'Ponumerowane kroki procesu, np. „Jak pracujemy”. 1 kolumna na telefonie, 5 na szerokim ekranie.',
 		'supports' => array(
-			'html' => false,
-			'layout' => array(
-				'default' => array(
-					'type' => 'flex',
-					'flexWrap' => 'wrap'
-				)
-			)
+			'html' => false
 		),
 		'attributes' => array(
 			'label' => array(
@@ -217,8 +205,7 @@ return array(
 			)
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'project-detail' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -236,7 +223,6 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php'
 	),
 	'project-grid' => array(
@@ -258,7 +244,6 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php',
 		'viewScriptModule' => 'file:./view.js'
 	),
@@ -285,7 +270,21 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css',
+		'render' => 'file:./render.php'
+	),
+	'site-header' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/site-header',
+		'title' => 'Nagłówek strony',
+		'category' => 'grid-blocks',
+		'icon' => 'menu',
+		'description' => 'Logo + nawigacja z hamburger menu na telefonie, dokładnie jak w makiecie (checkbox-driven, bez core/navigation) — aktywna strona ma podkreślenie accent.',
+		'supports' => array(
+			'html' => false
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
 		'render' => 'file:./render.php'
 	),
 	'stat-bar' => array(
@@ -297,17 +296,10 @@ return array(
 		'icon' => 'chart-bar',
 		'description' => 'Rząd statystyk oddzielony górną linią, np. „+20 lat pracowni”.',
 		'supports' => array(
-			'html' => false,
-			'layout' => array(
-				'default' => array(
-					'type' => 'flex',
-					'flexWrap' => 'nowrap'
-				)
-			)
+			'html' => false
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'stat-item' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -339,8 +331,7 @@ return array(
 			)
 		),
 		'textdomain' => 'grid',
-		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css'
+		'editorScript' => 'file:./index.js'
 	),
 	'team-grid' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
@@ -365,7 +356,6 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'style' => 'file:./style-index.css',
 		'render' => 'file:./render.php'
 	)
 );

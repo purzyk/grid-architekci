@@ -135,7 +135,7 @@
 			"blockGap": "56px"
 		},
 		"color": {
-			"background": "var(--wp--preset--color--paper)",
+			"background": "var(--wp--preset--color--desk)",
 			"text": "var(--wp--preset--color--ink)"
 		},
 		"typography": {
@@ -147,12 +147,6 @@
 			"link": {
 				"color": { "text": "var(--wp--preset--color--ink)" },
 				":hover": { "color": { "text": "var(--wp--preset--color--accent-700)" } }
-			},
-			"heading": {
-				"typography": {
-					"fontWeight": "800",
-					"textTransform": "uppercase"
-				}
 			}
 		}
 	}

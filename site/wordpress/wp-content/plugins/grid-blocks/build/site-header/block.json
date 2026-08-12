@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "grid/site-header",
+  "title": "Nagłówek strony",
+  "category": "grid-blocks",
+  "icon": "menu",
+  "description": "Logo + nawigacja z hamburger menu na telefonie, dokładnie jak w makiecie (checkbox-driven, bez core/navigation) — aktywna strona ma podkreślenie accent.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "grid",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

@@ -10,9 +10,9 @@ const TEMPLATE = [
 
 export default function Edit( { attributes, setAttributes } ) {
 	const { label, note } = attributes;
-	const blockProps = useBlockProps( { className: 'grid-process-steps' } );
+	const blockProps = useBlockProps();
 	const innerBlocksProps = useInnerBlocksProps(
-		{ className: 'grid-process-steps__grid' },
+		{ className: 'mt-7 grid grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-7' },
 		{
 			template: TEMPLATE,
 			allowedBlocks: [ 'grid/process-step' ],
@@ -22,17 +22,17 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	return (
 		<div { ...blockProps }>
-			<div className="grid-process-steps__head">
+			<div className="flex flex-col gap-2 border-b-2 border-divider pb-3.5 md:flex-row md:items-baseline md:justify-between">
 				<RichText
 					tagName="h2"
-					className="grid-process-steps__label"
+					className="grid-process-steps__label m-0 text-[26px] font-extrabold uppercase tracking-[-0.035em] sm:text-[30px] md:text-[34px]"
 					value={ label }
 					onChange={ ( label ) => setAttributes( { label } ) }
 					allowedFormats={ [] }
 				/>
 				<RichText
 					tagName="p"
-					className="grid-process-steps__note"
+					className="grid-process-steps__note m-0 max-w-[440px] text-[13px] text-ink/60 md:text-right"
 					value={ note }
 					onChange={ ( note ) => setAttributes( { note } ) }
 					placeholder="Krótka notatka wyrównana do prawej na desktopie…"

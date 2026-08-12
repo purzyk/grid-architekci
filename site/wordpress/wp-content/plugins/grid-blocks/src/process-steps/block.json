@@ -6,15 +6,11 @@
 	"category": "grid-blocks",
 	"icon": "list-view",
 	"description": "Ponumerowane kroki procesu, np. „Jak pracujemy”. 1 kolumna na telefonie, 5 na szerokim ekranie.",
-	"supports": {
-		"html": false,
-		"layout": { "default": { "type": "flex", "flexWrap": "wrap" } }
-	},
+	"supports": { "html": false },
 	"attributes": {
 		"label": { "type": "string", "source": "html", "selector": ".grid-process-steps__label", "default": "Jak pracujemy" },
 		"note": { "type": "string", "source": "html", "selector": ".grid-process-steps__note", "default": "" }
 	},
 	"textdomain": "grid",
-	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"editorScript": "file:./index.js"
 }

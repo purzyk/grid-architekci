@@ -22,9 +22,14 @@ $query = new WP_Query( array(
 	),
 ) );
 
-$variants = array( 'accent', 'ink', 'surface' );
+$variant_classes = array(
+	'accent'  => 'bg-accent text-paper',
+	'ink'     => 'bg-ink text-paper',
+	'surface' => 'bg-surface text-ink',
+);
+$variants = array_keys( $variant_classes );
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'grid-featured-awards' ) ); ?>>
+<div <?php echo get_block_wrapper_attributes( array( 'class' => 'grid grid-cols-1 gap-0.5 border-t-2 border-divider sm:grid-cols-3' ) ); ?>>
 	<?php
 	$index = 0;
 	while ( $query->have_posts() ) :
@@ -39,13 +44,13 @@ $variants = array( 'accent', 'ink', 'surface' );
 		$href    = $related_id ? get_permalink( $related_id ) : '#';
 		$variant = $variants[ $index % count( $variants ) ];
 		?>
-		<a href="<?php echo esc_url( $href ); ?>" class="grid-featured-awards__plate is-variant-<?php echo esc_attr( $variant ); ?>">
-			<div class="grid-featured-awards__year"><?php echo esc_html( $rok ); ?></div>
-			<?php if ( $wynik ) : ?><div class="grid-featured-awards__kicker"><?php echo esc_html( $wynik ); ?></div><?php endif; ?>
-			<div class="grid-featured-awards__name"><?php echo esc_html( $konkurs ); ?></div>
-			<?php if ( $opis ) : ?><p class="grid-featured-awards__description"><?php echo esc_html( $opis ); ?></p><?php endif; ?>
-			<span class="grid-featured-awards__arrow" aria-hidden="true">→</span>
-			<span class="grid-featured-awards__mask" aria-hidden="true"></span>
+		<a href="<?php echo esc_url( $href ); ?>" class="group relative block overflow-hidden px-6 pb-8 pt-7 md:px-7 md:pb-[34px] md:pt-[30px] <?php echo esc_attr( $variant_classes[ $variant ] ); ?>">
+			<div class="text-[38px] font-extrabold leading-none tracking-[-0.04em] md:text-[46px]"><?php echo esc_html( $rok ); ?></div>
+			<?php if ( $wynik ) : ?><div class="mb-3.5 mt-3 text-[10px] uppercase tracking-[0.18em] opacity-75"><?php echo esc_html( $wynik ); ?></div><?php endif; ?>
+			<div class="text-[20px] font-extrabold uppercase leading-[1.1] tracking-[-0.02em] md:text-[22px]"><?php echo esc_html( $konkurs ); ?></div>
+			<?php if ( $opis ) : ?><p class="m-0 mt-2 text-[13px] leading-[1.5] opacity-80"><?php echo esc_html( $opis ); ?></p><?php endif; ?>
+			<span aria-hidden="true" class="pointer-events-none absolute bottom-[26px] right-6 -translate-x-2 text-[22px] font-extrabold leading-none opacity-0 transition-[opacity,transform] duration-450 ease-reveal group-hover:translate-x-0 group-hover:opacity-90">→</span>
+			<span aria-hidden="true" class="pointer-events-none absolute inset-0 bg-current opacity-0 transition-opacity duration-300 group-hover:opacity-[0.07]"></span>
 		</a>
 		<?php
 		$index++;

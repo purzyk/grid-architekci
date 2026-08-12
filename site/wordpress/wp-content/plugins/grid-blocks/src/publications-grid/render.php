@@ -17,14 +17,14 @@ $query = new WP_Query( array(
 	'order'          => 'DESC',
 ) );
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'grid-publications-grid' ) ); ?>>
+<div <?php echo get_block_wrapper_attributes(); ?>>
 	<?php if ( $label || $note ) : ?>
-		<div class="grid-publications-grid__head">
-			<?php if ( $label ) : ?><h2 class="grid-publications-grid__label"><?php echo esc_html( $label ); ?></h2><?php endif; ?>
-			<?php if ( $note ) : ?><p class="grid-publications-grid__note"><?php echo esc_html( $note ); ?></p><?php endif; ?>
+		<div class="mt-16 grid grid-cols-1 items-end gap-6 border-b-2 border-divider pb-5 md:mt-[76px] md:gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:gap-16">
+			<?php if ( $label ) : ?><h2 class="m-0 hyphens-auto break-words text-[clamp(32px,4.4vw,56px)] font-extrabold uppercase leading-[0.96] tracking-[-0.04em]"><?php echo esc_html( $label ); ?></h2><?php endif; ?>
+			<?php if ( $note ) : ?><p class="m-0 text-[14px] leading-[1.6] text-ink/70 lg:mb-1.5"><?php echo esc_html( $note ); ?></p><?php endif; ?>
 		</div>
 	<?php endif; ?>
-	<div class="grid-publications-grid__grid">
+	<div class="mt-8 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-4 md:grid-cols-6 md:gap-x-6 md:gap-y-[30px]">
 		<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 			<?php
 			$post_id = get_the_ID();
@@ -35,16 +35,16 @@ $query = new WP_Query( array(
 			?>
 			<a
 				<?php if ( $link ) : ?>href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener"<?php else : ?>href="#"<?php endif; ?>
-				class="grid-publications-grid__item"
+				class="group block text-ink"
 			>
-				<div class="grid-publications-grid__cover">
+				<div class="aspect-cover w-full overflow-hidden bg-surface">
 					<?php if ( $cover ) : ?>
-						<div class="grid-publications-grid__img" style="background-image:url(<?php echo esc_url( $cover ); ?>)"></div>
+						<div class="h-full w-full bg-contain bg-center bg-no-repeat saturate-55 transition-[transform,filter] duration-600 ease-reveal group-hover:scale-[1.06] group-hover:saturate-100" style="background-image:url(<?php echo esc_url( $cover ); ?>)"></div>
 					<?php endif; ?>
 				</div>
-				<div class="grid-publications-grid__title"><?php the_title(); ?></div>
+				<div class="mt-2.5 border-t-2 border-divider pt-2 text-[13px] font-extrabold leading-[1.25] tracking-[-0.01em]"><?php the_title(); ?></div>
 				<?php if ( $typ || $rok ) : ?>
-					<div class="grid-publications-grid__meta">
+					<div class="mt-1 flex justify-between gap-2 text-[10px] uppercase tracking-[0.08em] text-ink/50">
 						<?php if ( $typ ) : ?><span><?php echo esc_html( $typ ); ?></span><?php endif; ?>
 						<?php if ( $rok ) : ?><span><?php echo esc_html( $rok ); ?></span><?php endif; ?>
 					</div>

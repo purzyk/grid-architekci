@@ -14,14 +14,14 @@ $query = new WP_Query( array(
 	'order'          => 'DESC',
 ) );
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'grid-awards-table' ) ); ?>>
-	<div class="grid-awards-table__head" aria-hidden="true">
+<div <?php echo get_block_wrapper_attributes(); ?>>
+	<div class="hidden grid-cols-[58px_minmax(0,1fr)_minmax(0,1fr)_156px] gap-5 border-b-2 border-divider pb-[7px] text-[10px] uppercase tracking-[0.16em] text-ink/50 md:grid">
 		<span>Rok</span>
 		<span>Konkurs / nagroda</span>
 		<span>Projekt</span>
 		<span>Wynik</span>
 	</div>
-	<div class="grid-awards-table__rows">
+	<div class="mt-8 border-t-2 border-divider md:mt-0 md:border-t-0">
 		<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 			<?php
 			$post_id    = get_the_ID();
@@ -35,12 +35,12 @@ $query = new WP_Query( array(
 			?>
 			<<?php echo esc_html( $tag ); ?>
 				<?php if ( $href ) : ?>href="<?php echo esc_url( $href ); ?>"<?php endif; ?>
-				class="grid-awards-table__row"
+				class="grid grid-cols-[46px_minmax(0,1fr)] gap-x-4 gap-y-0.5 border-b border-hairline py-2.5 text-ink transition-colors hover:bg-accent/[0.07] md:grid-cols-[58px_minmax(0,1fr)_minmax(0,1fr)_156px] md:items-baseline md:gap-5 md:py-2"
 			>
-				<span class="grid-awards-table__year"><?php echo esc_html( $rok ); ?></span>
-				<span class="grid-awards-table__name"><?php echo esc_html( $konkurs ); ?></span>
-				<span class="grid-awards-table__project"><?php echo esc_html( $related_id ? get_the_title( $related_id ) : '' ); ?></span>
-				<span class="grid-awards-table__result"><?php echo esc_html( $wynik ); ?></span>
+				<span class="row-span-3 text-[14px] font-extrabold tracking-[-0.01em] md:row-span-1"><?php echo esc_html( $rok ); ?></span>
+				<span class="text-[13px] leading-[1.35]"><?php echo esc_html( $konkurs ); ?></span>
+				<span class="text-[13px] leading-[1.35] text-ink/60"><?php echo esc_html( $related_id ? get_the_title( $related_id ) : '' ); ?></span>
+				<span class="text-[10px] font-extrabold uppercase tracking-[0.1em] text-accent-700"><?php echo esc_html( $wynik ); ?></span>
 			</<?php echo esc_html( $tag ); ?>>
 		<?php endwhile; wp_reset_postdata(); ?>
 	</div>

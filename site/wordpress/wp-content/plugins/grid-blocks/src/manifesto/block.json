@@ -12,6 +12,5 @@
 		"body": { "type": "string", "source": "html", "selector": ".grid-manifesto__body", "default": "" }
 	},
 	"textdomain": "grid",
-	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"editorScript": "file:./index.js"
 }
