@@ -16,9 +16,11 @@ site/wordpress/index.php
 site/wordpress/license.txt
 site/wordpress/readme.html
 site/wordpress/wp-content/uploads/
-# Third-party plugins are dependencies, not tracked; our own code (grid-core) is.
+# Third-party plugins are dependencies, not tracked; our own code is.
 site/wordpress/wp-content/plugins/*
 !site/wordpress/wp-content/plugins/grid-core/
+!site/wordpress/wp-content/plugins/grid-blocks/
+site/wordpress/wp-content/plugins/grid-blocks/node_modules/
 site/wordpress/wp-content/themes/twenty*/
 site/wordpress/wp-content/upgrade/
 site/wordpress/wp-content/cache/

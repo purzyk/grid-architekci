@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "grid/highlight-plate",
+  "title": "Płyta wyróżnienia",
+  "category": "grid-blocks",
+  "icon": "awards",
+  "description": "Płyta nagrody — rok, wynik, tytuł, opis. Trzy warianty wypełnienia: accent / ink / surface.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "year": {
+      "type": "string",
+      "source": "html",
+      "selector": ".grid-highlight-plate__year",
+      "default": "2003"
+    },
+    "kicker": {
+      "type": "string",
+      "source": "html",
+      "selector": ".grid-highlight-plate__kicker",
+      "default": "I nagroda"
+    },
+    "title": {
+      "type": "string",
+      "source": "html",
+      "selector": ".grid-highlight-plate__title",
+      "default": "Nazwa konkursu"
+    },
+    "description": {
+      "type": "string",
+      "source": "html",
+      "selector": ".grid-highlight-plate__description",
+      "default": ""
+    },
+    "url": {
+      "type": "string",
+      "default": ""
+    },
+    "variant": {
+      "type": "string",
+      "default": "accent"
+    }
+  },
+  "textdomain": "grid",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}

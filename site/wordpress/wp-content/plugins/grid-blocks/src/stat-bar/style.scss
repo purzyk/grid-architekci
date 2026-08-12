@@ -1,0 +1,10 @@
+.grid-stat-bar {
+	display: flex;
+	gap: 22px;
+	border-top: 2px solid var(--wp--preset--color--divider);
+	padding-top: 14px;
+
+	@media (min-width: 900px) {
+		gap: 40px;
+	}
+}

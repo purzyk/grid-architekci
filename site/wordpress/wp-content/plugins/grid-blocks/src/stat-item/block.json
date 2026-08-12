@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "grid/stat-item",
+	"title": "Statystyka",
+	"category": "grid-blocks",
+	"icon": "info",
+	"description": "Pojedyncza liczba i etykieta w pasku statystyk.",
+	"parent": [ "grid/stat-bar" ],
+	"supports": { "html": false, "reusable": false },
+	"attributes": {
+		"value": {
+			"type": "string",
+			"source": "html",
+			"selector": ".grid-stat-item__value",
+			"default": "+20"
+		},
+		"label": {
+			"type": "string",
+			"source": "html",
+			"selector": ".grid-stat-item__label",
+			"default": "etykieta"
+		}
+	},
+	"textdomain": "grid",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

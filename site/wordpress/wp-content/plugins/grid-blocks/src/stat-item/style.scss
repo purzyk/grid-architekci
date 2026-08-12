@@ -1,0 +1,18 @@
+.grid-stat-item {
+	&__value {
+		font-size: 30px;
+		font-weight: 800;
+		line-height: 1;
+		letter-spacing: -0.03em;
+		color: var(--wp--preset--color--accent);
+	}
+
+	&__label {
+		margin-top: 5px;
+		font-size: var(--wp--preset--font-size--label);
+		line-height: var(--wp--custom--line-height--label);
+		text-transform: uppercase;
+		letter-spacing: var(--wp--custom--letter-spacing--nav);
+		color: var(--wp--preset--color--ink-50);
+	}
+}

@@ -1,0 +1,79 @@
+.grid-highlight-plate {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	padding: 28px 24px 34px 28px;
+	text-decoration: none;
+
+	&.is-variant-accent {
+		background: var(--wp--preset--color--accent);
+		color: var(--wp--preset--color--paper);
+	}
+	&.is-variant-ink {
+		background: var(--wp--preset--color--ink);
+		color: var(--wp--preset--color--paper);
+	}
+	&.is-variant-surface {
+		background: var(--wp--preset--color--surface);
+		color: var(--wp--preset--color--ink);
+	}
+
+	&__year {
+		font-size: 46px;
+		font-weight: 800;
+		line-height: 1;
+		letter-spacing: var(--wp--custom--letter-spacing--tightest);
+	}
+
+	&__kicker {
+		margin: 12px 0;
+		font-size: var(--wp--preset--font-size--label);
+		text-transform: uppercase;
+		letter-spacing: 0.18em;
+		opacity: 0.75;
+	}
+
+	&__title {
+		font-size: 22px;
+		font-weight: 800;
+		text-transform: uppercase;
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+	}
+
+	&__description {
+		margin-top: 8px;
+		font-size: var(--wp--preset--font-size--body-sm);
+		line-height: var(--wp--custom--line-height--body-sm);
+		opacity: 0.8;
+	}
+
+	&__arrow {
+		position: absolute;
+		bottom: 26px;
+		right: 24px;
+		font-size: 22px;
+		font-weight: 800;
+		opacity: 0;
+		transform: translateX(-8px);
+		transition: opacity var(--wp--custom--duration--short) var(--wp--custom--easing--reveal),
+			transform var(--wp--custom--duration--short) var(--wp--custom--easing--reveal);
+	}
+
+	&__mask {
+		pointer-events: none;
+		position: absolute;
+		inset: 0;
+		background: currentColor;
+		opacity: 0;
+		transition: opacity 350ms;
+	}
+
+	&:hover &__arrow {
+		opacity: 0.9;
+		transform: translateX(0);
+	}
+	&:hover &__mask {
+		opacity: 0.07;
+	}
+}
