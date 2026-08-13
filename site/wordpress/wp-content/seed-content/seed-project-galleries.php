@@ -32,8 +32,13 @@ function grid_sideload_to_post( $filename, $post_id ) {
 
 $projects = array(
 	'dom-kultury-zapolice' => array(
-		'site_plan' => 'pzt-na-strone-www-1.jpg',
-		'gallery'   => array(
+		'site_plan'  => 'pzt-na-strone-www-1.jpg',
+		// The old site's featured_image pointed at a pre-shrunk 500x325
+		// legacy thumbnail (dom-kultury_6-500x325-1.jpg) — fine for its own
+		// small thumbnail use, but blurry for our full-bleed hero. Use the
+		// full-res sibling that's already in this project's own gallery.
+		'thumbnail'  => 'dom-kultury_6.jpg',
+		'gallery'    => array(
 			'dom-kultury_1.jpg',
 			'dom-kultury_2.jpg',
 			'dom-kultury_3.jpg',
@@ -47,8 +52,11 @@ $projects = array(
 		),
 	),
 	'dom-na-krzykach-wroclaw' => array(
-		'site_plan' => 'pzt.jpg',
-		'gallery'   => array(
+		'site_plan'  => 'pzt.jpg',
+		// Same issue: old featured_image was j31-kopia.jpg, a 500x325
+		// legacy thumbnail of j31.jpg — use the full-res original instead.
+		'thumbnail'  => 'j31.jpg',
+		'gallery'    => array(
 			'j4.jpg',
 			'j10.jpg',
 			'j12.jpg',
@@ -68,22 +76,29 @@ foreach ( $projects as $slug => $data ) {
 	}
 	$post_id = $post->ID;
 
-	$gallery_ids = array();
+	$gallery_ids     = array();
+	$filename_to_id  = array();
 	foreach ( $data['gallery'] as $filename ) {
 		$id = grid_sideload_to_post( $filename, $post_id );
 		if ( $id ) {
-			$gallery_ids[] = $id;
+			$gallery_ids[]              = $id;
+			$filename_to_id[ $filename ] = $id;
 		}
 	}
 	if ( $gallery_ids ) {
 		update_field( 'field_projekt_galeria', $gallery_ids, $post_id );
 	}
 
+	$plan_id = null;
 	if ( ! empty( $data['site_plan'] ) ) {
 		$plan_id = grid_sideload_to_post( $data['site_plan'], $post_id );
 		if ( $plan_id ) {
 			update_field( 'field_projekt_rysunek', $plan_id, $post_id );
 		}
+	}
+
+	if ( ! empty( $data['thumbnail'] ) && ! empty( $filename_to_id[ $data['thumbnail'] ] ) ) {
+		set_post_thumbnail( $post_id, $filename_to_id[ $data['thumbnail'] ] );
 	}
 
 	echo "{$slug} (ID {$post_id}): " . count( $gallery_ids ) . " gallery images" .
