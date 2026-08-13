@@ -247,6 +247,24 @@ return array(
 		'render' => 'file:./render.php',
 		'viewScriptModule' => 'file:./view.js'
 	),
+	'project-header' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/project-header',
+		'title' => 'Nagłówek projektu',
+		'category' => 'grid-blocks',
+		'icon' => 'editor-kb',
+		'description' => 'Kategoria · status · rok, tytuł i lead — dokładnie jak w makiecie pojedynczego projektu. Do użycia w szablonie pojedynczego projektu, przed grid/project-detail.',
+		'supports' => array(
+			'html' => false
+		),
+		'usesContext' => array(
+			'postId'
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'render' => 'file:./render.php'
+	),
 	'publications-grid' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
