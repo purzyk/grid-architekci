@@ -53,12 +53,20 @@ $metric_labels = array(
 	<?php if ( ! empty( $galeria ) ) : ?>
 		<div class="mt-10 flex flex-col gap-5">
 			<?php foreach ( $galeria as $img ) : ?>
-				<img
-					class="block w-full h-auto"
-					src="<?php echo esc_url( $img['sizes']['large'] ?? $img['url'] ); ?>"
-					alt="<?php echo esc_attr( $img['alt'] ?? '' ); ?>"
-					<?php if ( ! empty( $img['caption'] ) ) : ?>title="<?php echo esc_attr( $img['caption'] ); ?>"<?php endif; ?>
-				/>
+				<?php
+				// ACF's gallery field normally returns full image arrays, but
+				// falls back to plain attachment IDs if the field was ever
+				// saved as raw IDs (e.g. via update_field() with an ID array,
+				// as the migration seed script does) — handle both.
+				if ( is_array( $img ) ) {
+					echo wp_get_attachment_image( $img['ID'], 'large', false, array(
+						'class' => 'block w-full h-auto',
+						'alt'   => $img['alt'] ?? '',
+					) );
+				} else {
+					echo wp_get_attachment_image( $img, 'large', false, array( 'class' => 'block w-full h-auto' ) );
+				}
+				?>
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
