@@ -177,9 +177,14 @@ From `projekt/handoff/README.md`, unchanged:
 
 - High-res photos (current assets are ~500px, pulled from the old site)
 - Logo in SVG (current is a soft 1018px PNG)
-- Links or scans for the 8 publications
-- Directions/map graphic
-- Contact section photo (marked "do wymiany" / to replace in the mocks)
+- Links or scans for the 8 publications (covers are in; the `link` field
+  on each `publikacja` post is still empty — nothing to link to yet)
+- ~~Directions/map graphic~~ — client supplied `mapa-dojazdu.jpg`, wired
+  into the Kontakt "Jak do nas trafić" section
+- Contact section photo (marked "do wymiany" / to replace in the mocks) —
+  currently showing the same siedziba photo used lower on the page; the
+  mock's own "Zdjęcie do wymiany" badge is preserved as-is since it's part
+  of the mock's literal design, not something we added
 - Project metrics: structure, services, contractor, photo credits
 - Approved FAQ copy (mocks have draft text only — commercial commitments)
 - Native-speaker QA on the English translations
@@ -188,10 +193,20 @@ From `projekt/handoff/README.md`, unchanged:
 
 ## Open technical decisions
 
-- Where contact-form submissions go, and what confirmation the sender gets.
-  The old site's DB shows Gravity Forms + EasyWP SMTP already in use — worth
-  checking `gf_form_meta`/`gf_notifications` in `grid-legacy` for the
-  current routing before deciding whether to carry that forward.
+- ~~Where contact-form submissions go~~ — decided: Contact Form 7, chosen
+  over a custom-built form specifically so the client can edit fields and
+  the notification recipient later without a developer. Form is seeded via
+  `wp-content/seed-content/seed-contact-form.php` (CF7 itself isn't in git,
+  same as other third-party plugins — see that script's header). Styled
+  with the mock's actual computed field/button values, since CF7's own
+  tag syntax can't take Tailwind's arbitrary-bracket classes directly
+  (`class:min-h-[36px]` breaks CF7's `[...]` tag parsing) — applied instead
+  from the wrapping element via `[&_.wpcf7-form-control]:...` selectors.
+  **Still open:** actual mail delivery (SMTP) isn't configured — submissions
+  validate and show a success message but wp_mail() has nowhere to send
+  through yet. The old site's DB shows Gravity Forms + EasyWP SMTP already
+  in use — worth checking `gf_form_meta`/`gf_notifications` in
+  `grid-legacy` for the current routing before setting up SMTP here.
 - Cookie/privacy policy (mocks only have a GDPR clause under the form)
 - Touch fallback for the hover mask (`group-hover` doesn't exist on touch —
   README flags `active:opacity-90` or mask-on-`:active` as options, undecided)
