@@ -11,7 +11,7 @@ export default function save( { attributes } ) {
 		<div { ...blockProps }>
 			<RichText.Content
 				tagName="h1"
-				className="grid-manifesto__statement m-0 hyphens-auto break-words text-[clamp(28px,4.2vw,54px)] leading-[1.05] tracking-[-0.033em]"
+				className="grid-manifesto__statement m-0 hyphens-auto break-words text-[clamp(28px,4.2vw,54px)] font-black leading-[1.05] tracking-[-0.033em]"
 				value={ statement }
 			/>
 			<RichText.Content
