@@ -15,7 +15,7 @@ $query = new WP_Query( array(
 ) );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<div class="hidden grid-cols-[58px_minmax(0,1fr)_minmax(0,1fr)_156px] gap-5 border-b-2 border-divider pb-[7px] text-[10px] uppercase tracking-[0.16em] text-ink/50 md:grid">
+	<div class="mt-12 hidden grid-cols-[58px_minmax(0,1fr)_minmax(0,1fr)_156px] gap-5 border-b-2 border-divider pb-[7px] text-[10px] uppercase tracking-[0.16em] text-ink/50 md:grid">
 		<span>Rok</span>
 		<span>Konkurs / nagroda</span>
 		<span>Projekt</span>

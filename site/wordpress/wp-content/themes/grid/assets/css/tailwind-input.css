@@ -18,12 +18,12 @@ body {
 #grid-navtoggle:checked ~ label .icon-open { display: none; }
 #grid-navtoggle:checked ~ label .icon-close { display: block; }
 
-/* The page-shell wrapper (header / post-content / footer) already gets its
-   spacing entirely from each part's own Tailwind classes (Hero's pt-*,
-   footer's mt-14, ...). WP's global-styles blockGap (56px) would otherwise
-   stack an extra margin-block-start on top of that between every pair of
-   these three top-level parts — kill it here, scoped to this wrapper only
-   so blockGap still spaces unrelated stacked blocks inside post-content. */
-.max-w-page.is-layout-flow > * {
+/* Every section in the mocks brings its own top spacing (pt-*, mt-*) —
+   there's no page in the design that relies on a flat gap between stacked
+   blocks. WP's global styles still apply a default blockGap margin between
+   flow/constrained siblings even with settings.spacing.blockGap set to
+   false in theme.json, so kill it explicitly here. */
+:root :where(.is-layout-flow) > *,
+:root :where(.is-layout-constrained) > * {
 	margin-block-start: 0;
 }

@@ -16,7 +16,7 @@ $query = new WP_Query( array(
 	'order'          => 'ASC',
 ) );
 ?>
-<div <?php echo get_block_wrapper_attributes(); ?>>
+<div <?php echo get_block_wrapper_attributes( array( 'class' => 'mt-12 md:mt-[60px]' ) ); ?>>
 	<div class="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-divider pb-3.5">
 		<?php if ( $label ) : ?>
 			<h2 class="text-[10px] uppercase tracking-[0.2em] text-ink/50"><?php echo esc_html( $label ); ?></h2>

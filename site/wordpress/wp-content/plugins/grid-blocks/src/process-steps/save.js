@@ -2,7 +2,7 @@ import { useBlockProps, useInnerBlocksProps, RichText } from '@wordpress/block-e
 
 export default function save( { attributes } ) {
 	const { label, note } = attributes;
-	const blockProps = useBlockProps.save();
+	const blockProps = useBlockProps.save( { className: 'mt-12 md:mt-[60px]' } );
 	const innerBlocksProps = useInnerBlocksProps.save( {
 		className: 'mt-7 grid grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-7',
 	} );
