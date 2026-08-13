@@ -14,6 +14,10 @@ module.exports = {
 		// classes in particular) isn't duplicated in any block source file —
 		// without this, those classes are silently never compiled.
 		'../../seed-content/**/*.html',
+		// seed-contact-form.php builds $label_class as a PHP string, never
+		// duplicated in any scanned .html file — same gap as above, just in
+		// a .php file this time. Learned this twice now; keeping it for good.
+		'../../seed-content/**/*.php',
 	],
 	theme: {
 		// The mocks use exactly these three breakpoints — replaces Tailwind's defaults.

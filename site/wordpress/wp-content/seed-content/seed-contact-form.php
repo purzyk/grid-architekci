@@ -60,7 +60,7 @@ $form = <<<FORM
 
 <div><label for="your-location" class="{$label_class}">Lokalizacja inwestycji</label>[text your-location id:your-location placeholder "Miasto, gmina"]</div>
 
-<div><label for="your-message" class="{$label_class}">O czym myślisz</label>[textarea your-message id:your-message placeholder "Kilka zdań o inwestycji, skali i terminie."]</div>
+<div><label for="your-message" class="{$label_class}">O czym myślisz</label>[textarea your-message id:your-message rows:5 placeholder "Kilka zdań o inwestycji, skali i terminie."]</div>
 
 [submit "Wyślij zapytanie"]
 FORM;
