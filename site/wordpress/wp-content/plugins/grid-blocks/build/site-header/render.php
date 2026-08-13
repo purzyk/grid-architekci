@@ -15,8 +15,8 @@ $nav_items = array(
 <header <?php echo get_block_wrapper_attributes( array( 'class' => 'flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b-2 border-divider pb-3.5 md:flex-nowrap md:items-end' ) ); ?>>
 	<input id="grid-navtoggle" type="checkbox" class="peer/toggle hidden">
 
-	<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block text-[18px] font-extrabold uppercase tracking-[-0.01em] md:order-1">
-		<?php bloginfo( 'name' ); ?>
+	<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block md:order-1">
+		<img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/logo.png' ) ); ?>" alt="GRID Architekci" class="block h-7 w-auto md:h-8">
 	</a>
 
 	<label for="grid-navtoggle" class="-mr-1 cursor-pointer p-1 text-ink md:hidden md:order-3" aria-label="Menu">
