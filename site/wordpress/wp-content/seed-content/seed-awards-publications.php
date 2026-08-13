@@ -20,27 +20,27 @@ foreach ( array( 'nagroda', 'publikacja' ) as $pt ) {
 }
 
 $awards = array(
-	array( 'rok' => 2023, 'konkurs' => 'Piękny Wrocław, XXXII edycja', 'wynik' => 'I nagroda' ),
-	array( 'rok' => 2023, 'konkurs' => 'Zabytek Zadbany', 'wynik' => 'Laureat', 'featured' => true, 'opis' => 'Stara Szwalnia w Lesznie — adaptacja fabryki na mieszkania.' ),
-	array( 'rok' => 2021, 'konkurs' => 'Polski Cement w architekturze', 'wynik' => 'Nominacja' ),
-	array( 'rok' => 2021, 'konkurs' => 'IDOL Zachodniopomorskie', 'wynik' => 'Laureat' ),
-	array( 'rok' => 2020, 'konkurs' => 'Konkurs SARP', 'wynik' => 'Wyróżnienie' ),
-	array( 'rok' => 2019, 'konkurs' => 'Piękny Wrocław, XXIX edycja', 'wynik' => 'Wyróżnienie' ),
-	array( 'rok' => 2017, 'konkurs' => 'Najlepsza Przestrzeń Publiczna Woj. Śląskiego', 'wynik' => 'Nagroda' ),
-	array( 'rok' => 2017, 'konkurs' => 'Centrum Aktywności Lokalnej, Szczecin', 'wynik' => 'I nagroda' ),
-	array( 'rok' => 2016, 'konkurs' => 'Karkonoskie Spotkania Architektów KASA', 'wynik' => 'III miejsce' ),
-	array( 'rok' => 2016, 'konkurs' => 'Konkurs Fundacji Familijny', 'wynik' => 'Wyróżnienie' ),
-	array( 'rok' => 2016, 'konkurs' => 'Konkurs UG Drezdenko', 'wynik' => 'Wyróżnienie' ),
-	array( 'rok' => 2014, 'konkurs' => 'Dworzec, Piekary Śląskie', 'wynik' => 'I nagroda', 'featured' => true, 'opis' => 'Zrealizowany; Najlepsza Przestrzeń Publiczna Śląska 2017.' ),
-	array( 'rok' => 2014, 'konkurs' => 'Piękny Wrocław, XXIV edycja', 'wynik' => 'II nagroda' ),
-	array( 'rok' => 2013, 'konkurs' => 'Piękny Wrocław, XXIII edycja', 'wynik' => 'I nagroda' ),
-	array( 'rok' => 2013, 'konkurs' => 'Piękny Wrocław, XXIII edycja', 'wynik' => 'II nagroda' ),
-	array( 'rok' => 2012, 'konkurs' => 'Profesjonaliści Forbesa', 'wynik' => 'Laureat' ),
-	array( 'rok' => 2010, 'konkurs' => 'Konkurs SARP', 'wynik' => 'III nagroda' ),
-	array( 'rok' => 2008, 'konkurs' => 'Konkurs SARP', 'wynik' => 'II nagroda' ),
-	array( 'rok' => 2008, 'konkurs' => 'Konkurs UM Zawiercie', 'wynik' => 'III nagroda' ),
-	array( 'rok' => 2008, 'konkurs' => 'Konkurs SARP', 'wynik' => 'Wyróżnienie' ),
-	array( 'rok' => 2003, 'konkurs' => 'Europan 7, Kristianstad', 'wynik' => 'I nagroda', 'featured' => true, 'opis' => 'Pierwszy polski zespół z I nagrodą w Europan.' ),
+	array( 'rok' => 2023, 'konkurs' => 'Piękny Wrocław, XXXII edycja', 'wynik' => 'I nagroda', 'top' => true, 'projekt' => 'Dom jednorodzinny' ),
+	array( 'rok' => 2023, 'konkurs' => 'Zabytek Zadbany — adaptacja obiektów zabytkowych', 'wynik' => 'Laureat', 'top' => true, 'featured' => true, 'opis' => 'Stara Szwalnia w Lesznie — adaptacja fabryki na mieszkania.', 'projekt' => 'Stara Szwalnia, Leszno' ),
+	array( 'rok' => 2021, 'konkurs' => 'Polski Cement w architekturze', 'wynik' => 'Nominacja', 'projekt' => 'Dom Kultury Krzemień' ),
+	array( 'rok' => 2021, 'konkurs' => 'IDOL Zachodniopomorskie', 'wynik' => 'Laureat', 'top' => true, 'projekt' => 'Dom Kultury Krzemień' ),
+	array( 'rok' => 2020, 'konkurs' => 'Konkurs SARP', 'wynik' => 'Wyróżnienie', 'projekt' => 'Rynek w Janowie' ),
+	array( 'rok' => 2019, 'konkurs' => 'Piękny Wrocław, XXIX edycja', 'wynik' => 'Wyróżnienie', 'projekt' => 'Dom jednorodzinny' ),
+	array( 'rok' => 2017, 'konkurs' => 'Najlepsza Przestrzeń Publiczna Woj. Śląskiego', 'wynik' => 'Nagroda', 'top' => true, 'projekt' => 'Dworzec autobusowy, Piekary Śląskie' ),
+	array( 'rok' => 2017, 'konkurs' => 'Centrum Aktywności Lokalnej, Szczecin', 'wynik' => 'I nagroda', 'top' => true, 'projekt' => 'Dom Kultury Krzemień' ),
+	array( 'rok' => 2016, 'konkurs' => 'Karkonoskie Spotkania Architektów KASA', 'wynik' => 'III miejsce', 'projekt' => 'Nagroda Mistera' ),
+	array( 'rok' => 2016, 'konkurs' => 'Konkurs Fundacji Familijny', 'wynik' => 'Wyróżnienie', 'projekt' => 'Zespół wielofunkcyjny, Poznań' ),
+	array( 'rok' => 2016, 'konkurs' => 'Konkurs UG Drezdenko', 'wynik' => 'Wyróżnienie', 'projekt' => 'Przebudowa Placu Wileńskiego, Drezdenko' ),
+	array( 'rok' => 2014, 'konkurs' => 'Konkurs UM Piekary', 'wynik' => 'I nagroda', 'top' => true, 'featured' => true, 'opis' => 'Zrealizowany; Najlepsza Przestrzeń Publiczna Śląska 2017.', 'projekt' => 'Dworzec autobusowy, Piekary Śląskie' ),
+	array( 'rok' => 2014, 'konkurs' => 'Piękny Wrocław, XXIV edycja', 'wynik' => 'II nagroda', 'projekt' => 'Domy jednorodzinne' ),
+	array( 'rok' => 2013, 'konkurs' => 'Piękny Wrocław, XXIII edycja', 'wynik' => 'I nagroda', 'top' => true, 'projekt' => 'Dom z pracownią, Osobowice' ),
+	array( 'rok' => 2013, 'konkurs' => 'Piękny Wrocław, XXIII edycja', 'wynik' => 'II nagroda', 'projekt' => 'Rozbudowa bliźniaka, Wrocław' ),
+	array( 'rok' => 2012, 'konkurs' => 'Profesjonaliści Forbesa', 'wynik' => 'Laureat', 'projekt' => 'Artur Toboła — zawód zaufania publicznego' ),
+	array( 'rok' => 2010, 'konkurs' => 'Konkurs SARP', 'wynik' => 'III nagroda', 'projekt' => 'Sala gimnastyczna przy Z.S. Sportowych, Szczecin' ),
+	array( 'rok' => 2008, 'konkurs' => 'Konkurs SARP', 'wynik' => 'II nagroda', 'projekt' => 'Przedszkole w Złotym Potoku' ),
+	array( 'rok' => 2008, 'konkurs' => 'Konkurs UM Zawiercie', 'wynik' => 'III nagroda', 'projekt' => 'Rozbudowa osiedla TAZ' ),
+	array( 'rok' => 2008, 'konkurs' => 'Konkurs SARP', 'wynik' => 'Wyróżnienie', 'projekt' => 'Rynek w Olsztynie k. Częstochowy' ),
+	array( 'rok' => 2003, 'konkurs' => 'Europan 7', 'wynik' => 'I nagroda', 'top' => true, 'featured' => true, 'opis' => 'Pierwszy polski zespół z I nagrodą w Europan.', 'projekt' => 'Osiedle mieszkaniowe, Kristianstad, Szwecja' ),
 );
 
 foreach ( $awards as $a ) {
@@ -52,7 +52,9 @@ foreach ( $awards as $a ) {
 	update_field( 'field_nagroda_rok', $a['rok'], $id );
 	update_field( 'field_nagroda_konkurs', $a['konkurs'], $id );
 	update_field( 'field_nagroda_wynik', $a['wynik'], $id );
+	update_field( 'field_nagroda_top', ! empty( $a['top'] ), $id );
 	update_field( 'field_nagroda_wyrozniona', ! empty( $a['featured'] ), $id );
+	update_field( 'field_nagroda_projekt_nazwa', $a['projekt'], $id );
 	if ( ! empty( $a['opis'] ) ) {
 		update_field( 'field_nagroda_opis', $a['opis'], $id );
 	}
