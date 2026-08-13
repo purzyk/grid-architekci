@@ -144,6 +144,9 @@
 			"link": {
 				"color": { "text": "var(--wp--preset--color--ink)" },
 				":hover": { "color": { "text": "var(--wp--preset--color--accent-700)" } }
+			},
+			"heading": {
+				"typography": { "fontWeight": "800" }
 			}
 		}
 	}

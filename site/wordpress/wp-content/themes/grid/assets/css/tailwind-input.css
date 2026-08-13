@@ -12,6 +12,16 @@ body {
 	font-family: theme('fontFamily.sans');
 }
 
+/* Headings default to 800 in the design (confirmed against the live mock —
+   h1/h2/h3 all compute to 800 even with no explicit font-weight class on
+   them). theme.json declares this via styles.elements.heading, but
+   Tailwind's own preflight (h1..h6{font-weight:inherit}) has equal
+   selector specificity and loads later in this same file, so it wins the
+   cascade tie and silently resets it back to inherited body text (400). */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 800;
+}
+
 /* Hamburger: swap the icon when the menu is open (descendants can't use
    peer-*, since peer-checked only reaches direct siblings — same limitation
    the mocks hit, see grid-o-nas.dc.html's own #navtoggle:checked rule). */
