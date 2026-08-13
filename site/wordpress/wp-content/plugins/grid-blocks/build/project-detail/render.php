@@ -46,8 +46,9 @@ $metric_labels = array(
 // at the top level, so breaking these specific pieces out to true full
 // bleed needs an equal-and-opposite negative margin — same technique used
 // for the O nas/Kontakt photos.
-$bleed_class = '-mx-[18px] sm:-mx-7 md:-mx-10';
-$photo_class = 'block h-[260px] w-full object-cover saturate-60 sm:h-[400px] md:h-[620px]';
+$bleed_class      = '-mx-[18px] sm:-mx-7 md:-mx-10';
+$photo_class      = 'block h-[260px] w-full object-cover saturate-60 sm:h-[400px] md:h-[620px]';
+$photo_class_half = 'block h-[260px] w-full object-cover saturate-60 sm:h-[340px] md:h-[430px]';
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
 	<?php if ( has_post_thumbnail( $post_id ) ) : ?>
@@ -61,17 +62,23 @@ $photo_class = 'block h-[260px] w-full object-cover saturate-60 sm:h-[400px] md:
 	<?php endif; ?>
 
 	<?php if ( ! empty( $galeria ) ) : ?>
-		<div class="mt-9 flex flex-col gap-0.5 <?php echo esc_attr( $bleed_class ); ?>">
-			<?php foreach ( $galeria as $img ) : ?>
+		<div class="mt-9 grid grid-cols-2 gap-0.5 <?php echo esc_attr( $bleed_class ); ?>">
+			<?php foreach ( array_values( $galeria ) as $i => $img ) : ?>
 				<?php
 				// ACF's gallery field normally returns full image arrays, but
 				// falls back to plain attachment IDs if the field was ever
 				// saved as raw IDs (e.g. via update_field() with an ID array,
 				// as the migration seed script does) — handle both.
 				$img_id = is_array( $img ) ? ( $img['ID'] ?? null ) : $img;
-				if ( $img_id ) {
-					echo wp_get_attachment_image( $img_id, 'large', false, array( 'class' => $photo_class ) );
+				if ( ! $img_id ) {
+					continue;
 				}
+				// Alternate full-width / paired-half-width, matching the
+				// mock: every 3rd photo runs full width, the two in between
+				// sit side by side.
+				$is_full = ( 0 === $i % 3 );
+				$class   = $is_full ? $photo_class . ' col-span-2' : $photo_class_half;
+				echo wp_get_attachment_image( $img_id, 'large', false, array( 'class' => $class ) );
 				?>
 			<?php endforeach; ?>
 		</div>

@@ -265,6 +265,24 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'render' => 'file:./render.php'
 	),
+	'project-nav' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/project-nav',
+		'title' => 'Nawigacja projektu',
+		'category' => 'grid-blocks',
+		'icon' => 'editor-kb',
+		'description' => 'Poprzedni / Wszystkie projekty / Następny — pasek nawigacji na dole strony pojedynczego projektu, dokładnie jak w makiecie.',
+		'supports' => array(
+			'html' => false
+		),
+		'usesContext' => array(
+			'postId'
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'render' => 'file:./render.php'
+	),
 	'publications-grid' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
