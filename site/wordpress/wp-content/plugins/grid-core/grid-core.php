@@ -281,7 +281,7 @@ add_action( 'wp_enqueue_scripts', function() {
 	if ( is_singular() && has_shortcode( get_post()->post_content, 'contact-form-7' ) ) {
 		return;
 	}
-	wp_dequeue_style( 'contact-form-7-css' );
+	wp_dequeue_style( 'contact-form-7' );
 	wp_dequeue_script( 'contact-form-7' );
 	wp_dequeue_script( 'swv' );
 }, 20 );
