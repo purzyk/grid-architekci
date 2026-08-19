@@ -1,0 +1,112 @@
+# BEGIN Redirects (old grid.net.pl content with no equivalent on the new site)
+RewriteEngine On
+
+# Projects archive moved to the homepage
+RewriteRule ^projekt/?$ / [R=301,L]
+
+# Individual project image "attachment" pages collapse to their project page
+RewriteRule ^projekt/([^/]+)/[^/]+/?$ /projekt/$1/ [R=301,L]
+
+# Team member pages have no equivalent — the team now lives on O nas
+RewriteRule ^team(/.*)?$ /o-nas/ [R=301,L]
+
+# O nas image attachment pages collapse to the page itself
+RewriteRule ^o-nas/[^/]+/?$ /o-nas/ [R=301,L]
+
+# No testimonials feature on the new site
+RewriteRule ^testimonial(/.*)?$ / [R=301,L]
+
+# No blog category archives
+RewriteRule ^category/.*$ / [R=301,L]
+
+# Project category archives are now a client-side filter on the homepage
+RewriteRule ^projekt_cat/.*$ / [R=301,L]
+
+# No author archive pages
+RewriteRule ^author/.*$ / [R=301,L]
+
+# Test/junk pages, never real content
+RewriteRule ^testowa-ankieta/?$ / [R=301,L]
+RewriteRule ^sample-page/?$ / [R=301,L]
+
+# Blog removed entirely — individual posts and their image attachments
+RewriteRule ^news/?$ / [R=301,L]
+RewriteRule ^akupunktura-warszaty/?$ / [R=301,L]
+RewriteRule ^wyroznienie-w-konkursie-fundacji-familijny-poznan/?$ / [R=301,L]
+RewriteRule ^dworzec-autobusowy-otwarty/?$ / [R=301,L]
+RewriteRule ^rebrick-2013-warsztaty/?$ / [R=301,L]
+RewriteRule ^1331/?$ / [R=301,L]
+RewriteRule ^1327/?$ / [R=301,L]
+RewriteRule ^i-miejsce-w-konkursie-centrum-aktywnosci-lokalnej-w-podjuchach/?$ / [R=301,L]
+RewriteRule ^dyplom-mistera-jelenia-gora/?$ / [R=301,L]
+RewriteRule ^najlepsza-przestrzen-publiczna-wojewodztwa-slaskiego-2017(/.*)?$ / [R=301,L]
+RewriteRule ^xmas/?$ / [R=301,L]
+RewriteRule ^wycieczka-do-kopenhagi/?$ / [R=301,L]
+RewriteRule ^przywitajcie-valeryie/?$ / [R=301,L]
+RewriteRule ^vallastaden(/.*)?$ / [R=301,L]
+RewriteRule ^osiedla-domow-jednorodzinnych-wroclaw/?$ / [R=301,L]
+RewriteRule ^rozpoczecie-budowy-centrum-aktywnosci-lokalnej-w-podjuchach/?$ / [R=301,L]
+RewriteRule ^skarbowa-leszno/?$ / [R=301,L]
+RewriteRule ^witamy-justyne-na-pokladzie/?$ / [R=301,L]
+RewriteRule ^jak-mieszkac-warsztaty-projektowe/?$ / [R=301,L]
+RewriteRule ^rewitalizujemy-podworka-w-szczecinie(/.*)?$ / [R=301,L]
+RewriteRule ^leszno-ul-skarbowa/?$ / [R=301,L]
+RewriteRule ^piekny-wroclaw-2019/?$ / [R=301,L]
+RewriteRule ^erowa-hantech/?$ / [R=301,L]
+RewriteRule ^kasia(/.*)?$ / [R=301,L]
+RewriteRule ^modelowa-rewitalizacja-miast-szczecin/?$ / [R=301,L]
+RewriteRule ^wycieczka-2019/?$ / [R=301,L]
+RewriteRule ^wesolych-swiat-merry-christmas(/.*)?$ / [R=301,L]
+RewriteRule ^dom-kultury-krzemien-w-podjuchach-szczecin/?$ / [R=301,L]
+RewriteRule ^konkurs-life-challenge-2020/?$ / [R=301,L]
+RewriteRule ^wyroznienie-w-konkursie-na-rynek-w-janowie/?$ / [R=301,L]
+RewriteRule ^ii-nagroda-w-konkursie-piekny-wroclaw/?$ / [R=301,L]
+RewriteRule ^architektura-murator-06-21/?$ / [R=301,L]
+RewriteRule ^zabytek-zadbany(/.*)?$ / [R=301,L]
+RewriteRule ^i-nagroda-w-konkursie-piekny-wroclaw/?$ / [R=301,L]
+RewriteRule ^polski-cement-w-architekturze/?$ / [R=301,L]
+RewriteRule ^praktykantka-martyna/?$ / [R=301,L]
+RewriteRule ^spotkanie-z-mieszkancami-leszno/?$ / [R=301,L]
+RewriteRule ^centrum-informacji-turystycznej-leszno/?$ / [R=301,L]
+RewriteRule ^otwarcie-gokis-zapolice/?$ / [R=301,L]
+# END Redirects
+
+# BEGIN WordPress
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+# END WordPress
+
+# BEGIN Cache-Control (static assets — no-op if these modules aren't loaded)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(jpg|jpeg|png|webp|svg|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+# END Cache-Control
+
+# BEGIN Compression (no-op if mod_deflate/mod_brotli aren't loaded)
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/plain text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+# END Compression
