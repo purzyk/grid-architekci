@@ -137,3 +137,57 @@ function grid_core_activate() {
 register_deactivation_hook( __FILE__, function() {
 	flush_rewrite_rules();
 } );
+
+/**
+ * This is a brochure site with no blog and no discussion feature anywhere
+ * in the design — comments exist only as a spam surface. Close them off at
+ * every layer rather than just hiding the admin UI: options, post type
+ * support, and a hard `comments_open`/`pings_open` filter so a submission
+ * can't get through even via wp-comments-post.php, XML-RPC, or the REST
+ * API regardless of any individual post's stored comment_status.
+ */
+add_action( 'init', function() {
+	update_option( 'default_comment_status', 'closed' );
+	update_option( 'default_ping_status', 'closed' );
+
+	foreach ( array( 'post', 'page', 'attachment' ) as $post_type ) {
+		remove_post_type_support( $post_type, 'comments' );
+		remove_post_type_support( $post_type, 'trackbacks' );
+	}
+} );
+
+add_filter( 'comments_open', '__return_false', 20, 2 );
+add_filter( 'pings_open', '__return_false', 20, 2 );
+add_filter( 'comments_array', '__return_empty_array', 10, 2 );
+
+add_action( 'admin_menu', function() {
+	remove_menu_page( 'edit-comments.php' ); // Comments
+	remove_menu_page( 'edit.php' );          // Posts — this site has no blog
+} );
+
+add_action( 'admin_bar_menu', function( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'comments' );
+	$wp_admin_bar->remove_node( 'new-post' );
+}, 80 );
+
+// "Quick Draft" creates a post directly from the dashboard, bypassing the
+// hidden Posts menu.
+add_action( 'wp_dashboard_setup', function() {
+	remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
+} );
+
+add_action( 'admin_init', function() {
+	if ( isset( $_GET['page'] ) ) {
+		return;
+	}
+	global $pagenow;
+	if ( in_array( $pagenow, array( 'edit-comments.php', 'comment.php', 'edit.php', 'post-new.php' ), true )
+		&& empty( $_GET['post_type'] )
+	) {
+		wp_safe_redirect( admin_url() );
+		exit;
+	}
+} );
+
+// No blog, so nothing should advertise a comments feed either.
+add_filter( 'feed_links_show_comments_feed', '__return_false' );
