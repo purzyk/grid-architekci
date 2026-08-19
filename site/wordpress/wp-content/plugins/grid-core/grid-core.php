@@ -42,7 +42,10 @@ function grid_core_register_post_types() {
 		'show_ui'      => true,
 		'show_in_rest' => true,
 		'menu_icon'    => 'dashicons-groups',
-		'supports'     => array( 'title', 'editor', 'thumbnail' ),
+		// 'page-attributes' gives editors a plain "Order" field (block
+		// editor sidebar + Quick Edit) to control display order on the
+		// team grid — it's read via menu_order in team-grid/render.php.
+		'supports'     => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
 	) );
 
 	register_post_type( 'nagroda', array(
