@@ -87,7 +87,15 @@ $context = array(
 			>
 				<div class="relative aspect-tile w-full overflow-hidden bg-surface">
 					<?php if ( has_post_thumbnail() ) : ?>
-						<?php the_post_thumbnail( 'large', array( 'class' => 'absolute inset-0 h-full w-full object-cover saturate-60 transition-[transform,filter] duration-700 ease-reveal group-hover:scale-[1.03] group-hover:saturate-100' ) ); ?>
+						<?php
+						$thumb_attrs = array( 'class' => 'absolute inset-0 h-full w-full object-cover saturate-60 transition-[transform,filter] duration-700 ease-reveal group-hover:scale-[1.03] group-hover:saturate-100' );
+						// The first tile is the LCP candidate on this page — hint the
+						// browser to prioritize fetching it over everything else.
+						if ( 0 === $index ) {
+							$thumb_attrs['fetchpriority'] = 'high';
+						}
+						the_post_thumbnail( 'large', $thumb_attrs );
+						?>
 					<?php endif; ?>
 					<div class="absolute inset-0 bg-accent opacity-0 mix-blend-multiply transition-opacity duration-450 group-hover:opacity-28"></div>
 				</div>
