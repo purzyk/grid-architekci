@@ -271,3 +271,17 @@ add_action( 'wp_login_failed', function() {
 add_action( 'wp_login', function() {
 	delete_transient( grid_login_throttle_key() );
 } );
+
+/**
+ * Contact Form 7 enqueues its CSS/JS site-wide by default — the form only
+ * lives on Kontakt, so every other page was shipping ~3 unused requests
+ * (dead weight contributing to PageSpeed's render-blocking-requests flag).
+ */
+add_action( 'wp_enqueue_scripts', function() {
+	if ( is_singular() && has_shortcode( get_post()->post_content, 'contact-form-7' ) ) {
+		return;
+	}
+	wp_dequeue_style( 'contact-form-7-css' );
+	wp_dequeue_script( 'contact-form-7' );
+	wp_dequeue_script( 'swv' );
+}, 20 );
