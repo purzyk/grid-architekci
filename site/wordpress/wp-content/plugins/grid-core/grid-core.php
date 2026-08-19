@@ -191,3 +191,83 @@ add_action( 'admin_init', function() {
 
 // No blog, so nothing should advertise a comments feed either.
 add_filter( 'feed_links_show_comments_feed', '__return_false' );
+
+/**
+ * Baseline hardening. Nothing here relies on a security plugin — these are
+ * plain WordPress core hooks/constants closing off attack surface this site
+ * doesn't use. CF7 spam filtering (Akismet vs. honeypot) is a separate,
+ * deliberately deferred decision — handled later, on the live site.
+ */
+
+// XML-RPC: brute-force amplification / pingback DDoS vector, unused here
+// (no Jetpack, no mobile app posting).
+add_filter( 'xmlrpc_enabled', '__return_false' );
+remove_action( 'wp_head', 'rsd_link' );
+remove_action( 'wp_head', 'wlwmanifest_link' );
+add_filter( 'wp_headers', function( $headers ) {
+	unset( $headers['X-Pingback'] );
+	return $headers;
+} );
+
+// Don't hand out the exact WordPress version — makes it trivial to match
+// against known CVEs for that release.
+remove_action( 'wp_head', 'wp_generator' );
+add_filter( 'the_generator', '__return_empty_string' );
+
+// The REST API and the old ?author=N query var both leak real usernames
+// (confirmed live: /wp-json/wp/v2/users returned "admin" outright, and
+// ?author=1 redirected straight to /author/admin/) — halves the work for
+// anyone brute-forcing login, since they no longer have to guess the
+// username too.
+add_filter( 'rest_endpoints', function( $endpoints ) {
+	if ( ! is_user_logged_in() ) {
+		unset( $endpoints['/wp/v2/users'] );
+		unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+	}
+	return $endpoints;
+} );
+add_action( 'init', function() {
+	if ( ! is_admin() && isset( $_GET['author'] ) && is_numeric( $_GET['author'] ) ) {
+		wp_safe_redirect( home_url(), 301 );
+		exit;
+	}
+} );
+
+// No editing PHP through the dashboard — if an attacker ever got any
+// admin-level foothold, this is the difference between "can view things"
+// and "can write arbitrary code to disk." Defined here (not wp-config.php)
+// so it's version-controlled and travels with the codebase automatically.
+if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+	define( 'DISALLOW_FILE_EDIT', true );
+}
+
+/**
+ * Lock out an IP after 5 failed logins within 15 minutes. WordPress core
+ * has no login throttling at all by default. Uses REMOTE_ADDR rather than
+ * X-Forwarded-For — the latter is trivially spoofable unless you know your
+ * specific proxy/CDN setup validates it, so if this ever sits behind one,
+ * this will need adjusting to read the real client IP correctly.
+ */
+function grid_login_throttle_key() {
+	return 'grid_login_fails_' . md5( $_SERVER['REMOTE_ADDR'] ?? '' );
+}
+
+add_filter( 'authenticate', function( $user, $username, $password ) {
+	if ( empty( $username ) && empty( $password ) ) {
+		return $user;
+	}
+	if ( (int) get_transient( grid_login_throttle_key() ) >= 5 ) {
+		return new WP_Error( 'grid_too_many_attempts', __( 'Zbyt wiele nieudanych prób logowania. Spróbuj ponownie za 15 minut.' ) );
+	}
+	return $user;
+}, 30, 3 );
+
+add_action( 'wp_login_failed', function() {
+	$key   = grid_login_throttle_key();
+	$count = (int) get_transient( $key );
+	set_transient( $key, $count + 1, 15 * MINUTE_IN_SECONDS );
+} );
+
+add_action( 'wp_login', function() {
+	delete_transient( grid_login_throttle_key() );
+} );
