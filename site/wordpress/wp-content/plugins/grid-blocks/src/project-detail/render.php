@@ -43,9 +43,26 @@ foreach ( $metryka as $row ) {
 $bleed_class      = '-mx-[18px] sm:-mx-7 md:-mx-10';
 $photo_class      = 'block h-[260px] w-full object-cover saturate-60 sm:h-[400px] md:h-[620px]';
 $photo_class_half = 'block h-[260px] w-full object-cover saturate-60 sm:h-[340px] md:h-[430px]';
+
+// The featured thumbnail (masonry_featured_image from the old theme) is
+// very often a pre-shrunk 500px legacy crop, while gallery photos were
+// sideloaded individually and are reliably full-res — use the gallery's
+// own first photo as the hero whenever there is one, and only fall back
+// to the featured thumbnail for the sparse projects that have no gallery
+// at all.
+$galeria_list = ! empty( $galeria ) ? array_values( $galeria ) : array();
+$hero_id      = null;
+if ( $galeria_list ) {
+	$first_img = array_shift( $galeria_list );
+	$hero_id   = is_array( $first_img ) ? ( $first_img['ID'] ?? null ) : $first_img;
+}
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
-	<?php if ( has_post_thumbnail( $post_id ) ) : ?>
+	<?php if ( $hero_id ) : ?>
+		<div class="<?php echo esc_attr( $bleed_class ); ?>">
+			<?php echo wp_get_attachment_image( $hero_id, 'large', false, array( 'class' => $photo_class ) ); ?>
+		</div>
+	<?php elseif ( has_post_thumbnail( $post_id ) ) : ?>
 		<div class="<?php echo esc_attr( $bleed_class ); ?>">
 			<?php echo get_the_post_thumbnail( $post_id, 'large', array( 'class' => $photo_class ) ); ?>
 		</div>
@@ -71,9 +88,9 @@ $photo_class_half = 'block h-[260px] w-full object-cover saturate-60 sm:h-[340px
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $galeria ) ) : ?>
+	<?php if ( ! empty( $galeria_list ) ) : ?>
 		<div class="mt-9 grid grid-cols-2 gap-0.5 <?php echo esc_attr( $bleed_class ); ?>">
-			<?php foreach ( array_values( $galeria ) as $i => $img ) : ?>
+			<?php foreach ( $galeria_list as $i => $img ) : ?>
 				<?php
 				// ACF's gallery field normally returns full image arrays, but
 				// falls back to plain attachment IDs if the field was ever
