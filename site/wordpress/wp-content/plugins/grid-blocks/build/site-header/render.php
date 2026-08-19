@@ -16,7 +16,7 @@ $nav_items = array(
 	<input id="grid-navtoggle" type="checkbox" class="peer/toggle hidden">
 
 	<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block md:order-1">
-		<img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/logo.png' ) ); ?>" alt="GRID Architekci" class="block h-7 w-auto md:h-8">
+		<img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/logo.png' ) ); ?>" alt="GRID Architekci" width="1018" height="187" class="block h-7 w-auto md:h-8">
 	</a>
 
 	<label for="grid-navtoggle" class="-mr-1 cursor-pointer p-1 text-ink md:hidden md:order-3" aria-label="Menu">
