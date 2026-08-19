@@ -1,0 +1,936 @@
+{
+    "projects": [
+        {
+            "old_id": 1172,
+            "title": "Dom letniskowy, Przedgórze Izerskie",
+            "slug": "dom-letniskowy-przedgorze-izerskie",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/antoninow.jpg",
+            "gallery": [
+                "2017\/11\/antoninow.jpg",
+                "2017\/11\/antoniow-7.jpg",
+                "2017\/11\/antoniow-6.jpg",
+                "2017\/11\/antoniow-5.jpg",
+                "2017\/11\/antoniow-4.jpg",
+                "2017\/11\/antoniow-3.jpg",
+                "2017\/11\/antoniow-2.jpg",
+                "2017\/11\/antoniow-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1181,
+            "title": "Dom jednorodzinny, Wrocław",
+            "slug": "dom-jednorodzinny-wroclaw",
+            "year": 2014,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/kulki.jpg",
+            "gallery": [
+                "2017\/11\/kulki.jpg",
+                "2017\/11\/kulki-7.jpg",
+                "2017\/11\/kulki-6.jpg",
+                "2017\/11\/kulki-5.jpg",
+                "2017\/11\/kulki-4.jpg",
+                "2017\/11\/kulki-3.jpg",
+                "2017\/11\/kulki-2.jpg",
+                "2017\/11\/kulki-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1190,
+            "title": "Dom jednorodzinny z pracownią, Osobowice",
+            "slug": "dom-jednorodzinny-z-pracownia-osobowice",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/jarocinska.jpg",
+            "gallery": [
+                "2017\/11\/jarocinska.jpg",
+                "2017\/11\/jarocinska-7.jpg",
+                "2017\/11\/jarocinska-6.jpg",
+                "2017\/11\/jarocinska-5.jpg",
+                "2017\/11\/jarocinska-4.jpg",
+                "2017\/11\/jarocinska-3.jpg",
+                "2017\/11\/jarocinska-2.jpg",
+                "2017\/11\/jarocinska-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1199,
+            "title": "Rozbudowa Bliźniaka, Wrocław",
+            "slug": "rozbudowa-blizniaka-wroclaw",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/holenderska.jpg",
+            "gallery": [
+                "2017\/11\/holenderska.jpg",
+                "2017\/11\/holenderska-9.jpg",
+                "2017\/11\/holenderska-8.jpg",
+                "2017\/11\/holenderska-7.jpg",
+                "2017\/11\/holenderska-6.jpg",
+                "2017\/11\/holenderska-5.jpg",
+                "2017\/11\/holenderska-4.jpg",
+                "2017\/11\/holenderska-3.jpg",
+                "2017\/11\/holenderska-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1209,
+            "title": "Dom Kultury Krzemień, Szczecin I NAGRODA",
+            "slug": "centrum-aktywnosci-lokalnej-szczecin",
+            "year": 2017,
+            "kategoria": "publiczne",
+            "status": "konkurs",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "konkursy"
+            ],
+            "featured_image": "2020\/09\/d07_5227_500x325.jpg",
+            "gallery": [
+                "2017\/11\/cal-1.jpg",
+                "2017\/11\/cal_04.jpg",
+                "2017\/11\/cal_03.jpg",
+                "2017\/11\/cal_02.jpg",
+                "2017\/11\/cal_01.jpg",
+                "2017\/11\/cal.jpg"
+            ]
+        },
+        {
+            "old_id": 1222,
+            "title": "Ensinger Polska, Leszno",
+            "slug": "ensinger-polska-leszno",
+            "year": 2017,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2017\/11\/ensigner.jpg",
+            "gallery": [
+                "2017\/11\/ensigner.jpg",
+                "2017\/11\/ensinger-7.jpg",
+                "2017\/11\/ensinger-6.jpg",
+                "2017\/11\/ensinger-5.jpg",
+                "2017\/11\/ensinger-4.jpg",
+                "2017\/11\/ensinger-3.jpg",
+                "2017\/11\/ensinger-2.jpg",
+                "2017\/11\/ensinger-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1231,
+            "title": "Erowa, Kąty Wrocławskie",
+            "slug": "erowa-katy-wroclawskie",
+            "year": 2017,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2017\/11\/erowa.jpg",
+            "gallery": [
+                "2017\/11\/erowa.jpg",
+                "2017\/11\/erowa-5.jpg",
+                "2017\/11\/erowa-4.jpg",
+                "2017\/11\/erowa-3.jpg",
+                "2017\/11\/erowa-2.jpg",
+                "2017\/11\/erowa-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1238,
+            "title": "Dworzec autobusowy, Piekary Śląskie I Nagroda",
+            "slug": "dworzec-autobusowy-piekary-slaskie",
+            "year": 2017,
+            "kategoria": "publiczne",
+            "status": "konkurs",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "konkursy"
+            ],
+            "featured_image": "2017\/11\/piekary.jpg",
+            "gallery": [
+                "2017\/11\/piekary.jpg",
+                "2017\/11\/piekary-10.jpg",
+                "2017\/11\/piekary-9.jpg",
+                "2017\/11\/piekary-8.jpg",
+                "2017\/11\/piekary-7.jpg",
+                "2017\/11\/piekary-6.jpg",
+                "2017\/11\/piekary-5.jpg",
+                "2017\/11\/piekary-4.jpg",
+                "2017\/11\/piekary-3.jpg",
+                "2017\/11\/piekary-2.jpg",
+                "2017\/11\/piekary-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1394,
+            "title": "Suer Polska, Widziszewo",
+            "slug": "suer-polska-widziszewo",
+            "year": 2017,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2017\/11\/suer_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1398,
+            "title": "Osiedle Kaszmirowe, Wrocław",
+            "slug": "osiedle-kaszmirowe-wroclaw",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/maslice_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1400,
+            "title": "Ułańska, Leszno",
+            "slug": "ulanska-leszno",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/ulanska_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1402,
+            "title": "Inmed Karczewscy, Krępice",
+            "slug": "inmed-karczewscy-krepice",
+            "year": 2012,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2017\/11\/inmed_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1447,
+            "title": "Skarbowa, Leszno",
+            "slug": "skarbowa-leszno",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2018\/12\/skarbowa_leszno-500325-1.jpg",
+            "gallery": [
+                "2017\/11\/skarbowa6.jpg",
+                "2017\/11\/skarbowa5.jpg",
+                "2017\/11\/skarbowa4.jpg",
+                "2017\/11\/skarbowa3.jpg",
+                "2017\/11\/skarbowa2.jpg",
+                "2017\/11\/skarbowa1.jpg",
+                "2017\/11\/skarbowa_500.jpg"
+            ]
+        },
+        {
+            "old_id": 1555,
+            "title": "Przedszkole w Złotym Potoku, II Nagroda",
+            "slug": "przedszkole-w-zlotym-potoku",
+            "year": 2008,
+            "kategoria": "publiczne",
+            "status": "konkurs",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "konkursy"
+            ],
+            "featured_image": "2017\/11\/sala_500.jpg",
+            "gallery": [
+                "2017\/11\/sala_500.jpg",
+                "2017\/11\/ujeciewejscie-4.jpg",
+                "2017\/11\/ujeciefront2-3.jpg",
+                "2017\/11\/sala-2.jpg",
+                "2017\/11\/potok_6.jpg",
+                "2017\/11\/potok_2.jpg",
+                "2017\/11\/malasala-1.jpg",
+                "2017\/11\/ujeciefront2.jpg"
+            ]
+        },
+        {
+            "old_id": 1566,
+            "title": "Europan 7, Kristianstad I NAGRODA",
+            "slug": "europan-7-kristianstad",
+            "year": 203,
+            "kategoria": "mieszkalne",
+            "status": "konkurs",
+            "needs_review": false,
+            "old_terms": [
+                "konkursy",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/11\/europan_startowy-1.jpg",
+            "gallery": [
+                "2017\/11\/europan_startowy-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1581,
+            "title": "Pawilon handlowy, Nowy Tomyśl",
+            "slug": "pawilon-handlowy-nowy-tomysl",
+            "year": 2010,
+            "kategoria": "publiczne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": "2017\/11\/widok_m500.jpg",
+            "gallery": [
+                "2017\/11\/widok_m500.jpg",
+                "2017\/11\/widok-3.jpg",
+                "2017\/11\/widok-2.jpg",
+                "2017\/11\/widok-1.jpg"
+            ]
+        },
+        {
+            "old_id": 1603,
+            "title": "Dom parterowy, Wrocław",
+            "slug": "dom-parterowy-wroclaw",
+            "year": 2017,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2017\/01\/dom_jerzmanow_500_325.jpg",
+            "gallery": [
+                "2017\/01\/dom_jerzmanow_hires-34-1200x900-1.jpg",
+                "2017\/01\/dom_jerzmanow_hires-1-1200x900-1.jpg",
+                "2017\/01\/dom_jerzmanow_500_325.jpg",
+                "2017\/01\/dsc_0909.jpg",
+                "2017\/01\/dsc_0868.jpg",
+                "2017\/01\/dsc_0844.jpg",
+                "2017\/01\/dsc_0812-kopia.jpg",
+                "2017\/01\/dsc_0810-1200x900-1.jpg",
+                "2017\/01\/dom_jerzmanow_hires-40-1200x900-1.jpg",
+                "2017\/01\/dom_jerzmanow_hires-39.jpg",
+                "2018\/01\/jerzmanow_szkic.jpg",
+                "2018\/01\/jerzman_4.jpg",
+                "2018\/01\/jerzman_3.jpg",
+                "2018\/01\/jerzman_2.jpg",
+                "2018\/01\/jerzman_1.jpg"
+            ]
+        },
+        {
+            "old_id": 1611,
+            "title": "Muzeum motoryzacji, Poznań",
+            "slug": "muzeum-motoryzacji-poznan",
+            "year": 2017,
+            "kategoria": "publiczne",
+            "status": "konkurs",
+            "needs_review": true,
+            "old_terms": [
+                "konkursy"
+            ],
+            "featured_image": "2018\/01\/muzeum_500x325-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1617,
+            "title": "Almark, Leszno",
+            "slug": "almark-leszno",
+            "year": 2017,
+            "kategoria": "przemyslowe",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": "2018\/05\/almark_3.jpg",
+            "gallery": [
+                "2018\/05\/organique_3.jpg",
+                "2018\/05\/organique_2.jpg",
+                "2018\/05\/organique_1_500.jpg",
+                "2018\/05\/organique_1.jpg",
+                "2018\/05\/maki_4.jpg",
+                "2018\/05\/maki_3.jpg",
+                "2018\/05\/maki_2.jpg",
+                "2018\/05\/maki_1_500.jpg",
+                "2018\/05\/maki_1.jpg",
+                "2018\/05\/ben_w6.jpg",
+                "2018\/05\/ben_w5.jpg",
+                "2018\/05\/ben_w4.jpg",
+                "2018\/05\/ben_w3.jpg",
+                "2018\/05\/ben_w2.jpg",
+                "2018\/05\/ben_w1.jpg",
+                "2018\/05\/ben_3.jpg",
+                "2018\/05\/ben_2.jpg",
+                "2018\/05\/ben_1.jpg",
+                "2018\/05\/almark_3_500.jpg",
+                "2018\/05\/almark_3.jpg",
+                "2018\/05\/almark_2.jpg",
+                "2018\/05\/almark_1.jpg"
+            ]
+        },
+        {
+            "old_id": 1631,
+            "title": "Inbras, Inowrocław",
+            "slug": "budynek-przemys",
+            "year": 2018,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2021\/01\/d07_6145-500x325-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1671,
+            "title": "Organique, Wrocław",
+            "slug": "organique-wroclaw",
+            "year": 2018,
+            "kategoria": "przemyslowe",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": "2018\/05\/organique_1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1673,
+            "title": "dom z dachem dwuspadowym, Wrocław",
+            "slug": "dom-z-dachem-dwuspadowym-wroclaw",
+            "year": 2018,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2021\/07\/1_maki_500x325.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1675,
+            "title": "Willa Grabiszynek, Wrocław",
+            "slug": "willa-grabiszynek-wroclaw",
+            "year": 2019,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2019\/12\/ben_1_500-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1693,
+            "title": "Biblioteka, Szczecin",
+            "slug": "biblioteka-szczecin",
+            "year": 2018,
+            "kategoria": "publiczne",
+            "status": "konkurs",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "konkursy"
+            ],
+            "featured_image": "2018\/08\/biblioteka-szczecin-1_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1722,
+            "title": "Dom jednorodzinny, Warszawa",
+            "slug": "dom-jednorodzinny-warszawa",
+            "year": 2018,
+            "kategoria": "mieszkalne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "do mieszkania"
+            ],
+            "featured_image": null,
+            "gallery": []
+        },
+        {
+            "old_id": 1745,
+            "title": "Almark, Leszno",
+            "slug": "almark-leszno",
+            "year": 2017,
+            "kategoria": "przemyslowe",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": "2018\/05\/almark_3.jpg",
+            "gallery": [
+                "2018\/05\/almark_3.jpg",
+                "2018\/05\/almark_1.jpg"
+            ]
+        },
+        {
+            "old_id": 1800,
+            "title": "Dom jednorodzinny, Jerzmanowo",
+            "slug": "dom-jednorodzinny-wroclaw-2",
+            "year": 2019,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2019\/03\/osi_500.jpg",
+            "gallery": [
+                "2019\/03\/osi_01.jpg",
+                "2019\/03\/osiniecka-rzut.jpg",
+                "2019\/03\/osiniecka-pzt.jpg",
+                "2019\/03\/osi_03.jpg",
+                "2019\/03\/osi_02.jpg"
+            ]
+        },
+        {
+            "old_id": 1859,
+            "title": "Hantech, Kąty Wrocławskie",
+            "slug": "hantech-katy-wroclawskie",
+            "year": 2019,
+            "kategoria": "przemyslowe",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": "2019\/12\/hantech_wizka_2_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1861,
+            "title": "Estella, Polkowice",
+            "slug": "estella-polkowice",
+            "year": 2019,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2019\/12\/estella_wizka_3_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 1880,
+            "title": "Dom po sąsiedzku, Wrocław",
+            "slug": "dom-po-sasiedzku-wroclaw",
+            "year": 2019,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2019\/10\/krotoszynska-wiz1_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2012,
+            "title": "Osada Gawrówka, Stronie Śląskie",
+            "slug": "osada-gawrowka-stronie-slaskie",
+            "year": 2020,
+            "kategoria": "mieszkalne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "do mieszkania"
+            ],
+            "featured_image": "2020\/12\/zima_ps-500x325-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2065,
+            "title": "Skarbowa, Stara Szwalnia, Leszno",
+            "slug": "skarbowa-2-leszno",
+            "year": 2020,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2023\/10\/d07_8155-500x325-2.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2108,
+            "title": "Kwartał 39, Szczecin",
+            "slug": "kwartal-39-szczecin",
+            "year": 2019,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2021\/05\/2b_ps-500x325-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2192,
+            "title": "DOM NAD JEZIOREM",
+            "slug": "dom-nad-jeziorem",
+            "year": 2021,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2021\/07\/jezioro_1str500x325.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2197,
+            "title": "DOM BIELANY WROCŁAWSKIE",
+            "slug": "dom-bielany-wroclawskie",
+            "year": 2019,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2021\/07\/1_mali_500x325.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2203,
+            "title": "Rolkowisko, Wrocław",
+            "slug": "rolkowisko-wroclaw",
+            "year": 2021,
+            "kategoria": "publiczne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2021\/11\/04_500-1.jpg",
+            "gallery": [
+                "2021\/11\/09_widok-1.jpg",
+                "2021\/11\/08_widok-copy-1.jpg",
+                "2021\/11\/06_widok-copy-1.jpg",
+                "2021\/11\/07_widok-copy-1.jpg",
+                "2021\/11\/05_widok-1.jpg",
+                "2021\/11\/04_z-lotu-ptaka-1.jpg",
+                "2021\/11\/04_500-1.jpg",
+                "2021\/11\/01_z-lotu-ptaka-1.jpg"
+            ]
+        },
+        {
+            "old_id": 2245,
+            "title": "DOM JEDNORODZINNY, WIDAWA",
+            "slug": "dom-jednorodzinny-widawa",
+            "year": 2020,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2022\/07\/1_ps-500x325-1.jpg",
+            "gallery": [
+                "2022\/07\/2_ps-1600x1000-1.jpg",
+                "2022\/07\/1_ps-500x325-1.jpg",
+                "2022\/07\/1_ps-1600x1000-1.jpg",
+                "2022\/07\/rzuty-na-strone-www.jpg",
+                "2022\/07\/pzt-na-strone-www.jpg",
+                "2022\/07\/3_ps-1600x1000-1.jpg"
+            ]
+        },
+        {
+            "old_id": 2260,
+            "title": "DOM KULTURY,  ZAPOLICE",
+            "slug": "dom-kultury-zapolice",
+            "year": 2022,
+            "kategoria": "publiczne",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2022\/07\/dom-kultury_6-500x325-1.jpg",
+            "gallery": [
+                "2022\/07\/dom-kultury_6-500x325-1.jpg",
+                "2022\/07\/dom-kultury_biblio2.jpg",
+                "2022\/07\/dom-kultury_biblio1.jpg",
+                "2022\/07\/dom-kultury_6.jpg",
+                "2022\/07\/dom-kultury_5.jpg",
+                "2022\/07\/dom-kultury_4.jpg",
+                "2022\/07\/dom-kultury_3.jpg",
+                "2022\/07\/dom-kultury_2.jpg",
+                "2022\/07\/dom-kultury_1.jpg",
+                "2022\/07\/pzt-na-strone-www-1.jpg",
+                "2022\/07\/dom-kultury_sala.jpg",
+                "2022\/07\/dom-kultury_hol.jpg"
+            ]
+        },
+        {
+            "old_id": 2307,
+            "title": "DOM na krzykach, wrocław",
+            "slug": "dom-na-krzykach-wroclaw",
+            "year": 2016,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2022\/07\/j31-kopia.jpg",
+            "gallery": [
+                "2022\/07\/pzt.jpg",
+                "2022\/07\/j31.jpg",
+                "2022\/07\/j20.jpg",
+                "2022\/07\/j19.jpg",
+                "2022\/07\/j16-scaled.jpg",
+                "2022\/07\/j12.jpg",
+                "2022\/07\/j10.jpg",
+                "2022\/07\/j4.jpg",
+                "2022\/07\/j31-kopia.jpg"
+            ]
+        },
+        {
+            "old_id": 2351,
+            "title": "PRZEBUDOWA DOMU",
+            "slug": "przebudowa-domu",
+            "year": 2015,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": "2022\/07\/dsc_0951-kopia-500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2389,
+            "title": "Deptak, Leszno",
+            "slug": "deptak-leszno",
+            "year": 2022,
+            "kategoria": "publiczne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": "2023\/08\/1-akso-kopia_500.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2435,
+            "title": "Park nad Narwią",
+            "slug": "park-nad-narwia",
+            "year": 2021,
+            "kategoria": "publiczne",
+            "status": "konkurs",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "konkursy"
+            ],
+            "featured_image": null,
+            "gallery": []
+        },
+        {
+            "old_id": 2458,
+            "title": "Domy wakacyjne w górach",
+            "slug": "domy-wakacyjne-w-gorach",
+            "year": 2022,
+            "kategoria": "mieszkalne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "do mieszkania"
+            ],
+            "featured_image": "2023\/09\/widok-3-500x325-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2461,
+            "title": "Hala montażowa, TORNOS",
+            "slug": "hala-montazowa-tornos",
+            "year": 2021,
+            "kategoria": "przemyslowe",
+            "status": "zrealizowane",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne",
+                "zrealizowane"
+            ],
+            "featured_image": "2023\/10\/d07_0975-fullres-kopia500x325-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2568,
+            "title": "DOM W BRZOZACH",
+            "slug": "dom-w-brzozach",
+            "year": 2021,
+            "kategoria": "mieszkalne",
+            "status": "zrealizowane",
+            "needs_review": false,
+            "old_terms": [
+                "zrealizowane",
+                "do mieszkania"
+            ],
+            "featured_image": null,
+            "gallery": []
+        },
+        {
+            "old_id": 2583,
+            "title": "2HANDLE POLEN, KOŚCIAN",
+            "slug": "2handle-polen-koscian",
+            "year": 2016,
+            "kategoria": "przemyslowe",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "komercyjne"
+            ],
+            "featured_image": null,
+            "gallery": []
+        },
+        {
+            "old_id": 2594,
+            "title": "dom JEDNORODZINNY, OŁTASZYN",
+            "slug": "dom-na-oltaszynie",
+            "year": 2025,
+            "kategoria": "mieszkalne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "do mieszkania"
+            ],
+            "featured_image": "2025\/03\/l_500_4_ps-kopia-2-1.jpg",
+            "gallery": []
+        },
+        {
+            "old_id": 2652,
+            "title": "DOM JEDNORODZINNY, KRZYKI WROCŁAW",
+            "slug": "dom-jednorodzinny-krzyki-wroclaw",
+            "year": 2022,
+            "kategoria": "mieszkalne",
+            "status": "koncepcja",
+            "needs_review": true,
+            "old_terms": [
+                "do mieszkania"
+            ],
+            "featured_image": "2025\/03\/m-500_1_ps-kopia.jpg",
+            "gallery": []
+        }
+    ],
+    "team": [
+        {
+            "old_id": 1821,
+            "name": "Martyna Jóska",
+            "stanowisko": "Praktykantka",
+            "funkcja": "",
+            "linkedin": "",
+            "photo": "2024\/10\/martyna.jpg"
+        },
+        {
+            "old_id": 1445,
+            "name": "Paulina Gogacz-Formella",
+            "stanowisko": "architekt IARP, BIM manager",
+            "funkcja": "",
+            "linkedin": "",
+            "photo": "2017\/11\/20171114_122617-3.jpg"
+        },
+        {
+            "old_id": 73,
+            "name": "Artur Toboła",
+            "stanowisko": "architekt IARP",
+            "funkcja": "Prezes Zarządu",
+            "linkedin": "https:\/\/www.linkedin.com\/in\/artur-toboła-72933918\/",
+            "photo": "2017\/11\/20171114_122935-4.jpg"
+        },
+        {
+            "old_id": 77,
+            "name": "Agnieszka Zając",
+            "stanowisko": "architekt IARP",
+            "funkcja": "partner",
+            "linkedin": "https:\/\/www.linkedin.com\/in\/agnieszka-zaj%C4%85c-507226138\/",
+            "photo": "2017\/11\/20171114_123251-5.jpg"
+        }
+    ]
+}
