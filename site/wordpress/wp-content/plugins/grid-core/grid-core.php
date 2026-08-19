@@ -10,6 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Generate image subsizes as WebP instead of JPEG — smaller files at the
+// same visual quality, and it's fully transparent to the rest of the site
+// since wp_get_attachment_image()/srcset are metadata-driven: whatever
+// format the stored sizes array says, that's what gets served. The
+// original uploaded file is untouched either way.
+add_filter( 'image_editor_output_format', function( $formats ) {
+	$formats['image/jpeg'] = 'image/webp';
+	return $formats;
+} );
+
 require_once __DIR__ . '/acf-fields.php';
 
 add_action( 'init', 'grid_core_register_post_types' );
