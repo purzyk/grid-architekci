@@ -3,6 +3,7 @@
  * Plugin Name: GRID Core
  * Description: Content model for the GRID Architekci site — projekt/zespol/nagroda/publikacja post types and the projekt taxonomies. Kept in a plugin, not the theme, so the data model survives a theme change.
  * Version: 0.1.0
+ * Update URI: false
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

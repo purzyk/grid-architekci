@@ -3,6 +3,7 @@
  * Plugin Name: GRID Blocks
  * Description: Custom block library for the GRID Architekci site. Kept separate from grid-core (which owns the CPT/taxonomy/ACF data model) so blocks and content survive independently of each other and of a future theme change.
  * Version: 0.1.0
+ * Update URI: false
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
