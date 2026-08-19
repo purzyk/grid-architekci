@@ -34,3 +34,41 @@ add_action( 'init', function() {
 		register_block_type( $build_dir . '/' . $block_dir );
 	}
 } );
+
+/**
+ * Restrict the inserter on Pages to the blocks the design system actually
+ * styles. Every marketing page (front page, O nas, Osiągnięcia, Kontakt) is
+ * built from these — anything else in core (cover, table, media-text,
+ * embeds, social icons...) renders with zero Tailwind styling and would
+ * clash with the mock-matched design. Existing content isn't affected —
+ * this only trims what the inserter offers, so already-placed blocks like
+ * the raw wp:html backgrounds still render and remain editable in place.
+ */
+add_filter( 'allowed_block_types_all', function( $allowed_blocks, $editor_context ) {
+	if ( empty( $editor_context->post ) || 'page' !== $editor_context->post->post_type ) {
+		return $allowed_blocks;
+	}
+
+	static $grid_blocks = null;
+	if ( null === $grid_blocks ) {
+		$grid_blocks = array();
+		foreach ( glob( __DIR__ . '/build/*/block.json' ) as $block_json ) {
+			$data = json_decode( file_get_contents( $block_json ), true );
+			if ( ! empty( $data['name'] ) ) {
+				$grid_blocks[] = $data['name'];
+			}
+		}
+	}
+
+	$core_blocks = array(
+		'core/paragraph',
+		'core/heading',
+		'core/list',
+		'core/list-item',
+		'core/image',
+		'core/group',
+		'core/html',
+	);
+
+	return array_merge( $core_blocks, $grid_blocks );
+}, 10, 2 );
