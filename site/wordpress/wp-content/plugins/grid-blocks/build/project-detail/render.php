@@ -14,31 +14,25 @@ if ( ! $post_id || ! function_exists( 'get_field' ) ) {
 $opis       = get_field( 'opis', $post_id );
 $galeria    = get_field( 'galeria', $post_id );
 $rysunek_id = get_field( 'rysunek_zagospodarowania', $post_id );
-$metryka    = get_field( 'metryka', $post_id ) ?: array();
+$metryka    = get_field( 'metryka', $post_id ) ?: array(); // repeater: array of {label, value}
 
-// Rok and status aren't part of the metryka group (rok is its own field,
+// Rok and status aren't part of the metryka repeater (rok is its own field,
 // status is a taxonomy) but the mocks show them as metric columns too —
-// merge them in so the grid matches what the design actually shows.
+// prepend them so the grid matches what the design actually shows.
+$metric_rows = array();
 $rok = get_field( 'rok', $post_id );
 if ( $rok ) {
-	$metryka = array( 'rok' => $rok ) + $metryka;
+	$metric_rows[] = array( 'label' => 'Rok', 'value' => $rok );
 }
 $status_terms = get_the_terms( $post_id, 'projekt_status' );
 if ( $status_terms && ! is_wp_error( $status_terms ) ) {
-	$metryka = array( 'status' => $status_terms[0]->name ) + $metryka;
+	$metric_rows[] = array( 'label' => 'Status', 'value' => $status_terms[0]->name );
 }
-
-$metric_labels = array(
-	'rok'         => 'Rok',
-	'status'      => 'Status',
-	'klient'      => 'Klient',
-	'zakres'      => 'Zakres',
-	'zespol'      => 'Zespół',
-	'konstrukcja' => 'Konstrukcja',
-	'instalacje'  => 'Instalacje',
-	'wykonawca'   => 'Wykonawca',
-	'autor_zdjec' => 'Autor zdjęć',
-);
+foreach ( $metryka as $row ) {
+	if ( ! empty( $row['label'] ) && ! empty( $row['value'] ) ) {
+		$metric_rows[] = array( 'label' => $row['label'], 'value' => $row['value'] );
+	}
+}
 
 // The mock's photos and site-plan bleed edge-to-edge with the page canvas
 // (its own outer wrapper carries no horizontal padding — every section
@@ -90,16 +84,12 @@ $photo_class_half = 'block h-[260px] w-full object-cover saturate-60 sm:h-[340px
 		</div>
 	<?php endif; ?>
 
-	<?php
-	$has_metrics = is_array( $metryka ) && count( array_filter( $metryka ) ) > 0;
-	if ( $has_metrics ) :
-		?>
+	<?php if ( ! empty( $metric_rows ) ) : ?>
 		<div class="mt-12 grid grid-cols-2 gap-x-6 gap-y-[26px] border-t-2 border-divider py-[26px] sm:grid-cols-3 md:grid-cols-5">
-			<?php foreach ( $metric_labels as $key => $label ) : ?>
-				<?php if ( empty( $metryka[ $key ] ) ) continue; ?>
+			<?php foreach ( $metric_rows as $row ) : ?>
 				<div>
-					<div class="mb-1.5 h-3 text-label uppercase tracking-kicker text-ink/50"><?php echo esc_html( $label ); ?></div>
-					<div class="text-body-sm leading-[1.4]"><?php echo esc_html( $metryka[ $key ] ); ?></div>
+					<div class="mb-1.5 h-3 text-label uppercase tracking-kicker text-ink/50"><?php echo esc_html( $row['label'] ); ?></div>
+					<div class="text-body-sm leading-[1.4]"><?php echo esc_html( $row['value'] ); ?></div>
 				</div>
 			<?php endforeach; ?>
 		</div>
