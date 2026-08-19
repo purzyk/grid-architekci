@@ -52,7 +52,23 @@ $photo_class_half = 'block h-[260px] w-full object-cover saturate-60 sm:h-[340px
 	<?php endif; ?>
 
 	<?php if ( $opis ) : ?>
-		<div class="mt-9 columns-1 gap-14 text-body text-ink/70 md:mt-12 md:columns-2 [&_p]:mb-4 [&_p:last-child]:mb-0"><?php echo wp_kses_post( $opis ); ?></div>
+		<?php
+		// "Opis (dwa akapity)" is meant as two explicit paragraphs, one per
+		// column — the mock hardcodes body1/body2 into their own grid cells,
+		// not a CSS multi-column flow (which would split wherever a column
+		// runs out of height, ignoring paragraph boundaries). Split the real
+		// <p> tags instead so paragraph 1 always lands left, the rest right.
+		preg_match_all( '/<p[^>]*>.*?<\/p>/is', $opis, $opis_matches );
+		$opis_paragraphs = $opis_matches[0] ?: array( $opis );
+		$opis_left       = $opis_paragraphs[0];
+		$opis_right      = implode( '', array_slice( $opis_paragraphs, 1 ) );
+		?>
+		<div class="mt-9 grid grid-cols-1 gap-6 text-body text-ink/70 md:mt-12 md:grid-cols-2 md:gap-14">
+			<div class="[&_p]:mb-4 [&_p:last-child]:mb-0"><?php echo wp_kses_post( $opis_left ); ?></div>
+			<?php if ( $opis_right ) : ?>
+				<div class="[&_p]:mb-4 [&_p:last-child]:mb-0"><?php echo wp_kses_post( $opis_right ); ?></div>
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
 
 	<?php if ( ! empty( $galeria ) ) : ?>
