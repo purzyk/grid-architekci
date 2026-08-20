@@ -33,9 +33,15 @@ $query = new WP_Query( array(
 			$link    = function_exists( 'get_field' ) ? get_field( 'link', $post_id ) : '';
 			$cover   = get_the_post_thumbnail_url( $post_id, 'medium' );
 			?>
-			<a
-				<?php if ( $link ) : ?>href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener"<?php else : ?>href="#"<?php endif; ?>
-				class="group block text-ink"
+			<?php
+			// Only wrap in a real link when there's somewhere to go — an
+			// <a href="#"> still gets a pointer cursor and hover affordance
+			// even though clicking it does nothing.
+			$tag = $link ? 'a' : 'div';
+			?>
+			<<?php echo $tag; ?>
+				<?php if ( $link ) : ?>href="<?php echo esc_url( $link ); ?>" target="_blank" rel="noopener"<?php endif; ?>
+				class="<?php echo $link ? 'group ' : ''; ?>block text-ink"
 			>
 				<div class="aspect-cover w-full overflow-hidden bg-surface">
 					<?php if ( $cover ) : ?>
@@ -49,7 +55,7 @@ $query = new WP_Query( array(
 						<?php if ( $rok ) : ?><span><?php echo esc_html( $rok ); ?></span><?php endif; ?>
 					</div>
 				<?php endif; ?>
-			</a>
+			</<?php echo $tag; ?>>
 		<?php endwhile; wp_reset_postdata(); ?>
 	</div>
 </div>
