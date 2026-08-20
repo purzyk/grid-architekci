@@ -94,6 +94,15 @@ $context = array(
 						if ( 0 === $index ) {
 							$thumb_attrs['fetchpriority'] = 'high';
 						}
+						// WordPress's default `sizes` guess ("100vw" below 1024px) assumes
+						// the image fills the viewport — wrong here, since the real box is
+						// one grid-cols-3 tile (or two, for the wide tile every 7th item).
+						// Without an accurate hint the first few tiles (which render eager,
+						// before WP's native sizes="auto" self-correction can apply to
+						// lazy-loaded images) fetch a much bigger file than they display.
+						$thumb_attrs['sizes'] = $is_wide
+							? '(min-width: 1360px) 843px, (min-width: 900px) calc(66.67vw - 64px), (min-width: 620px) calc(100vw - 56px), calc(100vw - 36px)'
+							: '(min-width: 1360px) 405px, (min-width: 900px) calc(33.33vw - 48px), (min-width: 620px) calc(50vw - 38px), calc(100vw - 36px)';
 						the_post_thumbnail( 'large', $thumb_attrs );
 						?>
 					<?php endif; ?>
