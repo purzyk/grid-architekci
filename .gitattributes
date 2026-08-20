@@ -1,0 +1,15 @@
+# Line endings are normalised to LF in the repository and checked out as
+# LF everywhere, whatever a given machine's core.autocrlf says. Without
+# this, a rebuild on a Windows checkout rewrites generated files — the
+# blocks plugin's build/ output above all — with CRLF, and every one of
+# them then shows up as modified while being byte-identical once
+# normalised. That noise buries the files a change actually touched.
+* text=auto eol=lf
+
+# Binary assets: never converted, never diffed as text.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
+*.woff2 binary
+*.woff  binary
