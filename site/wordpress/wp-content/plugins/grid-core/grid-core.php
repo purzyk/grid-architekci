@@ -224,6 +224,20 @@ add_filter( 'wp_headers', function( $headers ) {
 remove_action( 'wp_head', 'wp_generator' );
 add_filter( 'the_generator', '__return_empty_string' );
 
+// Same version leak, different door: every core-enqueued script/style URL
+// carries ?ver=<wp version> unless we strip it.
+function grid_strip_version_query( $src ) {
+	global $wp_version;
+	$version_query = '?ver=' . $wp_version;
+	$offset        = strlen( $src ) - strlen( $version_query );
+	if ( $offset >= 0 && strpos( $src, $version_query, $offset ) !== false ) {
+		return substr( $src, 0, $offset );
+	}
+	return $src;
+}
+add_filter( 'script_loader_src', 'grid_strip_version_query' );
+add_filter( 'style_loader_src', 'grid_strip_version_query' );
+
 // The REST API and the old ?author=N query var both leak real usernames
 // (confirmed live: /wp-json/wp/v2/users returned "admin" outright, and
 // ?author=1 redirected straight to /author/admin/) — halves the work for

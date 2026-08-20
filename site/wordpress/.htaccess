@@ -1,3 +1,10 @@
+# BEGIN Lockdown (deny direct access to files that should never be served)
+<FilesMatch "^wp-config.*\.php$|^\.htaccess$|^readme\.html$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+# END Lockdown
+
 # BEGIN Redirects (old grid.net.pl content with no equivalent on the new site)
 RewriteEngine On
 
