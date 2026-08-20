@@ -130,7 +130,7 @@ function grid_core_register_acf_fields() {
 			array( 'key' => 'field_nagroda_konkurs', 'label' => 'Konkurs', 'name' => 'konkurs', 'type' => 'text' ),
 			array( 'key' => 'field_nagroda_wynik', 'label' => 'Wynik', 'name' => 'wynik', 'type' => 'text', 'instructions' => 'np. I nagroda' ),
 			array( 'key' => 'field_nagroda_top', 'label' => 'Znacząca', 'name' => 'top', 'type' => 'true_false', 'instructions' => 'Koloruje wynik w tabeli na pomarańczowo. Niezależne od pól poniżej.' ),
-			array( 'key' => 'field_nagroda_wyrozniona', 'label' => 'Wyróżniona', 'name' => 'wyrozniona', 'type' => 'true_false', 'instructions' => 'Trafia na trzy płyty u góry strony Osiągnięcia (max 3 najnowsze z zaznaczonych)' ),
+			array( 'key' => 'field_nagroda_wyrozniona', 'label' => 'Wyróżniona', 'name' => 'wyrozniona', 'type' => 'true_false', 'instructions' => 'Trafia na trzy płyty u góry strony Osiągnięcia (pierwsze 3 zaznaczone w ustalonej kolejności — przeciągnij i upuść na liście Nagród, żeby zmienić)' ),
 			array( 'key' => 'field_nagroda_opis', 'label' => 'Krótki opis', 'name' => 'opis', 'type' => 'textarea', 'rows' => 2, 'instructions' => 'Tylko dla wyróżnionych — tekst na płycie na stronie Osiągnięcia.' ),
 			array( 'key' => 'field_nagroda_projekt_nazwa', 'label' => 'Nazwa projektu', 'name' => 'projekt_nazwa', 'type' => 'text', 'instructions' => 'Wyświetlana w kolumnie Projekt, nawet bez powiązanego wpisu poniżej.' ),
 			array(

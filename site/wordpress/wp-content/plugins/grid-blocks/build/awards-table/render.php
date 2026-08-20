@@ -9,9 +9,8 @@ $query = new WP_Query( array(
 	'post_type'      => 'nagroda',
 	'post_status'    => 'publish',
 	'posts_per_page' => -1,
-	'meta_key'       => 'rok',
-	'orderby'        => 'meta_value_num',
-	'order'          => 'DESC',
+	'orderby'        => 'menu_order',
+	'order'          => 'ASC',
 ) );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>

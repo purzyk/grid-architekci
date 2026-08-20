@@ -11,9 +11,8 @@ $query = new WP_Query( array(
 	'post_type'      => 'nagroda',
 	'post_status'    => 'publish',
 	'posts_per_page' => $limit,
-	'meta_key'       => 'rok',
-	'orderby'        => 'meta_value_num',
-	'order'          => 'DESC',
+	'orderby'        => 'menu_order',
+	'order'          => 'ASC',
 	'meta_query'     => array(
 		array(
 			'key'   => 'wyrozniona',

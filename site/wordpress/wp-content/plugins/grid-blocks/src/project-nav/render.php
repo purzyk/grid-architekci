@@ -11,21 +11,25 @@ if ( ! $post_id ) {
 	return;
 }
 
-global $post;
-$original_post = $post;
-$post = get_post( $post_id );
-setup_postdata( $post );
+// The project grid is manually ordered (drag-and-drop via Simple Custom
+// Post Order, menu_order ASC) rather than by date, so core's
+// get_previous_post()/get_next_post() (which only understand chronological
+// adjacency) can't be used here — they'd silently drift out of sync with
+// whatever order the client actually dragged the projects into. Walk the
+// same ordered ID list the grid itself queries by instead, so prev/next
+// always matches what's actually shown there.
+$ordered_ids = get_posts( array(
+	'post_type'      => 'projekt',
+	'post_status'    => 'publish',
+	'posts_per_page' => -1,
+	'orderby'        => 'menu_order',
+	'order'          => 'ASC',
+	'fields'         => 'ids',
+) );
 
-// The project grid lists newest-first (DESC by date), so "next" in browse
-// order is the chronologically *older* neighboring post — what
-// get_previous_post() returns — and "previous" is the newer one, from
-// get_next_post(). Swapped from WP's default blog-chronological assumption
-// on purpose, to match how projects are actually browsed.
-$prev = get_next_post();
-$next = get_previous_post();
-
-wp_reset_postdata();
-$post = $original_post;
+$index = array_search( $post_id, $ordered_ids, true );
+$prev  = ( false !== $index && $index > 0 ) ? get_post( $ordered_ids[ $index - 1 ] ) : null;
+$next  = ( false !== $index && $index < count( $ordered_ids ) - 1 ) ? get_post( $ordered_ids[ $index + 1 ] ) : null;
 ?>
 <nav <?php echo get_block_wrapper_attributes( array( 'class' => 'grid grid-cols-1 items-center gap-5 border-t-2 border-divider pb-10 pt-6 md:grid-cols-[1fr_auto_1fr] md:gap-8 md:pb-10 md:pt-[30px]' ) ); ?>>
 	<?php if ( $prev ) : ?>
