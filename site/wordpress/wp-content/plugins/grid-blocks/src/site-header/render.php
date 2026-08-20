@@ -11,8 +11,27 @@ $nav_items = array(
 	array( 'label' => 'Osiągnięcia', 'url' => home_url( '/osiagniecia/' ), 'current' => is_page( 'osiagniecia' ) ),
 	array( 'label' => 'Kontakt', 'url' => home_url( '/kontakt/' ), 'current' => is_page( 'kontakt' ) ),
 );
+
+/*
+ * Slid out of view while scrolling down, back in on the way up (view.js
+ * toggles .is-hidden). The sticky positioning itself lives in the theme's
+ * tailwind-input.css, on the template-part wrapper around this header —
+ * see the comment there for why it can't be on this element. Two details
+ * worth keeping here:
+ *
+ * - The negative margin/padding pair reproduces the page sheet's own top
+ *   padding (pt-5 sm:pt-6 md:pt-[30px] on the wrapper in every template)
+ *   *inside* the header. At rest that's visually identical to before; once
+ *   stuck it means the paper band travels with the header instead of the
+ *   logo sitting flush against the viewport edge. bg-paper is what the
+ *   content then scrolls underneath.
+ * - The :has() rule pins it open while the mobile menu is expanded —
+ *   sliding away with the nav unfolded would take the open menu along.
+ *   #grid-navtoggle lives inside the header, so peer-* can't reach it.
+ */
+$header_class = 'grid-site-header pointer-events-auto -mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b-2 border-divider bg-paper pb-3.5 pt-5 transition-transform duration-300 ease-reveal [&.is-hidden]:-translate-y-full [&:has(#grid-navtoggle:checked)]:translate-y-0 motion-reduce:transition-none sm:-mt-6 sm:pt-6 md:-mt-[30px] md:flex-nowrap md:items-end md:pt-[30px]';
 ?>
-<header <?php echo get_block_wrapper_attributes( array( 'class' => 'flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b-2 border-divider pb-3.5 md:flex-nowrap md:items-end' ) ); ?>>
+<header <?php echo get_block_wrapper_attributes( array( 'class' => $header_class ) ); ?>>
 	<input id="grid-navtoggle" type="checkbox" class="peer/toggle hidden">
 
 	<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block md:order-1">

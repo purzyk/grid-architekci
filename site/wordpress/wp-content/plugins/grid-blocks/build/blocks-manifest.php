@@ -315,7 +315,8 @@ return array(
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',
-		'render' => 'file:./render.php'
+		'render' => 'file:./render.php',
+		'viewScript' => 'file:./view.js'
 	),
 	'stat-bar' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',

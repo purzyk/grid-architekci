@@ -45,3 +45,53 @@ body {
    the mocks hit, see grid-o-nas.dc.html's own #navtoggle:checked rule). */
 #grid-navtoggle:checked ~ label .icon-open { display: none; }
 #grid-navtoggle:checked ~ label .icon-close { display: block; }
+
+/* Scroll-away header (see grid-blocks' site-header/view.js). The sticky
+   positioning has to sit on the template-part wrapper, not on the header
+   the block renders: a sticky element can only travel inside its
+   containing block, and that wrapper is a box exactly the header's own
+   height — sticking the header itself is a no-op, it just scrolls away
+   with the page. The header's negative top margin collapses through this
+   (padding/border-free) wrapper, so the resting position is unchanged.
+
+   pointer-events are off here and back on for the header itself: once the
+   header has slid out of view this wrapper is still a full-width invisible
+   box pinned across the top of the viewport, and it would otherwise
+   swallow clicks meant for the content behind it. */
+.wp-block-template-part:has(> .grid-site-header) {
+	position: sticky;
+	top: 0;
+	z-index: 40;
+	pointer-events: none;
+}
+
+/* The paper band has to reach the page sheet's edges, not just its text
+   column. Project pages open with a full-bleed image, and with the header
+   background stopping at the sheet's own horizontal padding the photo
+   showed through as two strips either side of what then read as a
+   floating card. The offsets mirror the wrapper padding every template
+   uses (px-[18px] / sm:px-7 / md:px-10). The 2px rule is deliberately
+   left where it is — it belongs to the content grid and lines up with
+   the project tiles beneath it. */
+.grid-site-header {
+	position: relative;
+}
+
+.grid-site-header::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: -18px;
+	right: -18px;
+	z-index: -1;
+	background-color: theme('colors.paper');
+}
+
+@media (min-width: 620px) {
+	.grid-site-header::before { left: -28px; right: -28px; }
+}
+
+@media (min-width: 900px) {
+	.grid-site-header::before { left: -40px; right: -40px; }
+}

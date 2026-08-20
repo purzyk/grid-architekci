@@ -37,3 +37,6 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Playwright MCP scratch output (screenshots, a11y snapshots)
+.playwright-mcp/
