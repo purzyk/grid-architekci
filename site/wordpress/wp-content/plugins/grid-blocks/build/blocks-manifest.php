@@ -232,15 +232,9 @@ return array(
 		'title' => 'Siatka projektów',
 		'category' => 'grid-blocks',
 		'icon' => 'layout',
-		'description' => 'Filtrowana siatka projektów z „Pokaż więcej” — dane pobierane z wpisów typu Projekt, filtrowanie po stronie klienta bez przeładowania.',
+		'description' => 'Filtrowana siatka projektów — dane pobierane z wpisów typu Projekt, filtrowanie po stronie klienta bez przeładowania.',
 		'supports' => array(
 			'html' => false
-		),
-		'attributes' => array(
-			'postsPerPage' => array(
-				'type' => 'number',
-				'default' => 12
-			)
 		),
 		'textdomain' => 'grid',
 		'editorScript' => 'file:./index.js',

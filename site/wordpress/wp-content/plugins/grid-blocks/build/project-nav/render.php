@@ -16,8 +16,13 @@ $original_post = $post;
 $post = get_post( $post_id );
 setup_postdata( $post );
 
-$prev = get_previous_post();
-$next = get_next_post();
+// The project grid lists newest-first (DESC by date), so "next" in browse
+// order is the chronologically *older* neighboring post — what
+// get_previous_post() returns — and "previous" is the newer one, from
+// get_next_post(). Swapped from WP's default blog-chronological assumption
+// on purpose, to match how projects are actually browsed.
+$prev = get_next_post();
+$next = get_previous_post();
 
 wp_reset_postdata();
 $post = $original_post;

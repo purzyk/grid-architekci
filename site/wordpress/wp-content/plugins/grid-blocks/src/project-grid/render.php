@@ -5,8 +5,6 @@
  * @var WP_Block $block
  */
 
-$initial_visible = $attributes['postsPerPage'] ?? 12;
-
 $query = new WP_Query( array(
 	'post_type'      => 'projekt',
 	'post_status'    => 'publish',
@@ -33,10 +31,8 @@ foreach ( $categories as $term ) {
 }
 
 $context = array(
-	'filterCategory'      => 'all',
-	'visibleCount'        => $initial_visible,
-	'initialVisibleCount' => $initial_visible,
-	'categoryCounts'      => $category_counts,
+	'filterCategory' => 'all',
+	'categoryCounts' => $category_counts,
 );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>
@@ -62,7 +58,7 @@ $context = array(
 				><?php echo esc_html( ucfirst( $term->name ) ); ?></button>
 			<?php endforeach; ?>
 		</div>
-		<span class="text-meta text-ink/45" data-wp-text="state.countLabel"><?php echo esc_html( min( $initial_visible, $total ) . " / {$total}" ); ?></span>
+		<span class="text-meta text-ink/45" data-wp-text="state.countLabel"><?php echo esc_html( $total ); ?></span>
 	</div>
 
 	<div class="grid grid-flow-dense grid-cols-1 items-start gap-[30px] sm:grid-cols-2 sm:gap-x-5 sm:gap-y-8 md:grid-cols-3 md:gap-x-8 md:gap-y-10">
@@ -83,7 +79,7 @@ $context = array(
 				href="<?php the_permalink(); ?>"
 				class="group block text-inherit<?php echo $is_wide ? ' sm:col-span-2' : ''; ?>"
 				data-wp-class--hidden="state.isTileHidden"
-				<?php echo wp_interactivity_data_wp_context( array( 'itemCategory' => $kategoria_slug, 'itemIndex' => $index ) ); ?>
+				<?php echo wp_interactivity_data_wp_context( array( 'itemCategory' => $kategoria_slug ) ); ?>
 			>
 				<div class="relative aspect-tile w-full overflow-hidden bg-surface">
 					<?php if ( has_post_thumbnail() ) : ?>
@@ -124,13 +120,5 @@ $context = array(
 		endwhile;
 		wp_reset_postdata();
 		?>
-		<?php if ( $total > $initial_visible ) : ?>
-			<button
-				type="button"
-				class="flex w-full items-end pt-1.5 sm:aspect-tile sm:pt-0"
-				data-wp-on--click="actions.toggleShowMore"
-				data-wp-class--hidden="state.isShowMoreHidden"
-			><span class="border-b-2 border-accent pb-1 text-meta font-extrabold uppercase tracking-[0.16em] text-accent sm:translate-y-3.5" data-wp-text="state.showMoreLabel">Pokaż więcej projektów</span></button>
-		<?php endif; ?>
 	</div>
 </div>

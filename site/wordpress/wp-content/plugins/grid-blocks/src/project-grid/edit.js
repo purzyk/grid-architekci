@@ -1,26 +1,18 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl, Notice } from '@wordpress/components';
+import { PanelBody, Notice } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { __ } from '@wordpress/i18n';
 
-export default function Edit( { attributes, setAttributes } ) {
-	const { postsPerPage } = attributes;
+export default function Edit( { attributes } ) {
 	const blockProps = useBlockProps();
 
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
 				<PanelBody title={ __( 'Ustawienia', 'grid' ) }>
-					<RangeControl
-						label={ __( 'Projektów przed „Pokaż więcej”', 'grid' ) }
-						value={ postsPerPage }
-						onChange={ ( postsPerPage ) => setAttributes( { postsPerPage } ) }
-						min={ 3 }
-						max={ 48 }
-					/>
 					<Notice status="info" isDismissible={ false }>
 						{ __(
-							'Filtrowanie i „Pokaż więcej” działają na opublikowanej stronie (Interactivity API) — ten podgląd jest statyczny.',
+							'Filtrowanie działa na opublikowanej stronie (Interactivity API) — ten podgląd jest statyczny.',
 							'grid'
 						) }
 					</Notice>
