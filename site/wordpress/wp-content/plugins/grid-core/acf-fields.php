@@ -55,6 +55,23 @@ function grid_core_register_acf_fields() {
 				'return_format' => 'id',
 			),
 			array(
+				'key'               => 'field_projekt_rysunek_pozycja',
+				'label'             => 'Pozycja rysunku w galerii',
+				'name'              => 'rysunek_pozycja',
+				'type'              => 'number',
+				'instructions'      => 'Które to zdjęcie w kolejności, licząc zdjęcie główne (na górze strony) jako 1. Domyślnie 3, czyli zaraz po pierwszym zdjęciu w galerii. Rysunek wypada w tej samej siatce co zdjęcia, więc w zależności od pozycji może wyjść na całą szerokość albo w parze — tak jak zwykłe zdjęcie.',
+				'default_value'     => 3,
+				'min'               => 2,
+				'conditional_logic' => array(
+					array(
+						array(
+							'field'    => 'field_projekt_rysunek',
+							'operator' => '!=empty',
+						),
+					),
+				),
+			),
+			array(
 				'key'     => 'field_projekt_metryka',
 				'label'   => 'Metryka',
 				'name'    => 'metryka',

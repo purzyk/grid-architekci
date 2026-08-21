@@ -88,32 +88,53 @@ if ( $galeria_list ) {
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $galeria_list ) ) : ?>
+	<?php
+	// ACF's gallery field normally returns full image arrays, but falls back
+	// to plain attachment IDs if the field was ever saved as raw IDs (e.g.
+	// via update_field() with an ID array, as the migration seed script
+	// does) — handle both.
+	$grid_items = array();
+	foreach ( $galeria_list as $img ) {
+		$img_id = is_array( $img ) ? ( $img['ID'] ?? null ) : $img;
+		if ( $img_id ) {
+			$grid_items[] = array( 'type' => 'photo', 'id' => $img_id );
+		}
+	}
+
+	// The site-plan drawing is spliced into the same grid the photos render
+	// in, rather than always trailing the gallery — editors think of it as
+	// "which numbered photo", with the hero counting as 1, so position 3
+	// (the default) lands it as the grid's own first item.
+	if ( $rysunek_id ) {
+		$rysunek_pozycja = (int) ( get_field( 'rysunek_pozycja', $post_id ) ?: 3 );
+		$insert_at       = max( 0, min( count( $grid_items ), $rysunek_pozycja - 2 ) );
+		array_splice( $grid_items, $insert_at, 0, array( array( 'type' => 'rysunek', 'id' => $rysunek_id ) ) );
+	}
+	?>
+
+	<?php if ( ! empty( $grid_items ) ) : ?>
 		<div class="mt-9 grid grid-cols-2 gap-0.5 <?php echo esc_attr( $bleed_class ); ?>">
-			<?php foreach ( $galeria_list as $i => $img ) : ?>
+			<?php foreach ( $grid_items as $i => $item ) : ?>
 				<?php
-				// ACF's gallery field normally returns full image arrays, but
-				// falls back to plain attachment IDs if the field was ever
-				// saved as raw IDs (e.g. via update_field() with an ID array,
-				// as the migration seed script does) — handle both.
-				$img_id = is_array( $img ) ? ( $img['ID'] ?? null ) : $img;
-				if ( ! $img_id ) {
-					continue;
-				}
 				// Alternate full-width / paired-half-width, matching the
-				// mock: every 3rd photo runs full width, the two in between
-				// sit side by side.
+				// mock: every 3rd item runs full width, the two in between
+				// sit side by side. The rysunek follows the same rhythm as
+				// a regular photo, just with its own box/blend treatment.
 				$is_full = ( 0 === $i % 3 );
-				$class   = $is_full ? $photo_class . ' col-span-2' : $photo_class_half;
-				echo wp_get_attachment_image( $img_id, 'large', false, array( 'class' => $class ) );
+				if ( 'rysunek' === $item['type'] ) :
+					$box_class = $is_full
+						? 'flex h-[260px] w-full items-center justify-center bg-paper p-4 sm:h-[400px] md:h-[620px] md:p-5 col-span-2'
+						: 'flex h-[260px] w-full items-center justify-center bg-paper p-4 sm:h-[340px] md:h-[430px] md:p-5';
+					?>
+					<div class="<?php echo esc_attr( $box_class ); ?>">
+						<?php echo wp_get_attachment_image( $item['id'], 'large', false, array( 'class' => 'max-h-full max-w-full mix-blend-multiply' ) ); ?>
+					</div>
+				<?php else :
+					$class = $is_full ? $photo_class . ' col-span-2' : $photo_class_half;
+					echo wp_get_attachment_image( $item['id'], 'large', false, array( 'class' => $class ) );
+				endif;
 				?>
 			<?php endforeach; ?>
-		</div>
-	<?php endif; ?>
-
-	<?php if ( $rysunek_id ) : ?>
-		<div class="mt-0.5 flex h-[260px] w-full items-center justify-center bg-paper p-4 sm:h-[340px] md:h-[430px] md:p-5 <?php echo esc_attr( $bleed_class ); ?>">
-			<?php echo wp_get_attachment_image( $rysunek_id, 'large', false, array( 'class' => 'max-h-full max-w-full mix-blend-multiply' ) ); ?>
 		</div>
 	<?php endif; ?>
 
