@@ -9,6 +9,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+add_action( 'acf/init', 'grid_core_register_acf_options_pages' );
+function grid_core_register_acf_options_pages() {
+
+	if ( ! function_exists( 'acf_add_options_page' ) ) {
+		return;
+	}
+
+	acf_add_options_page( array(
+		'page_title' => 'Ustawienia strony',
+		'menu_title' => 'Ustawienia strony',
+		'menu_slug'  => 'grid-ustawienia',
+		'capability' => 'edit_posts',
+		'redirect'   => false,
+		'icon_url'   => 'dashicons-admin-generic',
+		'position'   => 26, // just under Projekty et al. in the admin menu
+	) );
+}
+
 add_action( 'acf/init', 'grid_core_register_acf_fields' );
 function grid_core_register_acf_fields() {
 
@@ -185,6 +203,33 @@ function grid_core_register_acf_fields() {
 					'param'    => 'post_type',
 					'operator' => '==',
 					'value'    => 'publikacja',
+				),
+			),
+		),
+	) );
+
+	acf_add_local_field_group( array(
+		'key'    => 'group_ustawienia',
+		'title'  => 'Ustawienia — Aktualne projekty',
+		'fields' => array(
+			array(
+				'key'           => 'field_aktualne_projekty',
+				'label'         => 'Aktualne projekty',
+				'name'          => 'aktualne_projekty',
+				'type'          => 'relationship',
+				'instructions'  => 'Do trzech projektów widocznych w sekcji „Aktualne projekty” w stopce — pokazuje się na każdej podstronie. Przeciągnij wybrane pozycje, żeby ustawić kolejność. Puste pole ukrywa całą sekcję.',
+				'post_type'     => array( 'projekt' ),
+				'filters'       => array( 'search' ),
+				'max'           => 3,
+				'return_format' => 'id',
+			),
+		),
+		'location' => array(
+			array(
+				array(
+					'param'    => 'options_page',
+					'operator' => '==',
+					'value'    => 'grid-ustawienia',
 				),
 			),
 		),

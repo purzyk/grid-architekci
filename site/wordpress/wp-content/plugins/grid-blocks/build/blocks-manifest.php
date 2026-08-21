@@ -16,6 +16,27 @@ return array(
 		'editorScript' => 'file:./index.js',
 		'render' => 'file:./render.php'
 	),
+	'current-projects' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion' => 3,
+		'name' => 'grid/current-projects',
+		'title' => 'Aktualne projekty',
+		'category' => 'grid-blocks',
+		'icon' => 'grid-view',
+		'description' => 'Do trzech projektów wybranych i uszeregowanych w Ustawienia → Aktualne projekty (strona opcji ACF) — nie wpisywane ręcznie tutaj. Sekcja znika sama, jeśli nic tam nie wybrano.',
+		'supports' => array(
+			'html' => false
+		),
+		'attributes' => array(
+			'label' => array(
+				'type' => 'string',
+				'default' => 'Aktualne projekty'
+			)
+		),
+		'textdomain' => 'grid',
+		'editorScript' => 'file:./index.js',
+		'render' => 'file:./render.php'
+	),
 	'featured-awards' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'apiVersion' => 3,
