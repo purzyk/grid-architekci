@@ -9,6 +9,13 @@ if ( ! function_exists( 'get_field' ) ) {
 	return;
 }
 
+// Rendered from footer.html, which every template shares — but the mock
+// only ever shows this section on the homepage, so it self-hides anywhere
+// else rather than needing a second copy of footer.html just for that.
+if ( ! is_front_page() ) {
+	return;
+}
+
 $label = $attributes['label'] ?? '';
 
 // Editor-picked and ordered on the options page (Ustawienia → Aktualne
