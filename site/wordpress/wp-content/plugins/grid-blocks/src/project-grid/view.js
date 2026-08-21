@@ -17,6 +17,18 @@ const { state } = store( 'grid/project-grid', {
 				? context.indexAll
 				: context.indexCategory;
 		},
+		// Whether *this* category is the one currently expanded — not a
+		// plain showAll boolean, deliberately: switching category should
+		// always land back on the 12-item view with "Pokaż więcej" showing
+		// again, and comparing against filterCategory gives that reset for
+		// free instead of requiring setCategory to reach into and clear a
+		// flag owned by a different context layer (writes from a filter
+		// button's own data-wp-context don't reliably propagate up to
+		// root-level state the way reads do).
+		get isExpanded() {
+			const context = getContext();
+			return context.expandedCategory === context.filterCategory;
+		},
 		get isTileHidden() {
 			const context = getContext();
 			const inCategory =
@@ -27,7 +39,7 @@ const { state } = store( 'grid/project-grid', {
 				return true;
 			}
 
-			return ! context.showAll && state.tileIndex >= context.limit;
+			return ! state.isExpanded && state.tileIndex >= context.limit;
 		},
 		get isTileWide() {
 			return state.tileIndex % 7 === 0;
@@ -35,7 +47,7 @@ const { state } = store( 'grid/project-grid', {
 		get visibleCount() {
 			const context = getContext();
 			const total = context.categoryCounts[ context.filterCategory ] ?? 0;
-			return context.showAll ? total : Math.min( total, context.limit );
+			return state.isExpanded ? total : Math.min( total, context.limit );
 		},
 		get countLabel() {
 			const context = getContext();
@@ -47,7 +59,7 @@ const { state } = store( 'grid/project-grid', {
 			return ( context.categoryCounts[ context.filterCategory ] ?? 0 ) <= context.limit;
 		},
 		get moreLabel() {
-			return getContext().showAll
+			return state.isExpanded
 				? 'Pokaż mniej'
 				: 'Pokaż więcej projektów';
 		},
@@ -59,7 +71,7 @@ const { state } = store( 'grid/project-grid', {
 		},
 		toggleShowAll: () => {
 			const context = getContext();
-			context.showAll = ! context.showAll;
+			context.expandedCategory = state.isExpanded ? '' : context.filterCategory;
 		},
 	},
 } );

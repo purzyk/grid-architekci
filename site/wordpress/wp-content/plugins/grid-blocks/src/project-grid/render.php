@@ -38,10 +38,10 @@ foreach ( $categories as $term ) {
 $limit = 12;
 
 $context = array(
-	'filterCategory' => 'all',
-	'categoryCounts' => $category_counts,
-	'showAll'        => false,
-	'limit'          => $limit,
+	'filterCategory'   => 'all',
+	'categoryCounts'   => $category_counts,
+	'expandedCategory' => '',
+	'limit'            => $limit,
 );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>
