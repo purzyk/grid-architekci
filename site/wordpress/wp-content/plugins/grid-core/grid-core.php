@@ -313,7 +313,7 @@ add_action( 'wp_enqueue_scripts', function() {
 /**
  * Google Analytics 4.
  *
- * Two guards, both deliberate:
+ * Host/editor guards, both deliberate and both safe to decide in PHP:
  *
  * - Never reports from the dev host. Until the site moves to the client's
  *   real domain, every hit here — including automated browser checks —
@@ -321,19 +321,25 @@ add_action( 'wp_enqueue_scripts', function() {
  *   bad baseline data is worse than none. Moving to the production domain
  *   is all it takes to switch this on; there is nothing else to remember.
  * - Never reports for signed-in editors, so the people working on the site
- *   don't count as its audience.
+ *   don't count as its audience. WP Super Cache doesn't cache logged-in
+ *   requests at all, so this one stays request-accurate even under caching.
  *
- * Consent-gated: the grid_ga4_enabled filter below requires the RODO/PKE
- * cookie-consent banner's choice (grid/cookie-consent block) to be
- * "granted" — no choice yet, same as an explicit refusal, keeps this off.
+ * RODO/PKE consent is deliberately NOT gated here in PHP. WP Super Cache
+ * serves one static HTML file per URL to every anonymous visitor — a
+ * server-side `if ($_COOKIE['grid_consent'] === 'granted')` bakes in
+ * whichever visitor's cookie state happened to trigger that file's
+ * generation and then serves it to everyone else regardless of *their*
+ * own cookie (this shipped once, and un-shipped after a live test: accept
+ * on the homepage, navigate away, navigate back — cached page, consent
+ * banner reappears, cookie ignored). The actual consent check has to run
+ * in the browser: window.__gridGa4Boot(), defined below and called by the
+ * cookie-consent block's view.js on acceptance (immediately, since the
+ * page's own markup is cache-frozen at whatever consent state existed
+ * when it was generated) and on every page load where the cookie already
+ * reads "granted".
  */
 const GRID_GA4_MEASUREMENT_ID = 'G-VL2L8YWMX7';
 
-// Host/role guards only — no consent involved. The cookie-consent block
-// uses this (not grid_ga4_enabled()) to decide whether it's worth asking
-// for consent / bootstrapping gtag client-side on accept at all, so a
-// click on the dev host or as a signed-in editor can't route around those
-// guards the way checking the *filtered* value would.
 function grid_ga4_eligible() {
 	$dev_hosts = array( 'grid.purzyk.usermd.net', 'localhost' );
 	$host      = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
@@ -342,56 +348,33 @@ function grid_ga4_eligible() {
 		&& ! ( is_user_logged_in() && current_user_can( 'edit_posts' ) );
 }
 
-function grid_ga4_enabled() {
-	return (bool) apply_filters( 'grid_ga4_enabled', grid_ga4_eligible() );
-}
-
 add_action( 'wp_enqueue_scripts', function() {
-	if ( ! grid_ga4_enabled() ) {
+	if ( ! grid_ga4_eligible() ) {
 		return;
 	}
 
-	$id = GRID_GA4_MEASUREMENT_ID;
-
-	wp_enqueue_script(
-		'grid-ga4',
-		'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $id ),
-		array(),
-		null,
-		array( 'in_footer' => false, 'strategy' => 'async' )
-	);
-
-	// Attached 'before', not 'after': WordPress refuses to mark a script
-	// async when an 'after' inline script is bound to it, which quietly
-	// made the tag render-blocking. gtag() only queues into dataLayer, so
-	// running the config first and letting gtag.js arrive later is exactly
-	// how the queue is meant to be used.
+	// No src: this is the loader, not gtag.js itself. Identical markup for
+	// every visitor of a given cached page — the only thing that varies is
+	// each browser's own document.cookie read, at execution time, which is
+	// exactly what a server-rendered/cached page can't do per-visitor.
+	wp_register_script( 'grid-ga4-loader', false, array(), null );
+	wp_enqueue_script( 'grid-ga4-loader' );
 	wp_add_inline_script(
-		'grid-ga4',
+		'grid-ga4-loader',
 		sprintf(
-			'window.dataLayer = window.dataLayer || [];' .
-			'function gtag(){dataLayer.push(arguments);}' .
-			'gtag("js", new Date());' .
-			'gtag("config", %s);',
-			wp_json_encode( $id )
-		),
-		'before'
+			'window.__gridGa4Boot = function () {' .
+				'if ( window.gtag ) { return; }' .
+				'window.dataLayer = window.dataLayer || [];' .
+				'window.gtag = function () { window.dataLayer.push( arguments ); };' .
+				'window.gtag( "js", new Date() );' .
+				'window.gtag( "config", %1$s );' .
+				'var s = document.createElement( "script" );' .
+				's.async = true;' .
+				's.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent( %1$s );' .
+				'document.head.appendChild( s );' .
+			'};' .
+			'if ( /(?:^|; )grid_consent=granted(?:;|$)/.test( document.cookie ) ) { window.__gridGa4Boot(); }',
+			wp_json_encode( GRID_GA4_MEASUREMENT_ID )
+		)
 	);
-} );
-
-/**
- * Consent gate — reads the first-party cookie the cookie-consent block's
- * own view.js writes ('granted' / 'denied'). Unset (no choice made yet)
- * returns '', which grid_ga4_enabled() above treats the same as denied.
- */
-function grid_consent_choice() {
-	if ( ! isset( $_COOKIE['grid_consent'] ) ) {
-		return '';
-	}
-	return in_array( $_COOKIE['grid_consent'], array( 'granted', 'denied' ), true )
-		? $_COOKIE['grid_consent']
-		: '';
-}
-add_filter( 'grid_ga4_enabled', function( $enabled ) {
-	return $enabled && 'granted' === grid_consent_choice();
 } );

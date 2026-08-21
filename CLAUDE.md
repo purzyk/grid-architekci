@@ -110,6 +110,21 @@ them back.
 
 ## Known gotchas (learned the hard way on this project)
 
+- **Never gate visible markup or a script's presence on `$_COOKIE`/session
+  state in PHP** — WP Super Cache serves one static HTML file per URL to
+  every anonymous visitor, generated from whichever request happened to
+  trigger it. A server-side `if ($_COOKIE['x'] === 'y')` bakes in *that*
+  visitor's state and serves it to everyone else regardless of their own
+  cookie. Hit this with the cookie-consent banner: accept on the homepage,
+  navigate away, navigate back — cached page, banner reappears, cookie
+  ignored. Same trap would have applied to gating GA4 itself on consent in
+  PHP. Fix: render identical markup/scripts for every visitor, and read
+  `document.cookie` client-side (in the block's `view.js`) to decide what
+  to show/run — exactly why `theme-toggle.js` never touches PHP for
+  dark/light state either. Logged-in requests are the exception (WP Super
+  Cache doesn't cache those), so role checks (`is_user_logged_in()`) are
+  still safe to gate in PHP; anything that varies per anonymous visitor
+  is not.
 - **`open_basedir` jail**: mydevil's PHP-FPM is jailed to `public_html`
   (`site/wordpress/`) — PHP cannot `require`/read anything outside it, even
   though SSH/shell can see the whole account. The classic "move

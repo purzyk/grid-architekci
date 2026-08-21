@@ -5,7 +5,7 @@
 	"title": "Banner cookies",
 	"category": "grid-blocks",
 	"icon": "privacy",
-	"description": "Stały pasek na dole strony — RODO/PKE zgoda na Google Analytics. Wybór klienta trafia do cookie grid_consent, które grid-core czyta przez filtr grid_ga4_enabled. Niewidoczny w edytorze (nakładka na cały front, nie sensowna jako podgląd inline).",
+	"description": "Stały pasek na dole strony — RODO/PKE zgoda na Google Analytics. Wybór klienta trafia do cookie grid_consent, odczytywanego w przeglądarce (nie w PHP — strona jest cache'owana przez WP Super Cache, więc zgodę trzeba sprawdzać po stronie klienta). Niewidoczny w edytorze (nakładka na cały front, nie sensowna jako podgląd inline).",
 	"supports": { "html": false, "multiple": false },
 	"textdomain": "grid",
 	"editorScript": "file:./index.js",
