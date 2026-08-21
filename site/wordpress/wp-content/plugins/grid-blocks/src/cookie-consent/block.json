@@ -1,0 +1,14 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "grid/cookie-consent",
+	"title": "Banner cookies",
+	"category": "grid-blocks",
+	"icon": "privacy",
+	"description": "Stały pasek na dole strony — RODO/PKE zgoda na Google Analytics. Wybór klienta trafia do cookie grid_consent, które grid-core czyta przez filtr grid_ga4_enabled. Niewidoczny w edytorze (nakładka na cały front, nie sensowna jako podgląd inline).",
+	"supports": { "html": false, "multiple": false },
+	"textdomain": "grid",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

@@ -323,22 +323,27 @@ add_action( 'wp_enqueue_scripts', function() {
  * - Never reports for signed-in editors, so the people working on the site
  *   don't count as its audience.
  *
- * NOT YET CONSENT-GATED. GA4 sets its own cookies, which under RODO/PKE
- * needs prior consent, so a consent banner has to land before this site
- * goes live on the real domain — at which point the first guard stops
- * suppressing it. Wire the banner's decision into the grid_ga4_enabled
- * filter rather than editing this block.
+ * Consent-gated: the grid_ga4_enabled filter below requires the RODO/PKE
+ * cookie-consent banner's choice (grid/cookie-consent block) to be
+ * "granted" — no choice yet, same as an explicit refusal, keeps this off.
  */
 const GRID_GA4_MEASUREMENT_ID = 'G-VL2L8YWMX7';
 
-function grid_ga4_enabled() {
+// Host/role guards only — no consent involved. The cookie-consent block
+// uses this (not grid_ga4_enabled()) to decide whether it's worth asking
+// for consent / bootstrapping gtag client-side on accept at all, so a
+// click on the dev host or as a signed-in editor can't route around those
+// guards the way checking the *filtered* value would.
+function grid_ga4_eligible() {
 	$dev_hosts = array( 'grid.purzyk.usermd.net', 'localhost' );
 	$host      = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
 
-	$enabled = ! in_array( $host, $dev_hosts, true )
+	return ! in_array( $host, $dev_hosts, true )
 		&& ! ( is_user_logged_in() && current_user_can( 'edit_posts' ) );
+}
 
-	return (bool) apply_filters( 'grid_ga4_enabled', $enabled );
+function grid_ga4_enabled() {
+	return (bool) apply_filters( 'grid_ga4_enabled', grid_ga4_eligible() );
 }
 
 add_action( 'wp_enqueue_scripts', function() {
@@ -372,4 +377,21 @@ add_action( 'wp_enqueue_scripts', function() {
 		),
 		'before'
 	);
+} );
+
+/**
+ * Consent gate — reads the first-party cookie the cookie-consent block's
+ * own view.js writes ('granted' / 'denied'). Unset (no choice made yet)
+ * returns '', which grid_ga4_enabled() above treats the same as denied.
+ */
+function grid_consent_choice() {
+	if ( ! isset( $_COOKIE['grid_consent'] ) ) {
+		return '';
+	}
+	return in_array( $_COOKIE['grid_consent'], array( 'granted', 'denied' ), true )
+		? $_COOKIE['grid_consent']
+		: '';
+}
+add_filter( 'grid_ga4_enabled', function( $enabled ) {
+	return $enabled && 'granted' === grid_consent_choice();
 } );
