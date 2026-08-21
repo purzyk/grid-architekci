@@ -73,7 +73,10 @@ No CI/CD — everything is a manual SSH deploy. The established pattern:
 2. If it touched `wp-content/plugins/grid-blocks/src/**`: `cd` into
    `grid-blocks/` and `npm run build` (webpack via `@wordpress/scripts`,
    bundles JS and copies `render.php`/`block.json` into `build/`). Deploy
-   the `build/` output, not `src/`.
+   the `build/` output, not `src/`. If the block has a `view.js`
+   (Interactivity API), deploy its `view.asset.php` in the same pass — see
+   the gotcha below, skipping it leaves the browser serving a stale cached
+   script indefinitely.
 3. If it touched Tailwind classes anywhere in the theme (templates, parts,
    blocks, seed-content): `cd` into `themes/grid/` and `npm run build`
    (plain `tailwindcss` CLI, outputs `assets/css/tailwind-build.css`).
@@ -144,6 +147,19 @@ them back.
   *not* use core's `get_previous_post()`/`get_next_post()` (those are
   date-based and would drift out of sync) — it walks the same
   `orderby=menu_order` ID list `project-grid` queries by.
+- **A block's `view.js` (Interactivity API) must always be deployed together
+  with its `view.asset.php`** — that file carries the build's version hash,
+  which is what ends up in the `<script src="...view.js?ver=HASH">` tag, and
+  that URL is served with `Cache-Control: public, max-age=2592000` (30
+  days). Deploy a new `view.js` without its matching `view.asset.php` and
+  the `?ver=` stays the old hash, so browsers that already loaded the page
+  keep serving the stale cached script indefinitely — WP Super Cache being
+  clean doesn't help, since this is the *browser's* cache on a versioned
+  asset URL, not the page cache. Symptom: a JS fix looks like it did
+  nothing, even though `curl`ing the file directly shows the new content.
+  Always `scp` both files (and re-check the `?ver=` on the page after
+  deploying, e.g. via a Playwright `document.querySelector(...).src`
+  check, not just a `curl` of the raw file).
 
 ## Credentials — none of these live in the repo
 
