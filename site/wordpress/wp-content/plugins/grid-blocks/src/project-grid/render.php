@@ -142,7 +142,7 @@ $context = array(
 					<?php if ( $rok ) : ?><span class="whitespace-nowrap text-label uppercase tracking-nav text-ink/50"><?php echo esc_html( $rok ); ?></span><?php endif; ?>
 				</div>
 				<?php if ( $kategoria_label || $status_label ) : ?>
-					<div class="mt-1 flex flex-wrap items-baseline gap-x-2 text-meta uppercase tracking-[0.1em] text-ink/45">
+					<div class="mt-1 flex flex-wrap items-baseline gap-x-2 text-meta uppercase tracking-[0.1em] text-ink/75">
 						<?php if ( $kategoria_label ) : ?><span><?php echo esc_html( $kategoria_label ); ?></span><?php endif; ?>
 						<?php if ( $status_label ) : ?><span><?php echo esc_html( $status_label ); ?></span><?php endif; ?>
 					</div>

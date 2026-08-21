@@ -48,7 +48,7 @@ $header_class = 'grid-site-header pointer-events-auto -mt-5 flex flex-wrap items
 			<a
 				href="<?php echo esc_url( $item['url'] ); ?>"
 				<?php if ( $item['current'] ) : ?>aria-current="page"<?php endif; ?>
-				class="border-b pb-0.5 text-meta uppercase tracking-nav hover:text-ink <?php echo $item['current'] ? 'border-accent text-ink' : 'border-transparent text-ink/50'; ?>"
+				class="border-b pb-0.5 text-meta uppercase tracking-nav hover:text-ink <?php echo $item['current'] ? 'border-accent text-ink' : 'border-transparent text-ink/75'; ?>"
 			><?php echo esc_html( $item['label'] ); ?></a>
 		<?php endforeach; ?>
 	</nav>
