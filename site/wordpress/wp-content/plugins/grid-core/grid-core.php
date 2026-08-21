@@ -323,6 +323,20 @@ add_action( 'wp_enqueue_scripts', function() {
 }, 20 );
 
 /**
+ * Honeypot for the Kontakt form — see the your-website field in
+ * seed-contact-form.php for the hidden field itself. Real visitors never
+ * see or fill it; a filled value means whatever submitted the form didn't
+ * render the CSS, i.e. almost certainly a bot.
+ */
+add_filter( 'wpcf7_spam', function( $spam, $submission ) {
+	if ( $spam ) {
+		return $spam;
+	}
+	$data = $submission->get_posted_data();
+	return ! empty( $data['your-website'] );
+}, 10, 2 );
+
+/**
  * Google Analytics 4.
  *
  * Host/editor guards, both deliberate and both safe to decide in PHP:

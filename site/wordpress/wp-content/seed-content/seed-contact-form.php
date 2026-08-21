@@ -51,6 +51,14 @@ $label_class = 'block text-[12px] mb-[5px] uppercase tracking-[0.14em] text-ink/
 // a block like this into a stray <p>/<br> pair around the label, adding
 // unwanted vertical space and making the whole field look oversized even
 // though the input itself is sized correctly.
+//
+// Honeypot: a field real visitors never see or tab into (off-screen, not
+// display:none — some bots specifically skip display:none fields since
+// that's the textbook honeypot tell) but that unsophisticated form-filling
+// bots reliably fill in anyway, named to look worth filling. grid-core.php's
+// wpcf7_spam hook rejects the submission if it's non-empty.
+$honeypot = '<div class="absolute left-[-9999px] top-auto h-px w-px overflow-hidden" aria-hidden="true">[text your-website tabindex:-1 autocomplete:off]</div>';
+
 $form = <<<FORM
 <div><label for="your-name" class="{$label_class}">Imię i nazwisko</label>[text* your-name id:your-name placeholder "Jan Kowalski"]</div>
 
@@ -61,6 +69,8 @@ $form = <<<FORM
 <div><label for="your-location" class="{$label_class}">Lokalizacja inwestycji</label>[text your-location id:your-location placeholder "Miasto, gmina"]</div>
 
 <div><label for="your-message" class="{$label_class}">O czym myślisz</label>[textarea your-message id:your-message rows:5 placeholder "Kilka zdań o inwestycji, skali i terminie."]</div>
+
+{$honeypot}
 
 [submit "Wyślij zapytanie"]
 FORM;
