@@ -309,3 +309,67 @@ add_action( 'wp_enqueue_scripts', function() {
 	wp_dequeue_script( 'contact-form-7' );
 	wp_dequeue_script( 'swv' );
 }, 20 );
+
+/**
+ * Google Analytics 4.
+ *
+ * Two guards, both deliberate:
+ *
+ * - Never reports from the dev host. Until the site moves to the client's
+ *   real domain, every hit here — including automated browser checks —
+ *   would land in their property and skew the numbers from day one, and
+ *   bad baseline data is worse than none. Moving to the production domain
+ *   is all it takes to switch this on; there is nothing else to remember.
+ * - Never reports for signed-in editors, so the people working on the site
+ *   don't count as its audience.
+ *
+ * NOT YET CONSENT-GATED. GA4 sets its own cookies, which under RODO/PKE
+ * needs prior consent, so a consent banner has to land before this site
+ * goes live on the real domain — at which point the first guard stops
+ * suppressing it. Wire the banner's decision into the grid_ga4_enabled
+ * filter rather than editing this block.
+ */
+const GRID_GA4_MEASUREMENT_ID = 'G-VL2L8YWMX7';
+
+function grid_ga4_enabled() {
+	$dev_hosts = array( 'grid.purzyk.usermd.net', 'localhost' );
+	$host      = strtolower( (string) wp_parse_url( home_url(), PHP_URL_HOST ) );
+
+	$enabled = ! in_array( $host, $dev_hosts, true )
+		&& ! ( is_user_logged_in() && current_user_can( 'edit_posts' ) );
+
+	return (bool) apply_filters( 'grid_ga4_enabled', $enabled );
+}
+
+add_action( 'wp_enqueue_scripts', function() {
+	if ( ! grid_ga4_enabled() ) {
+		return;
+	}
+
+	$id = GRID_GA4_MEASUREMENT_ID;
+
+	wp_enqueue_script(
+		'grid-ga4',
+		'https://www.googletagmanager.com/gtag/js?id=' . rawurlencode( $id ),
+		array(),
+		null,
+		array( 'in_footer' => false, 'strategy' => 'async' )
+	);
+
+	// Attached 'before', not 'after': WordPress refuses to mark a script
+	// async when an 'after' inline script is bound to it, which quietly
+	// made the tag render-blocking. gtag() only queues into dataLayer, so
+	// running the config first and letting gtag.js arrive later is exactly
+	// how the queue is meant to be used.
+	wp_add_inline_script(
+		'grid-ga4',
+		sprintf(
+			'window.dataLayer = window.dataLayer || [];' .
+			'function gtag(){dataLayer.push(arguments);}' .
+			'gtag("js", new Date());' .
+			'gtag("config", %s);',
+			wp_json_encode( $id )
+		),
+		'before'
+	);
+} );
