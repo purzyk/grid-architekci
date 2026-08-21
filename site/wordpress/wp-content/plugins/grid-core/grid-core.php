@@ -93,26 +93,38 @@ function grid_core_register_post_types() {
 add_action( 'init', 'grid_core_register_taxonomies' );
 function grid_core_register_taxonomies() {
 
+	// publicly_queryable is deliberately false on both: nothing on the site
+	// links to a /kategoria/... or /status/... archive — project-grid's
+	// category/status filtering is client-side tabs on the homepage, not
+	// separate pages — and there's no archive template for them either
+	// (they fell through to the generic index.html fallback, which renders
+	// a single stray post title with no listing, not a real archive). That
+	// combination is exactly what a search engine calls thin/broken
+	// content, so these are 404s now rather than orphaned pages a crawler
+	// could still stumble onto by URL guessing. `public => true` is kept so
+	// admin term management and the ACF/editor taxonomy UI still work.
 	register_taxonomy( 'projekt_kategoria', 'projekt', array(
-		'labels'       => array(
+		'labels'              => array(
 			'name'          => 'Kategorie',
 			'singular_name' => 'Kategoria',
 		),
-		'hierarchical' => true,
-		'public'       => true,
-		'show_in_rest' => true,
-		'rewrite'      => array( 'slug' => 'kategoria' ),
+		'hierarchical'        => true,
+		'public'              => true,
+		'publicly_queryable'  => false,
+		'show_in_rest'        => true,
+		'rewrite'             => array( 'slug' => 'kategoria' ),
 	) );
 
 	register_taxonomy( 'projekt_status', 'projekt', array(
-		'labels'       => array(
+		'labels'              => array(
 			'name'          => 'Status',
 			'singular_name' => 'Status',
 		),
-		'hierarchical' => true,
-		'public'       => true,
-		'show_in_rest' => true,
-		'rewrite'      => array( 'slug' => 'status' ),
+		'hierarchical'        => true,
+		'public'              => true,
+		'publicly_queryable'  => false,
+		'show_in_rest'        => true,
+		'rewrite'             => array( 'slug' => 'status' ),
 	) );
 }
 
