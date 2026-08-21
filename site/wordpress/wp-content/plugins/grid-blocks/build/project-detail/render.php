@@ -123,8 +123,8 @@ if ( $galeria_list ) {
 				$is_full = ( 0 === $i % 3 );
 				if ( 'rysunek' === $item['type'] ) :
 					$box_class = $is_full
-						? 'flex h-[260px] w-full items-center justify-center bg-paper p-4 sm:h-[400px] md:h-[620px] md:p-5 col-span-2'
-						: 'flex h-[260px] w-full items-center justify-center bg-paper p-4 sm:h-[340px] md:h-[430px] md:p-5';
+						? 'flex h-[260px] w-full items-center justify-center bg-white p-4 sm:h-[400px] md:h-[620px] md:p-5 col-span-2'
+						: 'flex h-[260px] w-full items-center justify-center bg-white p-4 sm:h-[340px] md:h-[430px] md:p-5';
 					?>
 					<div class="<?php echo esc_attr( $box_class ); ?>">
 						<?php echo wp_get_attachment_image( $item['id'], 'large', false, array( 'class' => 'max-h-full max-w-full mix-blend-multiply' ) ); ?>
