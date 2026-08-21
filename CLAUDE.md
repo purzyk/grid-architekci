@@ -6,8 +6,17 @@ into a real site: `wp-content/themes/grid` (theme) + `wp-content/plugins/grid-bl
 (custom Gutenberg blocks) + `wp-content/plugins/grid-core` (content model:
 projekt/zespol/nagroda/publikacja post types, ACF fields, security hardening).
 
-Live dev site: **https://grid.purzyk.usermd.net/** (mydevil.net shared hosting,
-not yet the client's real domain).
+Live dev site: **https://grid.purzyk.usermd.net/** (mydevil.net shared
+hosting, developer's own account — used for iterating/verifying changes
+before they go to production).
+
+**Production: https://grid.net.pl/** — the client's real domain, live since
+2026-08-21. Runs on the client's own separate mydevil account (SSH alias
+`grid-prod`, see below), not the dev account. Cutover was direct
+(no staging subdomain): old site backed up, `public_html` cleared, new
+WordPress core + this repo's theme/plugins + the dev site's DB (via
+`wp search-replace`) + `uploads/` deployed in its place. The old site's
+DB used table prefix `b1p8trw_` (kept as-is on import, not renamed).
 
 ## No Docker/ddev needed
 
@@ -54,7 +63,7 @@ just work without translation:
    and won't match existing instructions.
 5. Verify: `ssh grid-deploy "echo ok"`.
 
-**Server paths:**
+**Server paths (dev):**
 - WP root: `~/domains/grid.purzyk.usermd.net/repo/site/wordpress`
   (`public_html` is symlinked to this — deploy is a `git pull` there, or
   direct `scp` for faster iteration during active work)
@@ -65,9 +74,64 @@ just work without translation:
   root — never leave a DB dump there longer than needed, delete once the
   change is verified
 
+### Production access — `grid-prod`
+
+The client's own, separate mydevil account (`grid.net.pl`). Same setup
+pattern as `grid-deploy`, own machine-specific key:
+
+```
+ssh-keygen -t ed25519 -f ~/.ssh/grid_prod -C "grid-prod-<machine-name>"
+```
+```
+Host grid-prod
+    HostName panel20.mydevil.net
+    User gridarchitekci
+    IdentityFile ~/.ssh/grid_prod
+    IdentitiesOnly yes
+```
+Verify: `ssh grid-prod "echo ok"`.
+
+**Server paths (production):**
+- WP root: `~/domains/grid.net.pl/public_html` — plain directory (not a
+  git-repo symlink like dev), files are deployed by direct `scp`, not
+  `git pull`. There is no automated deploy for production yet; every
+  change is a manual, deliberate `scp` + cache purge, same mechanics as
+  dev but a second target.
+- DB: `m1048_grid2026` on `mysql20.mydevil.net` (table prefix `b1p8trw_`,
+  inherited from the dev DB it was imported from — don't assume `wp_` or
+  any other prefix).
+- `~/private-backup/` (outside the web root) holds the pre-cutover backup
+  of the *old* grid.net.pl site (files tar.gz + DB dump) — don't delete
+  without checking with the client first, it's the only safety net for
+  anything from the old site that wasn't otherwise migrated.
+- `~/backups/` is a **system-owned mydevil directory** (root-owned,
+  automated host-level backups) — don't write into it, `mkdir`/`tar` there
+  will just fail with a permission error. Use `~/private-backup/` (or
+  another directory you create) for anything of your own.
+
+### mydevil's `devil` CLI
+
+Every account-level operation (subdomains/vhosts, DNS zone records, SSL
+certs, mail/DKIM, MySQL databases) goes through the `devil` command over
+SSH, not a web panel action — `devil <module>` prints full usage for that
+module (e.g. `devil www`, `devil dns`, `devil ssl`, `devil mail`,
+`devil mysql`). Discovered modules used so far: `www` (add/list vhosts,
+per-vhost options like cache/gzip/WAF), `dns` (add/list/del zone records —
+`devil dns add <domain> <record> <type> <content> [ttl]`), `ssl` (Let's
+Encrypt via `devil ssl www add <ip> le le <domain>`), `mail` (mailboxes,
+and `devil mail dkim sign`/`devil mail dkim dns` for DKIM), `mysql` (db/user
+list — no `export` subcommand despite appearing in some docs; use
+`mysqldump` directly instead, it's on the `$PATH`). `devil dns del` prompts
+for interactive `y/N` confirmation, which hangs over a plain `ssh` command —
+pipe `echo y |` in front of it.
+
 ## Deploy workflow
 
-No CI/CD — everything is a manual SSH deploy. The established pattern:
+No CI/CD — everything is a manual SSH deploy. This describes the
+`grid-deploy` (dev) target; `grid-prod` (production, `grid.net.pl`) follows
+the same `scp` + cache-purge mechanics but is a separate, deliberate,
+manual pass — verify on dev first, then repeat the relevant `scp` commands
+against `grid-prod`'s paths. The established pattern:
 
 1. Edit theme/plugin source locally.
 2. If it touched `wp-content/plugins/grid-blocks/src/**`: `cd` into
@@ -175,24 +239,64 @@ them back.
   Always `scp` both files (and re-check the `?ver=` on the page after
   deploying, e.g. via a Playwright `document.querySelector(...).src`
   check, not just a `curl` of the raw file).
+- **`grid.net.pl`'s DNS has a wildcard `* CNAME grid.net.pl` record** — any
+  subdomain that isn't otherwise explicitly defined (including special
+  ones like `_dmarc` or a DKIM selector) silently resolves through it. This
+  is *convenient* for throwaway subdomains (`archiwum.grid.net.pl` worked
+  the moment it was created in `devil www add`, zero DNS steps) but it also
+  means a lookup succeeding doesn't prove a real record exists — a
+  wildcard match and an explicit record are indistinguishable from a
+  single `nslookup`. An explicit record for an exact name always wins over
+  the wildcard, so adding one (e.g. the DMARC record) works fine; just
+  don't assume "it resolves" means "it's configured."
+- **Archiving a legacy site into flat HTML with `wget --mirror` on Windows**:
+  do the actual crawl and any post-processing (renaming files, rewriting
+  links) *inside* a Linux container against the mirror directory, not with
+  Windows-native tools (Node.js, PowerShell) against the same files even if
+  they're bind-mounted into the container. Versioned assets (`style.css?ver=X`)
+  get mirrored with a literal `?` in the filename, which is illegal on
+  NTFS — Docker Desktop's Linux↔Windows filesystem bridge silently
+  represents that character differently depending which side reads it, so
+  a Windows-native script seeing "the same" files gets different (mangled)
+  filenames than a Linux one does, and a regex/rename pass that works
+  perfectly via `sh`/`sed` inside the container silently matches nothing
+  when run via Node on the host. Symptom: a page loads but is completely
+  unstyled (every asset 404s) even though the files are visibly right
+  there when you `ls` them from Windows.
 
 ## Credentials — none of these live in the repo
 
-- DB credentials: `wp-config-db.php` on the server only (inside the web
-  root, protected by an `.htaccess` deny rule — see the open_basedir
-  gotcha above for why it's not stored outside the web root).
+- DB credentials: `wp-config-db.php` on the server only — dev has it as a
+  standalone `require`d file, production keeps `DB_*` in `wp-config.php`
+  directly (see the open_basedir gotcha above for why it's not stored
+  outside the web root either way).
 - WP admin login: username is `purzycki @` (yes, with a literal space and
   `@`) — password lives in the account owner's password manager, not here.
+  Same login works on production (its DB was imported from dev).
+- `archiwum.grid.net.pl` (old-site static archive) is behind HTTP Basic
+  Auth — credentials live in the account owner's password manager, not
+  here; `.htpasswd` sits outside `public_html` on `grid-prod` at
+  `~/domains/archiwum.grid.net.pl/.htpasswd`.
 - Never commit secrets to this repo, even though it's currently private —
   it may get handed to the client eventually.
 
 ## Deferred / pending
 
-- SMTP / mail delivery (Easy WP SMTP) — explicitly deferred by the client
-  to migration time onto the real production domain.
-- GA4 / Google Search Console — waiting on real IDs from the client's
-  Google account; the old site's Universal Analytics property
-  (`UA-36260392-1`) is fully sunset and not worth carrying forward.
+- ~~SMTP / mail delivery~~ — done post-launch: Easy WP SMTP routes through
+  `mail20.mydevil.net`, DKIM signing enabled (`devil mail dkim sign` +
+  `devil mail dkim dns`) and a `_dmarc.grid.net.pl` TXT record added
+  (`p=none`, monitor-only — `rua` reports to `info@grid.net.pl`, not
+  `noreply@`, since reports need a monitored inbox). Confirmed a test
+  email landed in the inbox, not spam.
+- ~~GA4~~ — confirmed live and firing on the real domain post-launch
+  (verified via the consent banner + checking `dataLayer`/the gtag
+  request in a real browser).
+- **Google Search Console** — still pending: verify domain ownership,
+  submit `sitemap_index.xml` for `grid.net.pl`.
+- Old site's Universal Analytics property (`UA-36260392-1`) is fully
+  sunset — not worth carrying forward.
+- Archive subdomain (`archiwum.grid.net.pl`, see the archival gotcha
+  below) — agree a retention window with the client, then tear it down.
 
 ## Related repo
 
