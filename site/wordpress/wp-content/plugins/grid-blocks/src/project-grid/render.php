@@ -30,9 +30,18 @@ foreach ( $categories as $term ) {
 	$category_counts[ $term->slug ] = (int) $term->count;
 }
 
+// How many tiles show before "Pokaż więcej projektów" — counted within the
+// active category, not across the whole list. Everything past it is still
+// rendered and merely hidden, so the links stay in the markup for crawlers,
+// and since those images are lazy-loaded the tiles nobody expands cost no
+// image traffic.
+$limit = 12;
+
 $context = array(
 	'filterCategory' => 'all',
 	'categoryCounts' => $category_counts,
+	'showAll'        => false,
+	'limit'          => $limit,
 );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>
@@ -58,12 +67,13 @@ $context = array(
 				><?php echo esc_html( ucfirst( $term->name ) ); ?></button>
 			<?php endforeach; ?>
 		</div>
-		<span class="text-meta text-ink/45" data-wp-text="state.countLabel"><?php echo esc_html( $total ); ?></span>
+		<span class="text-meta text-ink/45" data-wp-text="state.countLabel"><?php echo esc_html( min( $limit, $total ) . ' / ' . $total ); ?></span>
 	</div>
 
 	<div class="grid grid-flow-dense grid-cols-1 items-start gap-[30px] sm:grid-cols-2 sm:gap-x-5 sm:gap-y-8 md:grid-cols-3 md:gap-x-8 md:gap-y-10">
 		<?php
-		$index = 0;
+		$index          = 0;
+		$category_index = array();
 		while ( $query->have_posts() ) :
 			$query->the_post();
 			$post_id         = get_the_ID();
@@ -73,13 +83,31 @@ $context = array(
 			$kategoria_label = ( $kategoria_terms && ! is_wp_error( $kategoria_terms ) ) ? $kategoria_terms[0]->name : '';
 			$status_label    = ( $status_terms && ! is_wp_error( $status_terms ) ) ? $status_terms[0]->name : '';
 			$rok             = function_exists( 'get_field' ) ? get_field( 'rok', $post_id ) : '';
-			$is_wide         = ( $index % 7 ) === 6;
+
+			if ( ! isset( $category_index[ $kategoria_slug ] ) ) {
+				$category_index[ $kategoria_slug ] = 0;
+			}
+			$index_category = $category_index[ $kategoria_slug ]++;
+
+			// What's rendered here is the state the page opens in — every
+			// category, collapsed. view.js recomputes both flags off the
+			// filtered index as soon as a category is picked; matching that
+			// starting point server-side keeps the first paint reflow-free.
+			$is_wide   = ( $index % 7 ) === 0;
+			$is_hidden = $index >= $limit;
 			?>
 			<a
 				href="<?php the_permalink(); ?>"
-				class="group block text-inherit<?php echo $is_wide ? ' sm:col-span-2' : ''; ?>"
+				class="group block text-inherit sm:[&.is-wide]:col-span-2<?php echo $is_wide ? ' is-wide' : ''; ?><?php echo $is_hidden ? ' hidden' : ''; ?>"
 				data-wp-class--hidden="state.isTileHidden"
-				<?php echo wp_interactivity_data_wp_context( array( 'itemCategory' => $kategoria_slug ) ); ?>
+				data-wp-class--is-wide="state.isTileWide"
+				<?php
+				echo wp_interactivity_data_wp_context( array(
+					'itemCategory'  => $kategoria_slug,
+					'indexAll'      => $index,
+					'indexCategory' => $index_category,
+				) );
+				?>
 			>
 				<div class="relative aspect-tile w-full overflow-hidden bg-surface">
 					<?php if ( has_post_thumbnail() ) : ?>
@@ -96,6 +124,11 @@ $context = array(
 						// Without an accurate hint the first few tiles (which render eager,
 						// before WP's native sizes="auto" self-correction can apply to
 						// lazy-loaded images) fetch a much bigger file than they display.
+						//
+						// Filtering can move a tile between the wide and narrow slot and
+						// this hint doesn't follow it, which is fine: `sizes` only counts
+						// at fetch time, and anything already on screen when a filter is
+						// clicked has been fetched already.
 						$thumb_attrs['sizes'] = $is_wide
 							? '(min-width: 1360px) 843px, (min-width: 900px) calc(66.67vw - 64px), (min-width: 620px) calc(100vw - 56px), calc(100vw - 36px)'
 							: '(min-width: 1360px) 405px, (min-width: 900px) calc(33.33vw - 48px), (min-width: 620px) calc(50vw - 38px), calc(100vw - 36px)';
@@ -120,5 +153,16 @@ $context = array(
 		endwhile;
 		wp_reset_postdata();
 		?>
+
+		<?php // A grid cell of its own, like the mock — it sits in the flow after
+			  // the last tile rather than being centred under the grid. ?>
+		<button
+			type="button"
+			class="flex w-full cursor-pointer items-end pt-1 text-left sm:aspect-tile sm:pt-0<?php echo $total <= $limit ? ' hidden' : ''; ?>"
+			data-wp-on--click="actions.toggleShowAll"
+			data-wp-class--hidden="state.isMoreHidden"
+		>
+			<span class="border-b-2 border-accent pb-1 text-meta font-extrabold uppercase tracking-kicker text-accent sm:translate-y-3.5" data-wp-text="state.moreLabel">Pokaż więcej projektów</span>
+		</button>
 	</div>
 </div>
