@@ -28,22 +28,20 @@ module.exports = {
 		},
 		extend: {
 			colors: {
+				// CSS-variable backed, so a `.dark` class on <html> repaints the
+				// whole site — see tailwind-input.css for the :root/.dark token
+				// values (ported from the mocks' own theme-toggle setup).
 				accent: {
-					DEFAULT: '#ff6633', // links, interactive, hover mask
-					600: '#e85320', // hover
-					700: '#c9420f', // pressed, and accent text at body size
+					DEFAULT: 'rgb(var(--c-accent) / <alpha-value>)', // links, interactive, hover mask
+					600: 'var(--c-accent-600)', // hover
+					700: 'var(--c-accent-700)', // pressed, and accent text at body size
 				},
-				ink: {
-					DEFAULT: '#201e1d', // body text
-					70: 'rgba(32,30,29,0.70)', // secondary copy
-					50: 'rgba(32,30,29,0.50)', // labels, metadata
-					45: 'rgba(32,30,29,0.45)', // tertiary metadata
-				},
-				paper: '#f3f2f2', // page surface
-				desk: '#dedbd9', // area around the page
-				surface: '#eae9e9', // image placeholder / plate fill
-				divider: 'rgba(32,30,29,0.40)', // the 2px rules
-				hairline: '#d7d3d3', // 1px table rows
+				ink: 'rgb(var(--c-ink) / <alpha-value>)', // body text; opacity modifiers (ink/70, ink/50…) cover secondary/metadata copy
+				paper: 'rgb(var(--c-paper) / <alpha-value>)', // page surface
+				desk: 'var(--c-desk)', // area around the page
+				surface: 'var(--c-surface)', // image placeholder / plate fill
+				divider: 'var(--c-divider)', // the 2px rules
+				hairline: 'var(--c-hairline)', // 1px table rows
 			},
 			fontFamily: {
 				// One family throughout. Headings are the same face at weight 800.

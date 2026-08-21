@@ -1,5 +1,42 @@
 @tailwind base;
 
+/* Theme tokens. Dark mode (.dark on <html>, set by assets/js/theme-toggle.js
+   before first paint) flips these; nothing else changes. Values ported
+   from the mocks' own grid-o-nas.dc.html, which is the source of truth
+   for both palettes. */
+:root {
+	--c-ink: 32 30 29;
+	--c-paper: 243 242 242;
+	--c-accent: 255 102 51;
+	--c-accent-600: #e85320;
+	--c-accent-700: #c9420f;
+	--c-desk: #dedbd9;
+	--c-surface: #eae9e9;
+	--c-divider: rgba(32, 30, 29, 0.40);
+	--c-hairline: #d7d3d3;
+}
+
+.dark {
+	--c-ink: 238 236 233;
+	--c-paper: 26 25 24;
+	--c-accent: 255 118 74;
+	--c-accent-600: #ff8f5c;
+	--c-accent-700: #ffa77b;
+	--c-desk: #100f0f;
+	--c-surface: #2a2826;
+	--c-divider: rgba(238, 236, 233, 0.32);
+	--c-hairline: #38352f;
+}
+
+/* Photographs carry less glare on a dark ground. */
+.dark [class*="saturate-"] { filter: brightness(0.88) saturate(0.6); }
+
+/* The logo is dark ink on transparent — invert it, keeping the orange bar orange. */
+.dark img[alt="GRID Architekci"] { filter: invert(1) hue-rotate(180deg); }
+
+.dark .icon-sun { display: none; }
+html:not(.dark) .icon-moon { display: none; }
+
 /* Headings default to 800 in the design (confirmed against the live mock —
    h1/h2/h3 all compute to 800 even with no explicit font-weight class on
    them). theme.json declares this via styles.elements.heading, but
@@ -36,15 +73,17 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
 	background-color: theme('colors.desk');
-	color: theme('colors.ink.DEFAULT');
+	color: theme('colors.ink');
 	font-family: theme('fontFamily.sans');
 }
 
 /* Hamburger: swap the icon when the menu is open (descendants can't use
    peer-*, since peer-checked only reaches direct siblings — same limitation
-   the mocks hit, see grid-o-nas.dc.html's own #navtoggle:checked rule). */
-#grid-navtoggle:checked ~ label .icon-open { display: none; }
-#grid-navtoggle:checked ~ label .icon-close { display: block; }
+   the mocks hit, see grid-o-nas.dc.html's own #navtoggle:checked rule).
+   The label now sits inside the header-controls div alongside the theme
+   toggle, not as a direct sibling of the checkbox, hence `~ div label`. */
+#grid-navtoggle:checked ~ div label .icon-open { display: none; }
+#grid-navtoggle:checked ~ div label .icon-close { display: block; }
 
 /* Scroll-away header (see grid-blocks' site-header/view.js). The sticky
    positioning has to sit on the template-part wrapper, not on the header

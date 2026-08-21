@@ -17,4 +17,14 @@ add_action( 'wp_enqueue_scripts', function() {
 		array( 'global-styles' ),
 		filemtime( get_theme_file_path( 'assets/css/tailwind-build.css' ) )
 	);
+
+	// Printed in <head> (default $in_footer = false), not deferred: it has
+	// to set .dark on <html> before the browser paints the body, or the
+	// wrong theme flashes on load.
+	wp_enqueue_script(
+		'grid-theme-toggle',
+		get_theme_file_uri( 'assets/js/theme-toggle.js' ),
+		array(),
+		filemtime( get_theme_file_path( 'assets/js/theme-toggle.js' ) )
+	);
 } );
