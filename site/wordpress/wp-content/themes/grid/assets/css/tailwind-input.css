@@ -34,6 +34,11 @@
 /* The logo is dark ink on transparent — invert it, keeping the orange bar orange. */
 .dark img[alt="GRID Architekci"] { filter: invert(1) hue-rotate(180deg); }
 
+/* WPML auto-inserts its own default language switcher via wp_footer since
+   this theme has no widget area for it to hook into — site-header renders
+   a real one instead, styled to match the design, so this stays hidden. */
+.wpml-ls-statics-footer { display: none; }
+
 .dark .icon-sun { display: none; }
 html:not(.dark) .icon-moon { display: none; }
 

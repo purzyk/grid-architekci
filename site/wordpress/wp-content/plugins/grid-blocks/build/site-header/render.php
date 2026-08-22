@@ -12,6 +12,27 @@ $nav_items = array(
 	array( 'label' => 'Kontakt', 'url' => home_url( '/kontakt/' ), 'current' => is_page( 'kontakt' ) ),
 );
 
+// WPML's own switcher (apply_filters returns the untouched $default arg,
+// null here, when WPML isn't active — e.g. on dev — so this degrades to
+// "don't render a switcher" rather than erroring). Sorted so the default
+// language always sits first, regardless of which one is currently active
+// — matches the mock's fixed "PL / EN" order.
+$languages = apply_filters( 'wpml_active_languages', null, array( 'skip_missing' => 0 ) );
+if ( is_array( $languages ) && count( $languages ) > 1 ) {
+	$default_language = apply_filters( 'wpml_default_language', null );
+	uksort( $languages, function( $a, $b ) use ( $default_language ) {
+		if ( $a === $default_language ) {
+			return -1;
+		}
+		if ( $b === $default_language ) {
+			return 1;
+		}
+		return 0;
+	} );
+} else {
+	$languages = array();
+}
+
 /*
  * Slid out of view while scrolling down, back in on the way up (view.js
  * toggles .is-hidden). The sticky positioning itself lives in the theme's
@@ -39,6 +60,19 @@ $header_class = 'grid-site-header pointer-events-auto -mt-5 flex flex-wrap items
 	</a>
 
 	<div class="flex items-center gap-4 md:order-3">
+		<?php if ( ! empty( $languages ) ) : ?>
+			<div class="flex items-baseline gap-1.5 text-[11px] uppercase tracking-[0.1em]">
+				<?php $lang_position = 0; ?>
+				<?php foreach ( $languages as $lang ) : ?>
+					<?php if ( $lang_position > 0 ) : ?><span class="text-ink/30">/</span><?php endif; ?>
+					<a
+						href="<?php echo esc_url( $lang['url'] ); ?>"
+						class="<?php echo $lang['active'] ? 'font-bold text-ink' : 'font-normal text-ink/50 hover:text-ink'; ?>"
+					><?php echo esc_html( $lang['language_code'] ); ?></a>
+					<?php $lang_position++; ?>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
 		<button type="button" data-theme-toggle="true" aria-label="Tryb ciemny" class="-my-1 cursor-pointer p-1 text-ink transition-opacity hover:opacity-60">
 			<svg class="icon-sun h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
 			<svg class="icon-moon h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4z"/></svg>
