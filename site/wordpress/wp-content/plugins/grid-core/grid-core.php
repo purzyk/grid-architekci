@@ -129,6 +129,23 @@ function grid_core_register_taxonomies() {
 }
 
 /**
+ * Language-aware URL for one of our own pages, found by slug — for the
+ * handful of hardcoded internal links (nav, footer, cookie banner) that
+ * would otherwise always point at the Polish page even when browsing the
+ * English site. apply_filters() returns $page->ID unchanged when WPML
+ * isn't active (e.g. on dev), so this degrades to plain home_url()-style
+ * behaviour with no explicit "is WPML active" check needed.
+ */
+function grid_translated_url( $slug ) {
+	$page = get_page_by_path( $slug );
+	if ( ! $page ) {
+		return home_url( '/' . $slug . '/' );
+	}
+	$translated_id = apply_filters( 'wpml_object_id', $page->ID, 'page', true );
+	return get_permalink( $translated_id );
+}
+
+/**
  * Default terms, matching projekt_kategoria/projekt_status split from
  * SPEC.md — the old site's flat `project_category` taxonomy conflated
  * both. Registered on activation so a fresh install/migration always has

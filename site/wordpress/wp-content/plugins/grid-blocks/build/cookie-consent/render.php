@@ -5,7 +5,7 @@
  * @var WP_Block $block
  */
 
-$policy_url = home_url( '/polityka-prywatnosci-i-plikow-cookies-oraz-regulamin/' );
+$policy_url = grid_translated_url( 'polityka-prywatnosci-i-plikow-cookies-oraz-regulamin' );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
 	<?php
@@ -25,12 +25,17 @@ $policy_url = home_url( '/polityka-prywatnosci-i-plikow-cookies-oraz-regulamin/'
 	>
 		<div class="mx-auto flex max-w-page flex-col items-start gap-3 px-[18px] py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-7 md:px-10">
 			<p class="m-0 text-[13px] leading-[1.5] text-ink/70">
-				Używamy plików cookie do analizy ruchu na stronie (Google Analytics). Możesz zaakceptować albo odrzucić — wybór możesz zmienić w każdej chwili w stopce strony. Szczegóły w
-				<a class="text-ink underline hover:text-accent" href="<?php echo esc_url( $policy_url ); ?>">polityce prywatności i plików cookie</a>.
+				<?php
+				printf(
+					/* translators: %s is a link to the privacy/cookie policy page. */
+					esc_html__( 'Używamy plików cookie do analizy ruchu na stronie (Google Analytics). Możesz zaakceptować albo odrzucić — wybór możesz zmienić w każdej chwili w stopce strony. Szczegóły w %s.', 'grid' ),
+					'<a class="text-ink underline hover:text-accent" href="' . esc_url( $policy_url ) . '">' . esc_html__( 'polityce prywatności i plików cookie', 'grid' ) . '</a>'
+				);
+				?>
 			</p>
 			<div class="flex shrink-0 gap-4">
-				<button type="button" data-cookie-action="denied" class="inline-flex cursor-pointer items-center justify-center text-[14px] font-extrabold text-ink/70 hover:text-ink">Odrzucam</button>
-				<button type="button" data-cookie-action="granted" class="inline-flex cursor-pointer items-center justify-center gap-1.5 bg-accent px-[14.4px] py-2 text-[14px] font-extrabold text-paper hover:bg-accent-600 active:bg-accent-700">Akceptuję</button>
+				<button type="button" data-cookie-action="denied" class="inline-flex cursor-pointer items-center justify-center text-[14px] font-extrabold text-ink/70 hover:text-ink"><?php esc_html_e( 'Odrzucam', 'grid' ); ?></button>
+				<button type="button" data-cookie-action="granted" class="inline-flex cursor-pointer items-center justify-center gap-1.5 bg-accent px-[14.4px] py-2 text-[14px] font-extrabold text-paper hover:bg-accent-600 active:bg-accent-700"><?php esc_html_e( 'Akceptuję', 'grid' ); ?></button>
 			</div>
 		</div>
 	</div>

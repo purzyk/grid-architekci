@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "grid/site-footer-info",
+  "title": "Stopka — informacje",
+  "category": "grid-blocks",
+  "icon": "info",
+  "description": "Dolna część stopki: social linki, notka, adres, copyright i link do polityki prywatności. Dynamiczny render.php zamiast statycznej treści w footer.html, żeby tłumaczalne stringi dało się objąć WPML String Translation (adres/nazwy social/domena zostają zwykłym tekstem — to nie są rzeczy do tłumaczenia).",
+  "supports": {
+    "html": false,
+    "multiple": false
+  },
+  "textdomain": "grid",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

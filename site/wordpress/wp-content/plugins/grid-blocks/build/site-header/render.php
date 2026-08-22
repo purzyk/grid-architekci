@@ -6,10 +6,10 @@
  */
 
 $nav_items = array(
-	array( 'label' => 'Projekty', 'url' => home_url( '/' ), 'current' => is_front_page() || is_singular( 'projekt' ) ),
-	array( 'label' => 'O nas', 'url' => home_url( '/o-nas/' ), 'current' => is_page( 'o-nas' ) ),
-	array( 'label' => 'Osiągnięcia', 'url' => home_url( '/osiagniecia/' ), 'current' => is_page( 'osiagniecia' ) ),
-	array( 'label' => 'Kontakt', 'url' => home_url( '/kontakt/' ), 'current' => is_page( 'kontakt' ) ),
+	array( 'label' => __( 'Projekty', 'grid' ), 'url' => home_url( '/' ), 'current' => is_front_page() || is_singular( 'projekt' ) ),
+	array( 'label' => __( 'O nas', 'grid' ), 'url' => grid_translated_url( 'o-nas' ), 'current' => is_page( 'o-nas' ) ),
+	array( 'label' => __( 'Osiągnięcia', 'grid' ), 'url' => grid_translated_url( 'osiagniecia' ), 'current' => is_page( 'osiagniecia' ) ),
+	array( 'label' => __( 'Kontakt', 'grid' ), 'url' => grid_translated_url( 'kontakt' ), 'current' => is_page( 'kontakt' ) ),
 );
 
 // WPML's own switcher (apply_filters returns the untouched $default arg,
@@ -73,11 +73,11 @@ $header_class = 'grid-site-header pointer-events-auto -mt-5 flex flex-wrap items
 				<?php endforeach; ?>
 			</div>
 		<?php endif; ?>
-		<button type="button" data-theme-toggle="true" aria-label="Tryb ciemny" class="-my-1 cursor-pointer p-1 text-ink transition-opacity hover:opacity-60">
+		<button type="button" data-theme-toggle="true" aria-label="<?php esc_attr_e( 'Tryb ciemny', 'grid' ); ?>" class="-my-1 cursor-pointer p-1 text-ink transition-opacity hover:opacity-60">
 			<svg class="icon-sun h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
 			<svg class="icon-moon h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M20 13.4A8.2 8.2 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4z"/></svg>
 		</button>
-		<label for="grid-navtoggle" class="-mr-1 cursor-pointer p-1 text-ink md:hidden" aria-label="Menu">
+		<label for="grid-navtoggle" class="-mr-1 cursor-pointer p-1 text-ink md:hidden" aria-label="<?php esc_attr_e( 'Menu', 'grid' ); ?>">
 			<svg class="icon-open block h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
 			<svg class="icon-close hidden h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M5 5l14 14M19 5L5 19"/></svg>
 		</label>

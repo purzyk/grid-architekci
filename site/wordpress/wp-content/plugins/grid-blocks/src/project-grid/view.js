@@ -59,9 +59,8 @@ const { state } = store( 'grid/project-grid', {
 			return ( context.categoryCounts[ context.filterCategory ] ?? 0 ) <= context.limit;
 		},
 		get moreLabel() {
-			return state.isExpanded
-				? 'Pokaż mniej'
-				: 'Pokaż więcej projektów';
+			const context = getContext();
+			return state.isExpanded ? context.lessLabel : context.moreLabel;
 		},
 	},
 	actions: {

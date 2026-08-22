@@ -42,6 +42,8 @@ $context = array(
 	'categoryCounts'   => $category_counts,
 	'expandedCategory' => '',
 	'limit'            => $limit,
+	'moreLabel'        => __( 'Pokaż więcej projektów', 'grid' ),
+	'lessLabel'        => __( 'Pokaż mniej', 'grid' ),
 );
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>
@@ -56,7 +58,7 @@ $context = array(
 				data-wp-on--click="actions.setCategory"
 				data-wp-bind--aria-pressed="state.isPressed"
 				<?php echo wp_interactivity_data_wp_context( array( 'filterValue' => 'all' ) ); ?>
-			>Wszystkie</button>
+			><?php esc_html_e( 'Wszystkie', 'grid' ); ?></button>
 			<?php foreach ( $categories as $term ) : ?>
 				<button
 					type="button"
@@ -162,7 +164,7 @@ $context = array(
 			data-wp-on--click="actions.toggleShowAll"
 			data-wp-class--hidden="state.isMoreHidden"
 		>
-			<span class="border-b-2 border-accent pb-1 text-meta font-extrabold uppercase tracking-kicker text-accent sm:translate-y-3.5" data-wp-text="state.moreLabel">Pokaż więcej projektów</span>
+			<span class="border-b-2 border-accent pb-1 text-meta font-extrabold uppercase tracking-kicker text-accent sm:translate-y-3.5" data-wp-text="state.moreLabel"><?php echo esc_html( $context['moreLabel'] ); ?></span>
 		</button>
 	</div>
 </div>

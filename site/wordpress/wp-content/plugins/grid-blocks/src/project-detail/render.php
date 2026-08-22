@@ -22,11 +22,11 @@ $metryka    = get_field( 'metryka', $post_id ) ?: array(); // repeater: array of
 $metric_rows = array();
 $rok = get_field( 'rok', $post_id );
 if ( $rok ) {
-	$metric_rows[] = array( 'label' => 'Rok', 'value' => $rok );
+	$metric_rows[] = array( 'label' => __( 'Rok', 'grid' ), 'value' => $rok );
 }
 $status_terms = get_the_terms( $post_id, 'projekt_status' );
 if ( $status_terms && ! is_wp_error( $status_terms ) ) {
-	$metric_rows[] = array( 'label' => 'Status', 'value' => $status_terms[0]->name );
+	$metric_rows[] = array( 'label' => __( 'Status', 'grid' ), 'value' => $status_terms[0]->name );
 }
 foreach ( $metryka as $row ) {
 	if ( ! empty( $row['label'] ) && ! empty( $row['value'] ) ) {
