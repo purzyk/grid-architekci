@@ -109,9 +109,28 @@ Fix: helper `grid_translated_url( $slug )` w `grid-core.php`.
    tekst w `footer.html`/`404.html`. Zweryfikowane na produkcji
    (Playwright): nawigacja, stopka, 404, metryki projektu, tabela
    osiągnięć, toggle "Pokaż więcej/mniej", przycisk ustawień cookies.
-5. Konfiguracja trybów tłumaczenia per custom post type
+5. ✅ Konfiguracja trybów tłumaczenia per custom post type
    (`projekt`/`zespol`/`nagroda`/`publikacja`) i per pole ACF, oraz per
-   taksonomia (`projekt_kategoria`/`projekt_status`).
-6. Sprawdzić punkt F (zapytania post_type + `current-projects`).
-7. Przetłumaczyć jeden projekt portfolio jako test end-to-end.
-8. Jeśli działa — reszta treści.
+   taksonomia (`projekt_kategoria`/`projekt_status`). Uwaga: pierwsza próba
+   ustawienia tego przez Piotra w GUI nie zapisała się poprawnie — wszystkie
+   4 CPT i obie taksonomie faktycznie zostały na "Nieprzetłumaczalne";
+   poprawione i zweryfikowane bezpośrednio w bazie ustawień WPML.
+6. Częściowo zrobione: dodano `apply_filters('wpml_object_id', ...)` dla
+   wszystkich miejsc czytających ID `projekt` z ACF (patrz sekcja F).
+   Zapytania `get_posts()`/`WP_Query` bez `suppress_filters` (najbardziej
+   wrażliwy: `project-nav`) — nadal do zweryfikowania, teraz że jest już
+   jeden przetłumaczony projekt do testu.
+7. ✅ Przetłumaczono jeden projekt portfolio end-to-end jako test:
+   "Dom jednorodzinny, Krzyki Wrocław" → "Single-Family Home, Krzyki
+   Wrocław" (`/en/projekt/single-family-home-krzyki-wroclaw/`). WPML's
+   wbudowane tłumaczenie AI (PTC) przetłumaczyło tytuł/lead/opis/kategorię/
+   status; przejrzane i poprawione jedno miejsce (dosłowne "second line of
+   development" → bardziej naturalne "second row of development"). Do tego
+   przetłumaczono w Tłumaczeniu ciągów znaków wszystkie stringi z kategorii
+   A/B/C/D (nawigacja, stopka, 404, metryki, tabela nagród, banner cookies)
+   — pełna lista w kodzie, ~30 stringów. Zweryfikowane end-to-end na
+   produkcji: strona projektu, 404, banner cookies, stopka — wszystko po
+   angielsku, strona polska bez regresji.
+8. Jeśli działa — reszta treści (wciąż do zrobienia: pozostałe ~46
+   projektów, zespół, nagrody, publikacje, strony O nas/Kontakt/
+   Osiągnięcia/Home).

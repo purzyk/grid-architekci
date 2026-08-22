@@ -263,6 +263,22 @@ them back.
   when run via Node on the host. Symptom: a page loads but is completely
   unstyled (every asset 404s) even though the files are visibly right
   there when you `ls` them from Windows.
+- **WPML assumes every theme/plugin string is written in English by
+  default** — wrapping a Polish string in `__( '...', 'grid' )` and running
+  WPML's "Lokalizacja motywu i wtyczek" scan does NOT make it show up for
+  translation the way you'd expect: WPML registers it with source language
+  = English, so the "+" translate icon in Tłumaczenie ciągów znaków asks
+  you to supply the *Polish* text (treating your Polish string as if it
+  needs translating *into* Polish from an English original that doesn't
+  exist). Fix is a one-time setting per text domain: WPML → Tłumaczenie
+  ciągów znaków → "Ustaw oryginalny język motywów i wtyczek" → pick the
+  `grid` domain → reassign its existing strings' source language to
+  Polski, and tick "use this as the default for new strings in this
+  domain" so future scans get it right automatically. Do this *before*
+  translating anything, or the translations you enter will be backwards.
+  Separately: the String Translation popup's textarea saves on plain
+  **Enter** (Shift+Enter inserts a newline) — there's no visible Save
+  button, and Tab/blur alone does not persist the value.
 
 ## Credentials — none of these live in the repo
 
