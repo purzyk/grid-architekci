@@ -18,13 +18,24 @@ if ( ! $post_id ) {
 // whatever order the client actually dragged the projects into. Walk the
 // same ordered ID list the grid itself queries by instead, so prev/next
 // always matches what's actually shown there.
+//
+// get_posts() defaults suppress_filters to true (unlike WP_Query, which
+// every other query-driven block here uses), which also suppresses WPML's
+// own language-filtering — under WPML this returned every translation of
+// every project as separate entries in one flat list, so a project's
+// "next" could resolve to its own sibling in another language. Explicit
+// suppress_filters => false re-enables that filtering; it doesn't affect
+// the Simple Custom Post Order gotcha (that only rewrites orderby when a
+// query leaves it at the 'date' default, and this one already asks for
+// menu_order explicitly).
 $ordered_ids = get_posts( array(
-	'post_type'      => 'projekt',
-	'post_status'    => 'publish',
-	'posts_per_page' => -1,
-	'orderby'        => 'menu_order',
-	'order'          => 'ASC',
-	'fields'         => 'ids',
+	'post_type'        => 'projekt',
+	'post_status'      => 'publish',
+	'posts_per_page'   => -1,
+	'orderby'          => 'menu_order',
+	'order'            => 'ASC',
+	'fields'           => 'ids',
+	'suppress_filters' => false,
 ) );
 
 $index = array_search( $post_id, $ordered_ids, true );
