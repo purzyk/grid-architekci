@@ -85,12 +85,17 @@ Fix: helper `grid_translated_url( $slug )` w `grid-core.php`.
   `publications-grid`) nie ustawia jawnie `suppress_filters` — sprawdzić czy
   WPML poprawnie filtruje po aktualnym języku, czy zacznie mieszać wpisy z
   obu języków. `project-nav` jest tu najbardziej wrażliwy (chodzi po
-  `menu_order` między projektami).
-- `current-projects/render.php` czyta konkretne ID postów z ACF Options
-  (`aktualne_projekty`) — po włączeniu WPML te ID będą przypięte do jednego
-  języka. Trzeba przepuścić przez `apply_filters('wpml_object_id', $id,
-  'projekt', true)` przed użyciem, żeby pokazać właściwy odpowiednik w
-  bieżącym języku.
+  `menu_order` między projektami) — **wymaga realnej dwujęzycznej treści do
+  sprawdzenia, więc odłożone do kroku 6/7, kiedy będzie co testować.**
+- ✅ **Zrobione** (przy okazji kroku 4, bo to ten sam bezpieczny wzorzec co
+  `grid_translated_url()`): każde miejsce czytające wprost ID posta
+  `projekt` z ACF i używające go bez filtrowania językowego zostało
+  przepuszczone przez `apply_filters('wpml_object_id', $id, 'projekt',
+  true)`. Dotyczy trzech miejsc (audyt przy pisaniu kodu znalazł dwa więcej
+  niż pierwotnie tu spisane):
+  - `current-projects/render.php` — ID z ACF Options (`aktualne_projekty`).
+  - `awards-table/render.php` i `featured-awards/render.php` — oba czytają
+    `projekt_powiazany` (pole relationship na CPT `nagroda`).
 
 ## Kolejność prac (do ustalenia szczegółowo przy starcie)
 
