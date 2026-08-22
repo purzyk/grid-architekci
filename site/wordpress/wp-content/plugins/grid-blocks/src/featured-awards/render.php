@@ -40,6 +40,11 @@ $variants = array_keys( $variant_classes );
 		$opis    = function_exists( 'get_field' ) ? get_field( 'opis', $post_id ) : '';
 		$related = function_exists( 'get_field' ) ? get_field( 'projekt_powiazany', $post_id ) : null;
 		$related_id = is_array( $related ) && ! empty( $related ) ? $related[0] : null;
+		// Resolve to the current language's version of the related project —
+		// same reasoning as current-projects' options-page IDs.
+		if ( $related_id ) {
+			$related_id = apply_filters( 'wpml_object_id', $related_id, 'projekt', true );
+		}
 		$variant = $variants[ $index % count( $variants ) ];
 		// Only wrap in a real link when there's a related project — no
 		// pointer cursor, hover tint, or arrow when there's nothing to go to.

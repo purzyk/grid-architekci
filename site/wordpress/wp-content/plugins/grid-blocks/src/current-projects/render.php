@@ -27,6 +27,14 @@ if ( empty( $project_ids ) ) {
 	return;
 }
 
+// The options page's picker stores IDs from whichever language it was last
+// edited in — WPML duplicates projekt posts per language, so resolve each
+// one to its current-language equivalent (falling back to the original if
+// that language has no translation yet) before using it for anything.
+$project_ids = array_map( function ( $post_id ) {
+	return apply_filters( 'wpml_object_id', $post_id, 'projekt', true );
+}, $project_ids );
+
 $project_ids = array_filter( $project_ids, function ( $post_id ) {
 	return 'publish' === get_post_status( $post_id );
 } );

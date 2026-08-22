@@ -31,6 +31,11 @@ $query = new WP_Query( array(
 			$projekt_nazwa = function_exists( 'get_field' ) ? get_field( 'projekt_nazwa', $post_id ) : '';
 			$related      = function_exists( 'get_field' ) ? get_field( 'projekt_powiazany', $post_id ) : null;
 			$related_id   = is_array( $related ) && ! empty( $related ) ? $related[0] : null;
+			// Resolve to the current language's version of the related
+			// project — same reasoning as current-projects' options-page IDs.
+			if ( $related_id ) {
+				$related_id = apply_filters( 'wpml_object_id', $related_id, 'projekt', true );
+			}
 			$href         = $related_id ? get_permalink( $related_id ) : '';
 			$tag          = $href ? 'a' : 'div';
 			$wynik_class  = $top ? 'text-accent-700' : 'text-ink/55';
