@@ -1,8 +1,9 @@
 # WPML — plan wdrożenia (PL + EN)
 
-Status: research/planning, nic jeszcze nie zaimplementowane. Instalacja WPML
-(core + Advanced Custom Fields Multilingual + WPML SEO + WPML dla CF7) robi
-Piotr sam na koncie WPML — ja pomagam od strony konfiguracji i kodu.
+Status: kroki 1–4 zrobione (backup, instalacja WPML+dodatków, konfiguracja
+język PL/EN + podkatalog, kod — patrz "Kolejność prac" niżej). Dalej: kroki
+5–8 (tryby tłumaczenia per CPT/pole/taksonomia, punkt F, testowe
+tłumaczenie, reszta treści).
 
 ## Decyzje architektoniczne
 
@@ -93,10 +94,16 @@ Fix: helper `grid_translated_url( $slug )` w `grid-core.php`.
 
 ## Kolejność prac (do ustalenia szczegółowo przy starcie)
 
-1. Backup bazy produkcyjnej (świeży, tuż przed startem).
-2. Instalacja WPML + ACF Multilingual + WPML SEO + WPML dla CF7 (Piotr).
-3. Konfiguracja: język domyślny PL, dodatkowy EN, format URL = podkatalog.
-4. Kod: punkty A–D powyżej (stringi + nowe bloki + helper URL).
+1. ✅ Backup bazy produkcyjnej (świeży, tuż przed startem).
+2. ✅ Instalacja WPML + ACF Multilingual + WPML SEO + WPML dla CF7 (Piotr).
+3. ✅ Konfiguracja: język domyślny PL, dodatkowy EN, format URL = podkatalog.
+   Przy okazji: prawdziwy przełącznik PL/EN w nagłówku (dopasowany do
+   makiety), domyślny widget WPML w stopce ukryty przez CSS.
+4. ✅ Kod: punkty A–D powyżej (stringi + nowe bloki + helper URL). Nowe
+   bloki `grid/site-footer-info` i `grid/not-found` zastąpiły statyczny
+   tekst w `footer.html`/`404.html`. Zweryfikowane na produkcji
+   (Playwright): nawigacja, stopka, 404, metryki projektu, tabela
+   osiągnięć, toggle "Pokaż więcej/mniej", przycisk ustawień cookies.
 5. Konfiguracja trybów tłumaczenia per custom post type
    (`projekt`/`zespol`/`nagroda`/`publikacja`) i per pole ACF, oraz per
    taksonomia (`projekt_kategoria`/`projekt_status`).
